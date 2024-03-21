@@ -1,4 +1,4 @@
-package com.xstock.plutus;
+package com.xstock.plutus.account;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
