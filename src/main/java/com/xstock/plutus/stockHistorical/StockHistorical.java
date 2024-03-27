@@ -1,20 +1,20 @@
-package com.xstock.plutus.stock_historical_data;
+package com.xstock.plutus.stockHistorical;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.type.descriptor.jdbc.TimestampWithTimeZoneJdbcType;
+import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 @Entity
-public class Stock_historical_data {
+@Table(name="stock_historical")
+public class StockHistorical {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer company_id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
-    private Timestamp time;
+    @Column(name="company_id")
+    private Integer companyId;
+
+    private OffsetDateTime time;
 
     private Integer open;
 
@@ -26,19 +26,27 @@ public class Stock_historical_data {
 
     private Integer volume;
 
-    public Integer getCompany_id() {
-        return company_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCompany_id(Integer company_id) {
-        this.company_id = company_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Timestamp getTime() {
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public OffsetDateTime getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(OffsetDateTime time) {
         this.time = time;
     }
 
