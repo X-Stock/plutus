@@ -10,6 +10,10 @@ public class Company {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToOne(mappedBy="company")
+//    @JoinColumn(name="company_id")
+    private Overview overview;
+
     private String ticker;
 
     @Column(name="com_group_code")
