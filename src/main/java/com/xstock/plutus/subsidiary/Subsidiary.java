@@ -3,6 +3,7 @@ package com.xstock.plutus.subsidiary;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name="subsidiaries")
 public class Subsidiary {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
