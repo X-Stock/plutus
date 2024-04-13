@@ -13,14 +13,14 @@ public class StockIntraday {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private Company company;
 
     private OffsetDateTime time;
 
-    @Column(name = "order_type")
+    @Column(name = "order_type", columnDefinition="TEXT")
     private String orderType;
 
     private Integer volume;

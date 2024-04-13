@@ -11,11 +11,12 @@ public class LargeShareholder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private Company company;
 
+    @Column(columnDefinition="TEXT")
     private String shareholder;
 
     @Column(name = "share_own_percent")

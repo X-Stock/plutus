@@ -15,11 +15,13 @@ public class Overview {
     @JsonIgnore
     private Company company;
 
+    @Column(columnDefinition="TEXT")
     private String exchange;
 
+    @Column(columnDefinition="TEXT")
     private String industry;
 
-    @Column(name = "company_type")
+    @Column(name = "company_type", columnDefinition="TEXT")
     private String companyType;
 
     @Column(name = "number_of_shareholders")
@@ -52,10 +54,10 @@ public class Overview {
     @Column(name = "delta_in_year")
     private Float deltaInYear;
 
-    @Column(name = "short_name")
+    @Column(name = "short_name", columnDefinition="TEXT")
     private String shortName;
 
-    @Column(name = "industry_en")
+    @Column(name = "industry_en", columnDefinition="TEXT")
     private String industryEn;
 
     @Column(name = "industry_id")
@@ -64,6 +66,7 @@ public class Overview {
     @Column(name = "industry_id_v2")
     private Integer industryIdV2;
 
+    @Column(columnDefinition="TEXT")
     private String website;
 
     public Integer getId() {

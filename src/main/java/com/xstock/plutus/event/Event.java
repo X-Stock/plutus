@@ -1,5 +1,6 @@
 package com.xstock.plutus.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
@@ -12,8 +13,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonIgnore
     private Company company;
 
     private Integer price;
@@ -30,10 +32,10 @@ public class Event {
     @Column(name = "monthly_price_change_ratio")
     private Float monthlyPriceChangeRatio;
 
-    @Column(name = "event_name")
+    @Column(name = "event_name", columnDefinition="TEXT")
     private String eventName;
 
-    @Column(name = "event_code")
+    @Column(name = "event_code", columnDefinition="TEXT")
     private String eventCode;
 
     @Column(name = "notify_date")
@@ -48,10 +50,10 @@ public class Event {
     @Column(name = "ex_rights_date")
     private OffsetDateTime exRightsDate;
 
-    @Column(name = "event_description")
+    @Column(name = "event_description", columnDefinition="TEXT")
     private String eventDescription;
 
-    @Column(name = "event_note")
+    @Column(name = "event_note", columnDefinition="TEXT")
     private String eventNote;
 
     public Integer getId() {

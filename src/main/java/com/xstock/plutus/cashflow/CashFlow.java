@@ -1,5 +1,6 @@
 package com.xstock.plutus.cashflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
@@ -12,6 +13,7 @@ public class CashFlow {
 
     @OneToOne
     @JoinColumn(name = "company_id")
+    @JsonIgnore
     private Company company;
 
     private String data;

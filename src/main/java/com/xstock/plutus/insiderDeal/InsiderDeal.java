@@ -13,7 +13,7 @@ public class InsiderDeal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private Company company;
@@ -21,10 +21,10 @@ public class InsiderDeal {
     @Column(name = "deal_announce_date")
     private OffsetDateTime dealAnnounceDate;
 
-    @Column(name = "deal_method")
+    @Column(name = "deal_method", columnDefinition="TEXT")
     private String dealMethod;
 
-    @Column(name = "deal_action")
+    @Column(name = "deal_action", columnDefinition="TEXT")
     private String dealAction;
 
     @Column(name = "deal_quantity")

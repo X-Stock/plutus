@@ -1,6 +1,9 @@
 package com.xstock.plutus.stockIndex;
 
+import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "stock_indices")
@@ -9,7 +12,10 @@ public class StockIndex {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "index_name")
+    @ManyToMany
+    Set<Company> companies;
+
+    @Column(name = "index_name", columnDefinition="TEXT")
     private String indexName;
 
     public Integer getId() {
