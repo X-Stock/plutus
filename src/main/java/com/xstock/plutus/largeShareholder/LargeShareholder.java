@@ -1,20 +1,24 @@
 package com.xstock.plutus.largeShareholder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="large_shareholders")
+@Table(name = "large_shareholders")
 public class LargeShareholder {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="company_id")
-    private Integer companyId;
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    private Company company;
 
     private String shareholder;
 
-    @Column(name="share_own_percent")
+    @Column(name = "share_own_percent")
     private Float shareOwnPercent;
 
     public Integer getId() {
@@ -25,12 +29,12 @@ public class LargeShareholder {
         this.id = id;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getShareholder() {

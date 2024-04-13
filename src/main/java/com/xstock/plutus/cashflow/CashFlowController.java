@@ -1,17 +1,21 @@
 package com.xstock.plutus.cashflow;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping(path="/api/v1/cashFlow")
+@RequestMapping(path = "/api/v1/cashFlow")
 public class CashFlowController {
     @Autowired
     private CashFlowService cashFlowService;
 
-    @GetMapping(path="/")
-    public Iterable<CashFlow> getCashFlow() {return cashFlowService.getCashFlow();}
+    @GetMapping
+    public Iterable<CashFlow> getCashFlows() {
+        return cashFlowService.getCashFlows();
+    }
 
-    @PostMapping(path="/")
-    public String addCashFlow (@RequestBody CashFlow cashFlow) {
-        return cashFlowService.addCashFlow(cashFlow);
+    @PostMapping(path = "/add")
+    public String addNewCashFlow(@RequestBody CashFlow cashFlow) {
+        return cashFlowService.addNewCashFlow(cashFlow);
     }
 }

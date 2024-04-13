@@ -1,68 +1,67 @@
 package com.xstock.plutus.overview;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
 public class Overview {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name="company_id", referencedColumnName="id")
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
     private Company company;
-
-    @Column(name="company_id")
-    private Integer companyId;
 
     private String exchange;
 
     private String industry;
 
-    @Column(name="company_type")
+    @Column(name = "company_type")
     private String companyType;
 
-    @Column(name="number_of_shareholders")
+    @Column(name = "number_of_shareholders")
     private Integer numberOfShareholders;
 
-    @Column(name="foreign_percent")
+    @Column(name = "foreign_percent")
     private Float foreignPercent;
 
-    @Column(name="outstanding_share")
+    @Column(name = "outstanding_share")
     private Float outstandingShare;
 
-    @Column(name="issue_share")
+    @Column(name = "issue_share")
     private Float issueShare;
 
-    @Column(name="established_year")
+    @Column(name = "established_year")
     private Integer establishedYear;
 
-    @Column(name="number_of_employees")
+    @Column(name = "number_of_employees")
     private Integer numberOfEmployees;
 
-    @Column(name="stock_rating")
+    @Column(name = "stock_rating")
     private Float stockRating;
 
-    @Column(name="delta_in_week")
+    @Column(name = "delta_in_week")
     private Float deltaInWeek;
 
-    @Column(name="delta_in_month")
+    @Column(name = "delta_in_month")
     private Float deltaInMonth;
 
-    @Column(name="delta_in_year")
+    @Column(name = "delta_in_year")
     private Float deltaInYear;
 
-    @Column(name="short_name")
+    @Column(name = "short_name")
     private String shortName;
 
-    @Column(name="industry_en")
+    @Column(name = "industry_en")
     private String industryEn;
 
-    @Column(name="industry_id")
+    @Column(name = "industry_id")
     private Integer industryId;
 
-    @Column(name="industry_id_v2")
+    @Column(name = "industry_id_v2")
     private Integer industryIdV2;
 
     private String website;
@@ -75,12 +74,12 @@ public class Overview {
         this.id = id;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getExchange() {

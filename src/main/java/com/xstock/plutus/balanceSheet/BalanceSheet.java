@@ -1,17 +1,17 @@
-package com.xstock.plutus.cashflow;
+package com.xstock.plutus.balanceSheet;
 
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="cash_flow")
-public class CashFlow {
+@Table(name = "balance_sheet")
+public class BalanceSheet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name="company_id")
     private Company company;
 
     private String data;

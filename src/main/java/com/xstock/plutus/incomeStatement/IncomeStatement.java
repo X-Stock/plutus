@@ -1,11 +1,11 @@
-package com.xstock.plutus.cashflow;
+package com.xstock.plutus.incomeStatement;
 
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="cash_flow")
-public class CashFlow {
+@Table(name = "income_statement")
+public class IncomeStatement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

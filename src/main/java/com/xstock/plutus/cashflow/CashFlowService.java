@@ -9,9 +9,11 @@ public class CashFlowService {
     @Autowired
     private CashFlowRepository cashFlowRepository;
 
-    public Iterable<CashFlow> getCashFlow() {return cashFlowRepository.findAll();}
+    public Iterable<CashFlow> getCashFlows() {
+        return cashFlowRepository.findAll();
+    }
 
-    public String addCashFlow (@RequestBody CashFlow cashFlow) {
+    public String addNewCashFlow(@RequestBody CashFlow cashFlow) {
         cashFlowRepository.save(cashFlow);
         return "Saved cash flow";
     }

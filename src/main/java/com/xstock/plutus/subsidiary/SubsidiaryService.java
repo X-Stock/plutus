@@ -12,7 +12,7 @@ public class SubsidiaryService {
         return subsidiaryRepository.findAll();
     }
 
-    public String addNewSubsidiary (Subsidiary subsidiary) {
+    public String addNewSubsidiary(Subsidiary subsidiary) {
         subsidiaryRepository.save(subsidiary);
         return "Saved subsidiary";
     }

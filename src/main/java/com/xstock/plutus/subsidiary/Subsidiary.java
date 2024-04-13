@@ -1,20 +1,24 @@
 package com.xstock.plutus.subsidiary;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="subsidiaries")
+@Table(name = "subsidiaries")
 public class Subsidiary {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="company_id")
-    private Integer companyId;
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    private Company company;
 
     private String name;
 
-    @Column(name="own_percent")
+    @Column(name = "own_percent")
     private Float ownPercent;
 
     public Integer getId() {
@@ -25,12 +29,12 @@ public class Subsidiary {
         this.id = id;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getName() {

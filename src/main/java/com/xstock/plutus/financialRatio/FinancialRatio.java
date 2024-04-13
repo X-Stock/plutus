@@ -1,11 +1,11 @@
-package com.xstock.plutus.cashflow;
+package com.xstock.plutus.financialRatio;
 
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="cash_flow")
-public class CashFlow {
+@Table(name = "financial_ratio")
+public class FinancialRatio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -40,3 +40,4 @@ public class CashFlow {
         this.data = Data;
     }
 }
+

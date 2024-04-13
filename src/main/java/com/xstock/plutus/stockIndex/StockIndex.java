@@ -3,13 +3,13 @@ package com.xstock.plutus.stockIndex;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="stock_indices")
+@Table(name = "stock_indices")
 public class StockIndex {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="index_name")
+    @Column(name = "index_name")
     private String indexName;
 
     public Integer getId() {

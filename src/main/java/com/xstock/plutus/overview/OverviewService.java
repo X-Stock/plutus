@@ -11,4 +11,9 @@ public class OverviewService {
     public Iterable<Overview> getOverviews() {
         return overviewRepository.findAll();
     }
+
+    public String addNewOverview(Overview overview) {
+        overviewRepository.save(overview);
+        return "Saved overview data";
+    }
 }
