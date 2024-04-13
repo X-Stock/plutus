@@ -1,25 +1,20 @@
-package com.xstock.plutus.subsidiary;
+package com.xstock.plutus.cashflow;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "subsidiaries")
-public class Subsidiary {
+@Table(name="cash_flow")
+public class CashFlow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
     @JoinColumn(name = "company_id")
-    @JsonIgnore
     private Company company;
 
-    private String name;
-
-    @Column(name = "own_percent")
-    private Float ownPercent;
+    private String data;
 
     public Integer getId() {
         return id;
@@ -37,19 +32,11 @@ public class Subsidiary {
         this.company = company;
     }
 
-    public String getName() {
-        return name;
+    public String getData() {
+        return data;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Float getOwnPercent() {
-        return ownPercent;
-    }
-
-    public void setOwnPercent(Float ownPercent) {
-        this.ownPercent = ownPercent;
+    public void setData(String Data) {
+        this.data = Data;
     }
 }

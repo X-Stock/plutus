@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="/api/v1/largeShareholders")
+@RequestMapping(path = "/api/v1/largeShareholders")
 public class LargeShareholderController {
     @Autowired
     private LargeShareholderService largeShareholderService;
 
-    @GetMapping("/")
+    @GetMapping
     public Iterable<LargeShareholder> getLargeShareholders() {
         return largeShareholderService.getLargeShareholders();
     }

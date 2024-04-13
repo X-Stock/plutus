@@ -13,7 +13,7 @@ public class InsiderDealService {
         return insiderDealRepository.findAll();
     }
 
-    public String addNewInsiderDeal (@RequestBody InsiderDeal insiderDeal) {
+    public String addNewInsiderDeal(@RequestBody InsiderDeal insiderDeal) {
         insiderDealRepository.save(insiderDeal);
         return "Saved insider deal";
     }

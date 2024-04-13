@@ -1,5 +1,7 @@
 package com.xstock.plutus.insiderDeal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -8,28 +10,30 @@ import java.time.OffsetDateTime;
 @Table(name = "insider_deals")
 public class InsiderDeal {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="company_id")
-    private Integer companyId;
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    private Company company;
 
-    @Column(name="deal_announce_date")
+    @Column(name = "deal_announce_date")
     private OffsetDateTime dealAnnounceDate;
 
-    @Column(name="deal_method")
+    @Column(name = "deal_method")
     private String dealMethod;
 
-    @Column(name="deal_action")
+    @Column(name = "deal_action")
     private String dealAction;
 
-    @Column(name="deal_quantity")
+    @Column(name = "deal_quantity")
     private Integer dealQuantity;
 
-    @Column(name="deal_price")
+    @Column(name = "deal_price")
     private Integer dealPrice;
 
-    @Column(name="deal_ratio")
+    @Column(name = "deal_ratio")
     private Float dealRatio;
 
     public Integer getId() {
@@ -40,12 +44,12 @@ public class InsiderDeal {
         this.id = id;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public OffsetDateTime getDealAnnounceDate() {

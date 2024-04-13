@@ -1,18 +1,22 @@
 package com.xstock.plutus.stockHistorical;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name="stock_historical")
+@Table(name = "stock_historical")
 public class StockHistorical {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="company_id")
-    private Integer companyId;
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    private Company company;
 
     private OffsetDateTime time;
 
@@ -34,12 +38,12 @@ public class StockHistorical {
         this.id = id;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public OffsetDateTime getTime() {

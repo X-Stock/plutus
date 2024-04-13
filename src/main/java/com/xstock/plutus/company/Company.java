@@ -1,36 +1,35 @@
 package com.xstock.plutus.company;
 
-import com.xstock.plutus.overview.Overview;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="companies")
+@Table(name = "companies")
 public class Company {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String ticker;
 
-    @Column(name="com_group_code")
+    @Column(name = "com_group_code")
     private String comGroupCode;
 
-    @Column(name="com_type_code")
+    @Column(name = "com_type_code")
     private String comTypeCode;
 
-    @Column(name="organ_name")
+    @Column(name = "organ_name")
     private String organName;
 
-    @Column(name="organ_short_name")
+    @Column(name = "organ_short_name")
     private String organShortName;
 
-    @Column(name="organ_type_code")
+    @Column(name = "organ_type_code")
     private String organTypeCode;
 
-    @Column(name="icb_name")
+    @Column(name = "icb_name")
     private String icbName;
 
-    @Column(name="icb_code")
+    @Column(name = "icb_code")
     private String icbCode;
 
     public Integer getId() {
