@@ -9,5 +9,4 @@ class PlutusApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
