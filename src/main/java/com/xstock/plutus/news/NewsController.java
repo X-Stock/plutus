@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="/api/v1/news")
+@RequestMapping(path = "/api/v1/news")
 public class NewsController {
     @Autowired
     private NewsService newsService;
@@ -14,7 +14,7 @@ public class NewsController {
         return newsService.getNews();
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path = "/add")
     public String addNewNews(@RequestBody News news) {
         return newsService.addNewNews(news);
     }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="/api/v1/profile")
+@RequestMapping(path = "/api/v1/profile")
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
@@ -14,7 +14,7 @@ public class ProfileController {
         return profileService.getProfiles();
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path = "/add")
     public String addNewProfile(@RequestBody Profile profile) {
         return profileService.addNewProfile(profile);
     }

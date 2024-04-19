@@ -3,9 +3,13 @@ package com.xstock.plutus.event;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.OffsetDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "events")
 public class Event {
@@ -32,10 +36,10 @@ public class Event {
     @Column(name = "monthly_price_change_ratio")
     private Float monthlyPriceChangeRatio;
 
-    @Column(name = "event_name", columnDefinition="TEXT")
+    @Column(name = "event_name", columnDefinition = "TEXT")
     private String eventName;
 
-    @Column(name = "event_code", columnDefinition="TEXT")
+    @Column(name = "event_code", columnDefinition = "TEXT")
     private String eventCode;
 
     @Column(name = "notify_date")
@@ -50,129 +54,9 @@ public class Event {
     @Column(name = "ex_rights_date")
     private OffsetDateTime exRightsDate;
 
-    @Column(name = "event_description", columnDefinition="TEXT")
+    @Column(name = "event_description", columnDefinition = "TEXT")
     private String eventDescription;
 
-    @Column(name = "event_note", columnDefinition="TEXT")
+    @Column(name = "event_note", columnDefinition = "TEXT")
     private String eventNote;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getPriceChange() {
-        return priceChange;
-    }
-
-    public void setPriceChange(Integer priceChange) {
-        this.priceChange = priceChange;
-    }
-
-    public Float getPriceChangeRatio() {
-        return priceChangeRatio;
-    }
-
-    public void setPriceChangeRatio(Float priceChangeRatio) {
-        this.priceChangeRatio = priceChangeRatio;
-    }
-
-    public Float getWeeklyPriceChangeRatio() {
-        return weeklyPriceChangeRatio;
-    }
-
-    public void setWeeklyPriceChangeRatio(Float weeklyPriceChangeRatio) {
-        this.weeklyPriceChangeRatio = weeklyPriceChangeRatio;
-    }
-
-    public Float getMonthlyPriceChangeRatio() {
-        return monthlyPriceChangeRatio;
-    }
-
-    public void setMonthlyPriceChangeRatio(Float monthlyPriceChangeRatio) {
-        this.monthlyPriceChangeRatio = monthlyPriceChangeRatio;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getEventCode() {
-        return eventCode;
-    }
-
-    public void setEventCode(String eventCode) {
-        this.eventCode = eventCode;
-    }
-
-    public OffsetDateTime getNotifyDate() {
-        return notifyDate;
-    }
-
-    public void setNotifyDate(OffsetDateTime notifyDate) {
-        this.notifyDate = notifyDate;
-    }
-
-    public OffsetDateTime getExerciseDate() {
-        return exerciseDate;
-    }
-
-    public void setExerciseDate(OffsetDateTime exerciseDate) {
-        this.exerciseDate = exerciseDate;
-    }
-
-    public OffsetDateTime getRegistrationFinalDate() {
-        return registrationFinalDate;
-    }
-
-    public void setRegistrationFinalDate(OffsetDateTime registrationFinalDate) {
-        this.registrationFinalDate = registrationFinalDate;
-    }
-
-    public OffsetDateTime getExRightsDate() {
-        return exRightsDate;
-    }
-
-    public void setExRightsDate(OffsetDateTime exRightsDate) {
-        this.exRightsDate = exRightsDate;
-    }
-
-    public String getEventDescription() {
-        return eventDescription;
-    }
-
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
-    }
-
-    public String getEventNote() {
-        return eventNote;
-    }
-
-    public void setEventNote(String eventNote) {
-        this.eventNote = eventNote;
-    }
 }

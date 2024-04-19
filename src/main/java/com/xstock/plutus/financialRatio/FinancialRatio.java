@@ -3,7 +3,11 @@ package com.xstock.plutus.financialRatio;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "financial_ratio")
 public class FinancialRatio {
@@ -16,30 +20,7 @@ public class FinancialRatio {
     @JsonIgnore
     private Company company;
 
+    @Column(columnDefinition = "TEXT")
     private String data;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String Data) {
-        this.data = Data;
-    }
 }
 

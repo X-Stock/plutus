@@ -2,9 +2,13 @@ package com.xstock.plutus.stockIndex;
 
 import com.xstock.plutus.company.Company;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "stock_indices")
 public class StockIndex {
@@ -15,22 +19,6 @@ public class StockIndex {
     @ManyToMany
     Set<Company> companies;
 
-    @Column(name = "index_name", columnDefinition="TEXT")
+    @Column(name = "index_name", columnDefinition = "TEXT")
     private String indexName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getIndexName() {
-        return indexName;
-    }
-
-    public void setIndexName(String indexName) {
-        this.indexName = indexName;
-    }
 }
