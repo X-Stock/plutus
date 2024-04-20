@@ -1,7 +1,7 @@
 package com.xstock.plutus;
 
-import com.xstock.plutus.company.Company;
-import com.xstock.plutus.company.CompanyRepository;
+import com.xstock.plutus.v1.company.Company;
+import com.xstock.plutus.v1.company.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
