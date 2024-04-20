@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "companies")
+@Table(name = "companies", indexes = @Index(columnList = "ticker", unique = true))
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Company {
     @ManyToMany(mappedBy = "companies")
     Set<StockIndex> stockIndices;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String ticker;
 
     @Column(name = "com_group_code", columnDefinition = "TEXT")
