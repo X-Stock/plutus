@@ -8,12 +8,11 @@ public class LargeShareholderService {
     @Autowired
     private LargeShareholderRepository largeShareholderRepository;
 
-    public Iterable<LargeShareholder> getLargeShareholders() {
+    public Iterable<LargeShareholder> getAll() {
         return largeShareholderRepository.findAll();
     }
 
-    public String addNewLargeShareholders(LargeShareholder largeShareholder) {
-        largeShareholderRepository.save(largeShareholder);
-        return "Saved large shareholders";
+    public Iterable<LargeShareholder> getAllFromTicker(String ticker) {
+        return largeShareholderRepository.findAllByCompany_Ticker(ticker);
     }
 }

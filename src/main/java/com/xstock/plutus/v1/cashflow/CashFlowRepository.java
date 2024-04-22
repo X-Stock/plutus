@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.cashflow;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface CashFlowRepository extends CrudRepository<CashFlow, Integer> {
+public interface CashFlowRepository extends CommonRepository<CashFlow> {
 }

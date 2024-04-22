@@ -8,12 +8,11 @@ public class SubsidiaryService {
     @Autowired
     private SubsidiaryRepository subsidiaryRepository;
 
-    public Iterable<Subsidiary> getSubsidiaries() {
+    public Iterable<Subsidiary> getAll() {
         return subsidiaryRepository.findAll();
     }
 
-    public String addNewSubsidiary(Subsidiary subsidiary) {
-        subsidiaryRepository.save(subsidiary);
-        return "Saved subsidiary";
+    public Iterable<Subsidiary> getAllByTicker(String ticker) {
+        return subsidiaryRepository.findAllByCompany_Ticker(ticker);
     }
 }

@@ -2,20 +2,19 @@ package com.xstock.plutus.v1.cashflow;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 public class CashFlowService {
     @Autowired
     private CashFlowRepository cashFlowRepository;
 
-    public Iterable<CashFlow> getCashFlows() {
+    public Iterable<CashFlow> getAll() {
         return cashFlowRepository.findAll();
     }
 
-    public String addNewCashFlow(@RequestBody CashFlow cashFlow) {
-        cashFlowRepository.save(cashFlow);
-        return "Saved cash flow";
+    public Optional<CashFlow> getByTicker(String ticker) {
+        return cashFlowRepository.findByCompany_Ticker(ticker);
     }
-
 }

@@ -20,6 +20,6 @@ public class IncomeStatement {
     @JsonIgnore
     private Company company;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String data;
 }

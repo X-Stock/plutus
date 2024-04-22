@@ -2,19 +2,19 @@ package com.xstock.plutus.v1.fundamentalRatio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 public class FundamentalRatioService {
     @Autowired
     private FundamentalRatioRepository fundamentalRatioRepository;
 
-    public Iterable<FundamentalRatio> getFundamentalRatios() {
+    public Iterable<FundamentalRatio> getAll() {
         return fundamentalRatioRepository.findAll();
     }
 
-    public String addNewFundamentalRatio(@RequestBody FundamentalRatio fundamentalRatio) {
-        fundamentalRatioRepository.save(fundamentalRatio);
-        return "Saved fundamental ratio";
+    public Optional<FundamentalRatio> getByTicker(String ticker) {
+        return fundamentalRatioRepository.findByCompany_Ticker(ticker);
     }
 }

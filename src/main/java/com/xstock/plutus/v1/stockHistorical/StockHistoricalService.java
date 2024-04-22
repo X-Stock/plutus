@@ -8,12 +8,11 @@ public class StockHistoricalService {
     @Autowired
     private StockHistoricalRepository stockHistoricalRepository;
 
-    public Iterable<StockHistorical> getStockHistorical() {
+    public Iterable<StockHistorical> getAll() {
         return stockHistoricalRepository.findAll();
     }
 
-    public String addNewStockHistorical(StockHistorical stockHistorical) {
-        stockHistoricalRepository.save(stockHistorical);
-        return "Saved stock historical data";
+    public Iterable<StockHistorical> getAllByTicker(String ticker) {
+        return stockHistoricalRepository.findAllByCompany_Ticker(ticker);
     }
 }

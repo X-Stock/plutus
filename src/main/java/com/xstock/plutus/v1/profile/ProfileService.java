@@ -3,17 +3,18 @@ package com.xstock.plutus.v1.profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    public Iterable<Profile> getProfiles() {
+    public Iterable<Profile> getAll() {
         return profileRepository.findAll();
     }
 
-    public String addNewProfile(Profile profile) {
-        profileRepository.save(profile);
-        return "Saved profile";
+    public Optional<Profile> getByTicker(String ticker) {
+        return profileRepository.findByCompany_Ticker(ticker);
     }
 }

@@ -2,21 +2,19 @@ package com.xstock.plutus.v1.stockHistorical;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/v1/stockHistorical")
+@RequestMapping(path = "/api/v1/companies/{ticker}")
 public class StockHistoricalController {
     @Autowired
     private StockHistoricalService stockHistoricalService;
 
-    @GetMapping
-    public @ResponseBody Iterable<StockHistorical> getStockHistorical() {
-        return stockHistoricalService.getStockHistorical();
-    }
-
-    @PostMapping(path = "/add")
-    public String addNewStockHistorical(@RequestBody StockHistorical stockHistorical) {
-        return stockHistoricalService.addNewStockHistorical(stockHistorical);
+    @GetMapping(path = "/stockHistorical")
+    public Iterable<StockHistorical> getAllByTicker(@PathVariable String ticker) {
+        return stockHistoricalService.getAllByTicker(ticker);
     }
 }
