@@ -8,12 +8,11 @@ public class OfficerService {
     @Autowired
     private OfficerRepository officerRepository;
 
-    public Iterable<Officer> getOfficers() {
+    public Iterable<Officer> getAll() {
         return officerRepository.findAll();
     }
 
-    public String addNewOfficer(Officer officer) {
-        officerRepository.save(officer);
-        return "Saved officer";
+    public Iterable<Officer> getAllByTicker(String ticker) {
+        return officerRepository.findAllByCompany_Ticker(ticker);
     }
 }

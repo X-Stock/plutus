@@ -2,20 +2,20 @@ package com.xstock.plutus.v1.financialRatio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 public class FinancialRatioService {
     @Autowired
     private FinancialRatioRepository financialRatioRepository;
 
-    public Iterable<FinancialRatio> getFinancialRatios() {
+    public Iterable<FinancialRatio> getAll() {
         return financialRatioRepository.findAll();
     }
 
-    public String addNewFinancialRatio(@RequestBody FinancialRatio financialRatio) {
-        financialRatioRepository.save(financialRatio);
-        return "Saved financial ratio";
+    public Optional<FinancialRatio> getByTicker(String ticker) {
+        return financialRatioRepository.findByCompany_Ticker(ticker);
     }
 
 }

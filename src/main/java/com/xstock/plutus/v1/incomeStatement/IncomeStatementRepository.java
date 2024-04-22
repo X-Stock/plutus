@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.incomeStatement;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface IncomeStatementRepository extends CrudRepository<IncomeStatement, Integer> {
+public interface IncomeStatementRepository extends CommonRepository<IncomeStatement> {
 }

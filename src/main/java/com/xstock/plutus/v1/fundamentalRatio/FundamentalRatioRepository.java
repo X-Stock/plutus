@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.fundamentalRatio;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface FundamentalRatioRepository extends CrudRepository<FundamentalRatio, Integer> {
+public interface FundamentalRatioRepository extends CommonRepository<FundamentalRatio> {
 }

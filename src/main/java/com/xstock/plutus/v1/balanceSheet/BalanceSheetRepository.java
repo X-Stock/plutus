@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.balanceSheet;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface BalanceSheetRepository extends CrudRepository<BalanceSheet, Integer> {
+public interface BalanceSheetRepository extends CommonRepository<BalanceSheet> {
 }

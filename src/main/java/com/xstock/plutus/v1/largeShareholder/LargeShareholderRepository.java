@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.largeShareholder;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface LargeShareholderRepository extends CrudRepository<LargeShareholder, Integer> {
+public interface LargeShareholderRepository extends CommonRepository<LargeShareholder> {
 }

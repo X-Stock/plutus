@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.financialRatio;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface FinancialRatioRepository extends CrudRepository<FinancialRatio, Integer> {
+public interface FinancialRatioRepository extends CommonRepository<FinancialRatio> {
 }

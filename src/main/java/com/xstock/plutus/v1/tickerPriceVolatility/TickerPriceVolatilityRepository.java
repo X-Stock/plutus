@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.tickerPriceVolatility;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface TickerPriceVolatilityRepository extends CrudRepository<TickerPriceVolatility, Integer> {
+public interface TickerPriceVolatilityRepository extends CommonRepository<TickerPriceVolatility> {
 }

@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface SubsidiaryRepository extends CrudRepository<Subsidiary, Integer> {
+public interface SubsidiaryRepository extends CommonRepository<Subsidiary> {
 }

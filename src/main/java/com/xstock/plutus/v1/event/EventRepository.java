@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.event;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface EventRepository extends CrudRepository<Event, Integer> {
+public interface EventRepository extends CommonRepository<Event> {
 }

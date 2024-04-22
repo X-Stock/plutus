@@ -8,12 +8,11 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Iterable<Event> getEvents() {
+    public Iterable<Event> getAll() {
         return eventRepository.findAll();
     }
 
-    public String addNewEvent(Event event) {
-        eventRepository.save(event);
-        return "Saved event";
+    public Iterable<Event> getAllByTicker(String ticker) {
+        return eventRepository.findAllByCompany_Ticker(ticker);
     }
 }

@@ -2,19 +2,17 @@ package com.xstock.plutus.v1.insiderDeal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class InsiderDealService {
     @Autowired
     private InsiderDealRepository insiderDealRepository;
 
-    public Iterable<InsiderDeal> getInsiderDeals() {
+    public Iterable<InsiderDeal> getAll() {
         return insiderDealRepository.findAll();
     }
 
-    public String addNewInsiderDeal(@RequestBody InsiderDeal insiderDeal) {
-        insiderDealRepository.save(insiderDeal);
-        return "Saved insider deal";
+    public Iterable<InsiderDeal> getAllByTicker(String ticker) {
+        return insiderDealRepository.findAllByCompany_Ticker(ticker);
     }
 }

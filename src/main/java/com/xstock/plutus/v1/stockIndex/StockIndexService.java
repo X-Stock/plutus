@@ -8,12 +8,11 @@ public class StockIndexService {
     @Autowired
     private StockIndexRepository stockIndexRepository;
 
-    public Iterable<StockIndex> getStockIndices() {
+    public Iterable<StockIndex> getAll() {
         return stockIndexRepository.findAll();
     }
 
-    public String addNewStockIndex(StockIndex stockIndex) {
-        stockIndexRepository.save(stockIndex);
-        return "Saved stock index";
+    public Iterable<StockIndex> getAllByTicker(String ticker) {
+        return stockIndexRepository.findAllByCompanies_Ticker(ticker);
     }
 }

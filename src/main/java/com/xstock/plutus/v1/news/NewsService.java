@@ -8,12 +8,11 @@ public class NewsService {
     @Autowired
     private NewsRepository newsRepository;
 
-    public Iterable<News> getNews() {
+    public Iterable<News> getAll() {
         return newsRepository.findAll();
     }
 
-    public String addNewNews(News news) {
-        newsRepository.save(news);
-        return "Saved news";
+    public Iterable<News> getAllByTicker(String ticker) {
+        return newsRepository.findAllByCompany_Ticker(ticker);
     }
 }

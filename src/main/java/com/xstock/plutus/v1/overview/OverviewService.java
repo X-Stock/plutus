@@ -3,17 +3,18 @@ package com.xstock.plutus.v1.overview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class OverviewService {
     @Autowired
     private OverviewRepository overviewRepository;
 
-    public Iterable<Overview> getOverviews() {
+    public Iterable<Overview> getAll() {
         return overviewRepository.findAll();
     }
 
-    public String addNewOverview(Overview overview) {
-        overviewRepository.save(overview);
-        return "Saved overview data";
+    public Optional<Overview> getByTicker(String ticker) {
+        return overviewRepository.findByCompany_Ticker(ticker);
     }
 }

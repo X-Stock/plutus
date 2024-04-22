@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.officer;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface OfficerRepository extends CrudRepository<Officer, Integer> {
+public interface OfficerRepository extends CommonRepository<Officer> {
 }

@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.news;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.CommonRepository;
 
-public interface NewsRepository extends CrudRepository<News, Integer> {
+public interface NewsRepository extends CommonRepository<News> {
 }
