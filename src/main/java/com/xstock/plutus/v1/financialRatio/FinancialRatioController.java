@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.financialRatio;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,10 @@ public class FinancialRatioController {
 
     @GetMapping(path = "/financialRatio")
     public Optional<FinancialRatio> getByTicker(@PathVariable String ticker) {
-        return financialRatioService.getByTicker(ticker);
+        Optional<FinancialRatio> financialRatio = financialRatioService.getByTicker(ticker);
+        if (!financialRatio.isPresent()) {
+            throw new ApiRequestException("Failed to retrieve financial ratios for ticker: " + ticker);
+        }
+        return financialRatio;
     }
 }

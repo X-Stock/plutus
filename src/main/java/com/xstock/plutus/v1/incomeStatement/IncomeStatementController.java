@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.incomeStatement;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,10 @@ public class IncomeStatementController {
 
     @GetMapping(path = "/incomeStatement")
     public Optional<IncomeStatement> getByTicker(@PathVariable String ticker) {
-        return incomeStatementService.getByTicker(ticker);
+        Optional<IncomeStatement> incomeStatement = incomeStatementService.getByTicker(ticker);
+        if (!incomeStatement.isPresent()) {
+            throw new ApiRequestException("Failed to retrieve income statement for ticker: " + ticker);
+        }
+        return incomeStatement;
     }
 }

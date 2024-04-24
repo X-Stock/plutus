@@ -1,6 +1,7 @@
 package com.xstock.plutus.v1.stockIntraday;
 
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,10 @@ public class StockIntradayController {
 
     @PostMapping(path = "/add")
     public String addNewStockIntraday(@RequestBody StockIntraday stockIntraday) {
-        return stockIntradayService.addNewStockIntraday(stockIntraday);
+        String result = stockIntradayService.addNewStockIntraday(stockIntraday);
+        if (result == null) {
+            throw new ApiRequestException("Failed to add new stock intraday data.");
+        }
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,10 @@ public class SubsidiaryController {
 
     @GetMapping(path = "/subsidiaries")
     public Iterable<Subsidiary> getAllByTicker(@PathVariable String ticker) {
-        return subsidiaryService.getAllByTicker(ticker);
+        Iterable<Subsidiary> subsidiaries = subsidiaryService.getAllByTicker(ticker);
+        if (subsidiaries == null) {
+            throw new ApiRequestException("Failed to retrieve subsidiaries for ticker: " + ticker);
+        }
+        return subsidiaries;
     }
 }

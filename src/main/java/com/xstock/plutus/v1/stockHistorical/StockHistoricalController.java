@@ -1,6 +1,7 @@
 package com.xstock.plutus.v1.stockHistorical;
 
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,10 @@ public class StockHistoricalController {
 
     @GetMapping(path = "/stockHistorical")
     public Iterable<StockHistorical> getAllByTicker(@PathVariable String ticker) {
-        return stockHistoricalService.getAllByTicker(ticker);
+        Iterable<StockHistorical> stockHistorical = stockHistoricalService.getAllByTicker(ticker);
+        if (stockHistorical == null) {
+            throw new ApiRequestException("Failed to retrieve stock historical data for ticker: " + ticker);
+        }
+        return stockHistorical;
     }
 }

@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.event;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,10 @@ public class EventController {
 
     @GetMapping(path = "/events")
     public Iterable<Event> getByTicker(@PathVariable String ticker) {
-        return eventService.getAllByTicker(ticker);
+        Iterable<Event> events = eventService.getAllByTicker(ticker);
+        if (events == null) {
+            throw new ApiRequestException("Failed to retrieve events for ticker: " + ticker);
+        }
+        return events;
     }
 }

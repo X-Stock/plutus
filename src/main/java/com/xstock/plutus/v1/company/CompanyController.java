@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.company;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,11 @@ public class CompanyController {
 
     @GetMapping
     public Iterable<Company> getAll() {
-        return companyService.getAll();
+        Iterable<Company> companies = companyService.getAll();
+        if (companies == null) {
+            throw new ApiRequestException("Failed to retrieve companies from the database");
+        }
+        return companies;
     }
 
     @GetMapping("/{ticker}")

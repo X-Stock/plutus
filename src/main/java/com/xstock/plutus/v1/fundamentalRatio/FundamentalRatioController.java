@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.fundamentalRatio;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,10 @@ public class FundamentalRatioController {
 
     @GetMapping(path = "/fundamentalRatio")
     public Optional<FundamentalRatio> getByTicker(@PathVariable String ticker) {
-        return fundamentalRatioService.getByTicker(ticker);
+        Optional<FundamentalRatio> fundamentalRatio = fundamentalRatioService.getByTicker(ticker);
+        if (!fundamentalRatio.isPresent()) {
+            throw new ApiRequestException("Failed to retrieve fundamental ratios for ticker: " + ticker);
+        }
+        return fundamentalRatio;
     }
 }

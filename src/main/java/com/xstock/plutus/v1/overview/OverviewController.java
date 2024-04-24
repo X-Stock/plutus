@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.overview;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,10 @@ public class OverviewController {
 
     @GetMapping(path = "/overview")
     public Optional<Overview> getByTicker(@PathVariable String ticker) {
-        return overviewService.getByTicker(ticker);
+        Optional<Overview> overview = overviewService.getByTicker(ticker);
+        if (!overview.isPresent()) {
+            throw new ApiRequestException("Failed to retrieve overview for ticker: " + ticker);
+        }
+        return overview;
     }
 }
