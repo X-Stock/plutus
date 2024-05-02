@@ -1,18 +1,21 @@
 package com.xstock.plutus.v1.subsidiary;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
-public class SubsidiaryService {
-    @Autowired
-    private SubsidiaryRepository subsidiaryRepository;
+public class SubsidiaryService implements MultiResponseService<Subsidiary> {
+    private final SubsidiaryRepository subsidiaryRepository;
 
-    public Iterable<Subsidiary> getAll() {
-        return subsidiaryRepository.findAll();
+    @Override
+    public final Iterable<Subsidiary> getAllByTicker(String ticker) {
+        return subsidiaryRepository.findAllByCompany_Ticker(ticker);
     }
 
-    public Iterable<Subsidiary> getAllByTicker(String ticker) {
-        return subsidiaryRepository.findAllByCompany_Ticker(ticker);
+    @Override
+    public final Iterable<Subsidiary> getAll() {
+        return subsidiaryRepository.findAll();
     }
 }

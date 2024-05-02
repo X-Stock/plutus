@@ -1,18 +1,21 @@
 package com.xstock.plutus.v1.stockHistorical;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
-public class StockHistoricalService {
-    @Autowired
-    private StockHistoricalRepository stockHistoricalRepository;
+public class StockHistoricalService implements MultiResponseService<StockHistorical> {
+    private final StockHistoricalRepository stockHistoricalRepository;
 
-    public Iterable<StockHistorical> getAll() {
-        return stockHistoricalRepository.findAll();
-    }
-
+    @Override
     public Iterable<StockHistorical> getAllByTicker(String ticker) {
         return stockHistoricalRepository.findAllByCompany_Ticker(ticker);
+    }
+
+    @Override
+    public Iterable<StockHistorical> getAll() {
+        return stockHistoricalRepository.findAll();
     }
 }

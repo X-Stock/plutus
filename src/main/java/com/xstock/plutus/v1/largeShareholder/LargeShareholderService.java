@@ -1,18 +1,21 @@
 package com.xstock.plutus.v1.largeShareholder;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
-public class LargeShareholderService {
-    @Autowired
-    private LargeShareholderRepository largeShareholderRepository;
+public class LargeShareholderService implements MultiResponseService<LargeShareholder> {
+    private final LargeShareholderRepository largeShareholderRepository;
 
-    public Iterable<LargeShareholder> getAll() {
-        return largeShareholderRepository.findAll();
+    @Override
+    public Iterable<LargeShareholder> getAllByTicker(String ticker) {
+        return largeShareholderRepository.findAllByCompany_Ticker(ticker);
     }
 
-    public Iterable<LargeShareholder> getAllFromTicker(String ticker) {
-        return largeShareholderRepository.findAllByCompany_Ticker(ticker);
+    @Override
+    public Iterable<LargeShareholder> getAll() {
+        return largeShareholderRepository.findAll();
     }
 }

@@ -1,20 +1,24 @@
 package com.xstock.plutus.v1.tickerPriceVolatility;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class TickerPriceVolatilityService {
-    @Autowired
-    private TickerPriceVolatilityRepository tickerPriceVolatilityRepository;
+public class TickerPriceVolatilityService implements SingleResponseService<TickerPriceVolatility> {
+    private final TickerPriceVolatilityRepository tickerPriceVolatilityRepository;
 
-    public Iterable<TickerPriceVolatility> getAll() {
-        return tickerPriceVolatilityRepository.findAll();
+    @Override
+    public TickerPriceVolatility getByTicker(String ticker) {
+        Optional<TickerPriceVolatility> tickerPriceVolatility = tickerPriceVolatilityRepository.findByCompany_Ticker(ticker);
+        return tickerPriceVolatility.orElseThrow();
     }
 
-    public Optional<TickerPriceVolatility> getByTicker(String ticker) {
-        return tickerPriceVolatilityRepository.findByCompany_Ticker(ticker);
+    @Override
+    public Iterable<TickerPriceVolatility> getAll() {
+        return tickerPriceVolatilityRepository.findAll();
     }
 }

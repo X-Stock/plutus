@@ -1,20 +1,24 @@
 package com.xstock.plutus.v1.overview;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class OverviewService {
-    @Autowired
-    private OverviewRepository overviewRepository;
+public class OverviewService implements SingleResponseService<Overview> {
+    private final OverviewRepository overviewRepository;
 
-    public Iterable<Overview> getAll() {
-        return overviewRepository.findAll();
+    @Override
+    public Overview getByTicker(String ticker) {
+        Optional<Overview> overview = overviewRepository.findByCompany_Ticker(ticker);
+        return overview.orElseThrow();
     }
 
-    public Optional<Overview> getByTicker(String ticker) {
-        return overviewRepository.findByCompany_Ticker(ticker);
+    @Override
+    public Iterable<Overview> getAll() {
+        return overviewRepository.findAll();
     }
 }

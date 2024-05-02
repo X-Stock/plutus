@@ -1,26 +1,26 @@
 package com.xstock.plutus.v1.company;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.controller.SingleResponseController;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/companies")
-public class CompanyController {
-    @Autowired
-    private CompanyService companyService;
+public class CompanyController implements SingleResponseController<Company> {
+    private final CompanyService companyService;
+
+    @Override
+    @GetMapping("/{ticker}")
+    public Company getByTicker(@PathVariable String ticker) {
+        return companyService.getByTicker(ticker);
+    }
 
     @GetMapping
     public Iterable<Company> getAll() {
         return companyService.getAll();
-    }
-
-    @GetMapping("/{ticker}")
-    public Optional<Company> getByTicker(@PathVariable String ticker) {
-        return companyService.getByTicker(ticker);
     }
 }

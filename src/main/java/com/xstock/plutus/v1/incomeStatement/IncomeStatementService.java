@@ -1,21 +1,24 @@
 package com.xstock.plutus.v1.incomeStatement;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
+public class IncomeStatementService implements SingleResponseService<IncomeStatement> {
+    private final IncomeStatementRepository incomeStatementRepository;
 
-public class IncomeStatementService {
-    @Autowired
-    private IncomeStatementRepository incomeStatementRepository;
-
-    public Iterable<IncomeStatement> getAll() {
-        return incomeStatementRepository.findAll();
+    @Override
+    public IncomeStatement getByTicker(String ticker) {
+        Optional<IncomeStatement> incomeStatement = incomeStatementRepository.findByCompany_Ticker(ticker);
+        return incomeStatement.orElseThrow();
     }
 
-    public Optional<IncomeStatement> getByTicker(String ticker) {
-        return incomeStatementRepository.findByCompany_Ticker(ticker);
+    @Override
+    public Iterable<IncomeStatement> getAll() {
+        return incomeStatementRepository.findAll();
     }
 }

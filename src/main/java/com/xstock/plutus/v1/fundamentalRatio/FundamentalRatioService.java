@@ -1,20 +1,24 @@
 package com.xstock.plutus.v1.fundamentalRatio;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class FundamentalRatioService {
-    @Autowired
-    private FundamentalRatioRepository fundamentalRatioRepository;
+public class FundamentalRatioService implements SingleResponseService<FundamentalRatio> {
+    private final FundamentalRatioRepository fundamentalRatioRepository;
 
-    public Iterable<FundamentalRatio> getAll() {
-        return fundamentalRatioRepository.findAll();
+    @Override
+    public FundamentalRatio getByTicker(String ticker) {
+        Optional<FundamentalRatio> fundamentalRatio = fundamentalRatioRepository.findByCompany_Ticker(ticker);
+        return fundamentalRatio.orElseThrow();
     }
 
-    public Optional<FundamentalRatio> getByTicker(String ticker) {
-        return fundamentalRatioRepository.findByCompany_Ticker(ticker);
+    @Override
+    public Iterable<FundamentalRatio> getAll() {
+        return fundamentalRatioRepository.findAll();
     }
 }

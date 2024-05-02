@@ -1,20 +1,24 @@
 package com.xstock.plutus.v1.profile;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class ProfileService {
-    @Autowired
-    private ProfileRepository profileRepository;
+public class ProfileService implements SingleResponseService<Profile> {
+    private final ProfileRepository profileRepository;
 
-    public Iterable<Profile> getAll() {
-        return profileRepository.findAll();
+    @Override
+    public Profile getByTicker(String ticker) {
+        Optional<Profile> profile = profileRepository.findByCompany_Ticker(ticker);
+        return profile.orElseThrow();
     }
 
-    public Optional<Profile> getByTicker(String ticker) {
-        return profileRepository.findByCompany_Ticker(ticker);
+    @Override
+    public Iterable<Profile> getAll() {
+        return profileRepository.findAll();
     }
 }

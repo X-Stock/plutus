@@ -1,20 +1,24 @@
 package com.xstock.plutus.v1.cashflow;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class CashFlowService {
-    @Autowired
-    private CashFlowRepository cashFlowRepository;
+public class CashFlowService implements SingleResponseService<CashFlow> {
+    private final CashFlowRepository cashFlowRepository;
 
-    public Iterable<CashFlow> getAll() {
-        return cashFlowRepository.findAll();
+    @Override
+    public CashFlow getByTicker(String ticker) {
+        Optional<CashFlow> cashFlow = cashFlowRepository.findByCompany_Ticker(ticker);
+        return cashFlow.orElseThrow();
     }
 
-    public Optional<CashFlow> getByTicker(String ticker) {
-        return cashFlowRepository.findByCompany_Ticker(ticker);
+    @Override
+    public Iterable<CashFlow> getAll() {
+        return cashFlowRepository.findAll();
     }
 }

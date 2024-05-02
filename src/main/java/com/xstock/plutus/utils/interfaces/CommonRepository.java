@@ -1,4 +1,4 @@
-package com.xstock.plutus.utils;
+package com.xstock.plutus.utils.interfaces;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;

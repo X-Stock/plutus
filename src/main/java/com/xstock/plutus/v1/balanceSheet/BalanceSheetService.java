@@ -1,20 +1,24 @@
 package com.xstock.plutus.v1.balanceSheet;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class BalanceSheetService {
-    @Autowired
-    private BalanceSheetRepository balanceSheetRepository;
+public class BalanceSheetService implements SingleResponseService<BalanceSheet> {
+    private final BalanceSheetRepository balanceSheetRepository;
 
+    @Override
     public Iterable<BalanceSheet> getAll() {
         return balanceSheetRepository.findAll();
     }
 
-    public Optional<BalanceSheet> getByTicker(String ticker) {
-        return balanceSheetRepository.findByCompany_Ticker(ticker);
+    @Override
+    public BalanceSheet getByTicker(String ticker) {
+        Optional<BalanceSheet> balanceSheet = balanceSheetRepository.findByCompany_Ticker(ticker);
+        return balanceSheet.orElseThrow();
     }
 }
