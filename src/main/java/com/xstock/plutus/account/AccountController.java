@@ -1,5 +1,6 @@
 package com.xstock.plutus.account;
 
+import com.xstock.plutus.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,11 @@ public class AccountController {
 
     @PostMapping
     public Account createAccount(@RequestBody Account account) {
-        return accountService.createAccount(account);
+        Account createdAccount = accountService.createAccount(account);
+        if (createdAccount == null) {
+            throw new ApiRequestException("Failed to create account.");
+        }
+        return createdAccount;
     }
 
     @GetMapping
@@ -23,12 +28,20 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public Account getAccountById(@PathVariable Long id) {
-        return accountService.getAccountById(id);
+        Account account = accountService.getAccountById(id);
+        if (account == null) {
+            throw new ApiRequestException("Account not found with ID: " + id);
+        }
+        return account;
     }
 
     @PutMapping("/{id}")
     public Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
-        return accountService.updateAccount(id, account);
+        Account updatedAccount = accountService.updateAccount(id, account);
+        if (updatedAccount == null) {
+            throw new ApiRequestException("Failed to update account with ID: " + id);
+        }
+        return updatedAccount;
     }
 
     @DeleteMapping("/{id}")
