@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.financialRatio;
 
+import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,15 @@ public class FinancialRatioService implements SingleResponseService<FinancialRat
     @Override
     public FinancialRatio getByTicker(String ticker) {
         Optional<FinancialRatio> financialRatio = financialRatioRepository.findByCompany_Ticker(ticker);
-        return financialRatio.orElseThrow();
+        return financialRatio.orElseThrow(() -> new EntityNotFoundException("financial ratio by " + ticker));
     }
 
     @Override
     public Iterable<FinancialRatio> getAll() {
-        return financialRatioRepository.findAll();
+        Iterable<FinancialRatio> financialRatios = financialRatioRepository.findAll();
+        if (!financialRatios.iterator().hasNext()) {
+            throw new EntityNotFoundException("all financial ratios");
+        }
+        return financialRatios;
     }
 }

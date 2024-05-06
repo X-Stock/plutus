@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.insiderDeal;
 
+import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,19 @@ public class InsiderDealService implements MultiResponseService<InsiderDeal> {
 
     @Override
     public Iterable<InsiderDeal> getAllByTicker(String ticker) {
-        return insiderDealRepository.findAllByCompany_Ticker(ticker);
+        Iterable<InsiderDeal> insiderDeals = insiderDealRepository.findAllByCompany_Ticker(ticker);
+        if (!insiderDeals.iterator().hasNext()) {
+            throw new EntityNotFoundException("insider deals by " + ticker);
+        }
+        return insiderDeals;
     }
 
     @Override
     public Iterable<InsiderDeal> getAll() {
-        return insiderDealRepository.findAll();
+        Iterable<InsiderDeal> insiderDeals = insiderDealRepository.findAll();
+        if (!insiderDeals.iterator().hasNext()) {
+            throw new EntityNotFoundException("all insider deals");
+        }
+        return insiderDeals;
     }
 }

@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
+import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,19 @@ public class SubsidiaryService implements MultiResponseService<Subsidiary> {
 
     @Override
     public final Iterable<Subsidiary> getAllByTicker(String ticker) {
-        return subsidiaryRepository.findAllByCompany_Ticker(ticker);
+        Iterable<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompany_Ticker(ticker);
+        if (!subsidiaries.iterator().hasNext()) {
+            throw new EntityNotFoundException("subsidiaries by " + ticker);
+        }
+        return subsidiaries;
     }
 
     @Override
     public final Iterable<Subsidiary> getAll() {
-        return subsidiaryRepository.findAll();
+        Iterable<Subsidiary> subsidiaries = subsidiaryRepository.findAll();
+        if (!subsidiaries.iterator().hasNext()) {
+            throw new EntityNotFoundException("all subsidiaries");
+        }
+        return subsidiaries;
     }
 }

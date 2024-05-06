@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.stockIntraday;
 
+import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,20 @@ public class StockIntradayService implements MultiResponseService<StockIntraday>
 
     @Override
     public Iterable<StockIntraday> getAllByTicker(String ticker) {
-        return stockIntradayRepository.findAllByCompany_Ticker(ticker);
+        Iterable<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker);
+        if (!stockIntradays.iterator().hasNext()) {
+            throw new EntityNotFoundException("intraday by " + ticker);
+        }
+        return stockIntradays;
     }
 
     @Override
     public Iterable<StockIntraday> getAll() {
-        return stockIntradayRepository.findAll();
+        Iterable<StockIntraday> stockIntradays = stockIntradayRepository.findAll();
+        if (!stockIntradays.iterator().hasNext()) {
+            throw new EntityNotFoundException("all intraday");
+        }
+        return stockIntradays;
     }
 
     public void getIntraday(SseEmitter emitter, String ticker) {

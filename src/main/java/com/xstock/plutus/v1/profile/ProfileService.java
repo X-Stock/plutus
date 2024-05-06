@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.profile;
 
+import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,15 @@ public class ProfileService implements SingleResponseService<Profile> {
     @Override
     public Profile getByTicker(String ticker) {
         Optional<Profile> profile = profileRepository.findByCompany_Ticker(ticker);
-        return profile.orElseThrow();
+        return profile.orElseThrow(() -> new EntityNotFoundException("profile by " + ticker));
     }
 
     @Override
     public Iterable<Profile> getAll() {
-        return profileRepository.findAll();
+        Iterable<Profile> profiles = profileRepository.findAll();
+        if (!profiles.iterator().hasNext()) {
+            throw new EntityNotFoundException("all profiles");
+        }
+        return profiles;
     }
 }

@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.largeShareholder;
 
+import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,19 @@ public class LargeShareholderService implements MultiResponseService<LargeShareh
 
     @Override
     public Iterable<LargeShareholder> getAllByTicker(String ticker) {
-        return largeShareholderRepository.findAllByCompany_Ticker(ticker);
+        Iterable<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompany_Ticker(ticker);
+        if (!largeShareholders.iterator().hasNext()) {
+            throw new EntityNotFoundException("large shareholders by " + ticker);
+        }
+        return largeShareholders;
     }
 
     @Override
     public Iterable<LargeShareholder> getAll() {
-        return largeShareholderRepository.findAll();
+        Iterable<LargeShareholder> largeShareholders = largeShareholderRepository.findAll();
+        if (!largeShareholders.iterator().hasNext()) {
+            throw new EntityNotFoundException("all large shareholders");
+        }
+        return largeShareholders;
     }
 }
