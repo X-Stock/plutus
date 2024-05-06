@@ -1,22 +1,22 @@
 package com.xstock.plutus.v1.stockIntraday;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-@RequestMapping(path = "/api/v1/stockIntraday")
+@RequiredArgsConstructor
+@Controller
+@RequestMapping(path = "/api/v1/companies/{ticker}")
 public class StockIntradayController {
-    @Autowired
-    private StockIntradayService stockIntradayService;
+    private final StockIntradayService stockIntradayService;
 
-    @GetMapping
-    public Iterable<StockIntraday> getStockIntraday() {
-        return stockIntradayService.getStockIntraday();
-    }
-
-    @PostMapping(path = "/add")
-    public String addNewStockIntraday(@RequestBody StockIntraday stockIntraday) {
-        return stockIntradayService.addNewStockIntraday(stockIntraday);
+    @GetMapping("/stockIntraday")
+    public SseEmitter getAllByTicker(@PathVariable String ticker) {
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        stockIntradayService.getIntraday(emitter, ticker);
+        return emitter;
     }
 }

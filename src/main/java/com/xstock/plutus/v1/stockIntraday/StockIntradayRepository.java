@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockIntraday;
 
-import org.springframework.data.repository.CrudRepository;
+import com.xstock.plutus.utils.interfaces.CommonRepository;
 
-public interface StockIntradayRepository extends CrudRepository<StockIntraday, Integer> {
+public interface StockIntradayRepository extends CommonRepository<StockIntraday> {
 }

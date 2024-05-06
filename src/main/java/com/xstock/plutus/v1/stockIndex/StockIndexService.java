@@ -11,7 +11,7 @@ public class StockIndexService implements MultiResponseService<StockIndex> {
 
     @Override
     public Iterable<StockIndex> getAllByTicker(String ticker) {
-        return stockIndexRepository.findAllByCompany_Ticker(ticker);
+        return stockIndexRepository.findAllByCompanies_Ticker(ticker);
     }
 
     @Override
