@@ -3,19 +3,20 @@ package com.xstock.plutus.v1.stockIntraday;
 import com.xstock.plutus.exception.EntityNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.time.Instant;
 
 @RequiredArgsConstructor
 @Service
 public class StockIntradayService implements MultiResponseService<StockIntraday> {
     private final StockIntradayRepository stockIntradayRepository;
-    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final TaskScheduler taskScheduler = new SimpleAsyncTaskScheduler();
 
     @Override
     public Iterable<StockIntraday> getAllByTicker(String ticker) {
@@ -36,12 +37,14 @@ public class StockIntradayService implements MultiResponseService<StockIntraday>
     }
 
     public void getIntraday(SseEmitter emitter, String ticker) {
-        executorService.scheduleAtFixedRate(() -> {
+        var scheduledFuture = taskScheduler.scheduleAtFixedRate(() -> {
             try {
                 emitter.send(getAllByTicker(ticker));
             } catch (IOException e) {
                 emitter.complete();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, Instant.now(), Duration.ofSeconds(1));
+
+        emitter.onCompletion(() -> scheduledFuture.cancel(true));
     }
 }
