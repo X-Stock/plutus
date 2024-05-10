@@ -15,8 +15,6 @@ public class StockIntradayController {
 
     @GetMapping("/stockIntraday")
     public SseEmitter getAllByTicker(@PathVariable String ticker) {
-        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
-        stockIntradayService.getIntraday(emitter, ticker);
-        return emitter;
+        return stockIntradayService.getIntraday(ticker);
     }
 }

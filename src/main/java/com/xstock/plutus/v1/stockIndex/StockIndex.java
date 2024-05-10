@@ -4,6 +4,7 @@ import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.Set;
 
 @Getter

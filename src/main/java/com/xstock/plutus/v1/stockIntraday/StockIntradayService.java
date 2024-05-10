@@ -36,15 +36,17 @@ public class StockIntradayService implements MultiResponseService<StockIntraday>
         return stockIntradays;
     }
 
-    public void getIntraday(SseEmitter emitter, String ticker) {
+    public SseEmitter getIntraday(String ticker) {
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        var intraday = getAllByTicker(ticker);
         var scheduledFuture = taskScheduler.scheduleAtFixedRate(() -> {
             try {
-                emitter.send(getAllByTicker(ticker));
+                emitter.send(intraday);
             } catch (IOException e) {
                 emitter.complete();
             }
         }, Instant.now(), Duration.ofSeconds(1));
-
         emitter.onCompletion(() -> scheduledFuture.cancel(true));
+        return emitter;
     }
 }

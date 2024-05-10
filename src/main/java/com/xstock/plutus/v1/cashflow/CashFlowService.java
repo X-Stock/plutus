@@ -22,7 +22,7 @@ public class CashFlowService implements SingleResponseService<CashFlow> {
     public Iterable<CashFlow> getAll() {
         Iterable<CashFlow> cashFlows = cashFlowRepository.findAll();
         if (!cashFlows.iterator().hasNext()) {
-            throw new EntityNotFoundException("all cash flows" );
+            throw new EntityNotFoundException("all cash flows");
         }
         return cashFlows;
     }
