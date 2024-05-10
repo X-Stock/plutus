@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockHistorical;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class StockHistoricalService implements MultiResponseService<StockHistori
     public Iterable<StockHistorical> getAllByTicker(String ticker) {
         Iterable<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompany_Ticker(ticker);
         if (!stockHistorical.iterator().hasNext()) {
-            throw new EntityNotFoundException("stock historical by " + ticker);
+            throw new ResourceNotFoundException("stock historical by " + ticker);
         }
         return stockHistorical;
     }
@@ -23,7 +23,7 @@ public class StockHistoricalService implements MultiResponseService<StockHistori
     public Iterable<StockHistorical> getAll() {
         Iterable<StockHistorical> stockHistorical = stockHistoricalRepository.findAll();
         if (!stockHistorical.iterator().hasNext()) {
-            throw new EntityNotFoundException("all stock historical");
+            throw new ResourceNotFoundException("all stock historical");
         }
         return stockHistorical;
     }

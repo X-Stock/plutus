@@ -1,6 +1,6 @@
 package com.xstock.plutus.account;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class AccountController {
     public Account createAccount(@RequestBody Account account) {
         Account createdAccount = accountService.createAccount(account);
         if (createdAccount == null) {
-            throw new EntityNotFoundException("Failed to create account.");
+            throw new ResourceNotFoundException("Failed to create account.");
         }
         return createdAccount;
     }
@@ -30,7 +30,7 @@ public class AccountController {
     public Account getAccountById(@PathVariable Long id) {
         Account account = accountService.getAccountById(id);
         if (account == null) {
-            throw new EntityNotFoundException("Account not found with ID: " + id);
+            throw new ResourceNotFoundException("Account not found with ID: " + id);
         }
         return account;
     }
@@ -39,7 +39,7 @@ public class AccountController {
     public Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
         Account updatedAccount = accountService.updateAccount(id, account);
         if (updatedAccount == null) {
-            throw new EntityNotFoundException("Failed to update account with ID: " + id);
+            throw new ResourceNotFoundException("Failed to update account with ID: " + id);
         }
         return updatedAccount;
     }

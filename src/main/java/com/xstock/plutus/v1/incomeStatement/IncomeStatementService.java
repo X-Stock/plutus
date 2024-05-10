@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.incomeStatement;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,14 @@ public class IncomeStatementService implements SingleResponseService<IncomeState
     @Override
     public IncomeStatement getByTicker(String ticker) {
         Optional<IncomeStatement> incomeStatement = incomeStatementRepository.findByCompany_Ticker(ticker);
-        return incomeStatement.orElseThrow(() -> new EntityNotFoundException("income statement by " + ticker));
+        return incomeStatement.orElseThrow(() -> new ResourceNotFoundException("income statement by " + ticker));
     }
 
     @Override
     public Iterable<IncomeStatement> getAll() {
         Iterable<IncomeStatement> incomeStatements = incomeStatementRepository.findAll();
         if (!incomeStatements.iterator().hasNext()) {
-            throw new EntityNotFoundException("all income statements");
+            throw new ResourceNotFoundException("all income statements");
         }
         return incomeStatements;
     }

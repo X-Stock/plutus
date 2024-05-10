@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockIntraday;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
@@ -22,7 +22,7 @@ public class StockIntradayService implements MultiResponseService<StockIntraday>
     public Iterable<StockIntraday> getAllByTicker(String ticker) {
         Iterable<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker);
         if (!stockIntradays.iterator().hasNext()) {
-            throw new EntityNotFoundException("intraday by " + ticker);
+            throw new ResourceNotFoundException("intraday by " + ticker);
         }
         return stockIntradays;
     }
@@ -31,7 +31,7 @@ public class StockIntradayService implements MultiResponseService<StockIntraday>
     public Iterable<StockIntraday> getAll() {
         Iterable<StockIntraday> stockIntradays = stockIntradayRepository.findAll();
         if (!stockIntradays.iterator().hasNext()) {
-            throw new EntityNotFoundException("all intraday");
+            throw new ResourceNotFoundException("all intraday");
         }
         return stockIntradays;
     }

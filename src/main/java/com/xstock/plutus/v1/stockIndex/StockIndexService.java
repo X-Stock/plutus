@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockIndex;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class StockIndexService implements MultiResponseService<StockIndex> {
     public Iterable<StockIndex> getAllByTicker(String ticker) {
         Iterable<StockIndex> stockIndices = stockIndexRepository.findAllByCompanies_Ticker(ticker);
         if (!stockIndices.iterator().hasNext()) {
-            throw new EntityNotFoundException("stock indices by " + ticker);
+            throw new ResourceNotFoundException("stock indices by " + ticker);
         }
         return stockIndices;
     }
@@ -23,7 +23,7 @@ public class StockIndexService implements MultiResponseService<StockIndex> {
     public Iterable<StockIndex> getAll() {
         Iterable<StockIndex> stockIndices = stockIndexRepository.findAll();
         if (!stockIndices.iterator().hasNext()) {
-            throw new EntityNotFoundException("all stock indices");
+            throw new ResourceNotFoundException("all stock indices");
         }
         return stockIndices;
     }

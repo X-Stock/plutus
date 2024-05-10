@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.officer;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class OfficerService implements MultiResponseService<Officer> {
     public Iterable<Officer> getAllByTicker(String ticker) {
         Iterable<Officer> officers = officerRepository.findAllByCompany_Ticker(ticker);
         if (!officers.iterator().hasNext()) {
-            throw new EntityNotFoundException("officers by " + ticker);
+            throw new ResourceNotFoundException("officers by " + ticker);
         }
         return officers;
     }
@@ -23,7 +23,7 @@ public class OfficerService implements MultiResponseService<Officer> {
     public Iterable<Officer> getAll() {
         Iterable<Officer> officers = officerRepository.findAll();
         if (!officers.iterator().hasNext()) {
-            throw new EntityNotFoundException("all officers");
+            throw new ResourceNotFoundException("all officers");
         }
         return officers;
     }

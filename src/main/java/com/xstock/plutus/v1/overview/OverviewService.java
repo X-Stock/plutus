@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.overview;
 
-import com.xstock.plutus.exception.EntityNotFoundException;
+import com.xstock.plutus.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,14 @@ public class OverviewService implements SingleResponseService<Overview> {
     @Override
     public Overview getByTicker(String ticker) {
         Optional<Overview> overview = overviewRepository.findByCompany_Ticker(ticker);
-        return overview.orElseThrow(() -> new EntityNotFoundException("overview by " + ticker));
+        return overview.orElseThrow(() -> new ResourceNotFoundException("overview by " + ticker));
     }
 
     @Override
     public Iterable<Overview> getAll() {
         Iterable<Overview> overviews = overviewRepository.findAll();
         if (!overviews.iterator().hasNext()) {
-            throw new EntityNotFoundException("all overviews");
+            throw new ResourceNotFoundException("all overviews");
         }
         return overviews;
     }
