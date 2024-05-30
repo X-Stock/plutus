@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: plutus
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/xstock
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  output:
+    ansi:
+      enabled: always

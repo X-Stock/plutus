@@ -1,10 +1,12 @@
 package com.xstock.plutus;
 
-import com.xstock.plutus.company.Company;
-import com.xstock.plutus.company.CompanyRepository;
+import com.xstock.plutus.v1.company.Company;
+import com.xstock.plutus.v1.company.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,11 +18,18 @@ public class DatabaseCreationTest {
     @Test
     public void createCompany_thenGetName() {
         Company company = new Company();
-        company.setTicker("SSI");
+        company.setTicker("Test");
         companyRepository.save(company);
 
-        Company company2 = companyRepository.findById(1).orElse(null);
-        assert company2 != null;
-        assertEquals("SSI", company2.getTicker());
+        Optional<Company> company2 = companyRepository.findByTicker("Test");
+        assert company2.isPresent();
+        assertEquals("Test", company2.get().getTicker());
+    }
+
+    @Test
+    public void getCompany_createdByDefault() {
+        Optional<Company> company = companyRepository.findByTicker("VVS");
+        assert company.isPresent();
+        assertEquals("VVS", company.get().getTicker());
     }
 }
