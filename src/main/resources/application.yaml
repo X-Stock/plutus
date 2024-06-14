@@ -1,3 +1,7 @@
+logging:
+  level:
+    org.springframework.security: TRACE
+
 spring:
   application:
     name: plutus
@@ -10,6 +14,12 @@ spring:
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9000"
+          audiences: xstock-client
   output:
     ansi:
       enabled: always
