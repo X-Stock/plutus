@@ -57,6 +57,10 @@ public class Event {
     @Column(name = "event_description", columnDefinition = "TEXT")
     private String eventDescription;
 
-    @Column(name = "event_note", columnDefinition = "TEXT")
-    private String eventNote;
+//    @Column(name = "event_note", columnDefinition = "TEXT")
+//    private String eventNote;
+
+    private Double rsi;
+
+    private Double rs;
 }

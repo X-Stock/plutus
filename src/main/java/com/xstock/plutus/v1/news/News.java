@@ -13,7 +13,6 @@ import java.time.OffsetDateTime;
 @Entity
 public class News {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
@@ -29,8 +28,8 @@ public class News {
     @Column(name = "price_change_ratio")
     private Float priceChangeRatio;
 
-    @Column(name = "weekly_price_change_ratio")
-    private Float weeklyPriceChangeRatio;
+//    @Column(name = "weekly_price_change_ratio")
+//    private Float weeklyPriceChangeRatio;
 
     @Column(name = "monthly_price_change_ratio")
     private Float MonthlyPriceChangeRatio;
@@ -43,4 +42,8 @@ public class News {
 
     @Column(name = "publish_date")
     private OffsetDateTime publishDate;
+
+    private Double rsi;
+
+    private Double rs;
 }

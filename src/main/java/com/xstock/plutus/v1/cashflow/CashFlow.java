@@ -20,6 +20,22 @@ public class CashFlow {
     @JsonIgnore
     private Company company;
 
-    @Column(columnDefinition = "TEXT")
-    private String data;
+    private Byte quarter;
+
+    private Short year;
+
+    @Column(name = "invest_cost")
+    private Integer investCost;
+
+    @Column(name = "from_invest")
+    private Integer fromInvest;
+
+    @Column(name = "from_financial")
+    private Integer fromFinancial;
+
+    @Column(name = "from_sale")
+    private Integer fromSale;
+
+    @Column(name = "free_cash_flow")
+    private Integer freeCashFlow;
 }

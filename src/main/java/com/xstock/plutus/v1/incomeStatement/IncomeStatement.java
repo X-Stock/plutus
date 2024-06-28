@@ -20,6 +20,68 @@ public class IncomeStatement {
     @JsonIgnore
     private Company company;
 
-    @Column(columnDefinition = "TEXT")
-    private String data;
+    private Byte quarter;
+
+    private Short year;
+
+    private Integer revenue;
+
+    @Column(name = "year_revenue_growth")
+    private Double yearRevenueGrowth;
+
+    @Column(name = "quarter_revenue_growth")
+    private Double quarterRevenueGrowth;
+
+    @Column(name = "cost_of_good_sold")
+    private Integer costOfGoodSold;
+
+    @Column(name = "gross_profit")
+    private Integer grossProfit;
+
+    @Column(name = "operation_expense")
+    private Integer operationExpense;
+
+    @Column(name = "operation_profit")
+    private Integer operationProfit;
+
+    @Column(name = "year_operation_profit_growth")
+    private Double yearOperationProfitGrowth;
+
+    @Column(name = "quarter_operation_profit_growth")
+    private Double quarterOperationProfitGrowth;
+
+    @Column(name = "interest_expense")
+    private Integer interestExpense;
+
+    @Column(name = "pre_tax_profit")
+    private Integer preTaxProfit;
+
+    @Column(name = "post_tax_profit")
+    private Integer postTaxProfit;
+
+    @Column(name = "shareholder_income")
+    private Integer shareholderIncome;
+
+    @Column(name = "year_shareholder_income_growth")
+    private Double yearShareholderIncomeGrowth;
+
+    @Column(name = "quarter_shareholder_income_growth")
+    private Double quarterShareholderIncomeGrowth;
+
+    @Column(name = "invest_profit")
+    private Integer investProfit;
+
+    @Column(name = "service_profit")
+    private Integer serviceProfit;
+
+    @Column(name = "other_profit")
+    private Integer otherProfit;
+
+    @Column(name = "provision_expense")
+    private Integer provisionExpense;
+
+    @Column(name = "operation_income")
+    private Integer operationIncome;
+
+    private Integer ebitda;
 }
