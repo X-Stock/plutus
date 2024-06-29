@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockIndex;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class StockIndexService implements CommonService<StockIndex> {
                         pageable.getSortOr(Sort.by(Sort.Direction.ASC, "indexName")))
         );
         if (stockIndices.isEmpty()) {
-            throw new ResourceNotFoundException("all stockIndices");
+            throw new ResourceNotFoundException();
         }
         return stockIndices.getContent();
     }
@@ -38,7 +38,7 @@ public class StockIndexService implements CommonService<StockIndex> {
                 )
         );
         if (stockIndices.isEmpty()) {
-            throw new ResourceNotFoundException("all stock indices");
+            throw new ResourceNotFoundException();
         }
         return stockIndices;
     }

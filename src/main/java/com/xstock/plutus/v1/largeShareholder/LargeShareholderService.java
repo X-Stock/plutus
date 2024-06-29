@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.largeShareholder;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class LargeShareholderService implements CommonService<LargeShareholder> 
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "share_own_percent")))
         );
         if (largeShareholders.isEmpty()) {
-            throw new ResourceNotFoundException("all largeShareholders");
+            throw new ResourceNotFoundException();
         }
         return largeShareholders.getContent();
     }

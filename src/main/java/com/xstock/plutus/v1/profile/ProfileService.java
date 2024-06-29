@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.profile;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ public class ProfileService implements CommonService<Profile> {
     @Override
     public Profile getByTicker(String ticker) {
         Optional<Profile> profile = profileRepository.findByCompany_Ticker(ticker);
-        return profile.orElseThrow(() -> new ResourceNotFoundException("profile by " + ticker));
+        return profile.orElseThrow(ResourceNotFoundException::new);
     }
 }

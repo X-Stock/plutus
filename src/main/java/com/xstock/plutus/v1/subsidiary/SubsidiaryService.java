@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class SubsidiaryService implements CommonService<Subsidiary> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "own_percent")))
         );
         if (subsidiaries.isEmpty()) {
-            throw new ResourceNotFoundException("all subsidiaries");
+            throw new ResourceNotFoundException();
         }
         return subsidiaries.getContent();
     }

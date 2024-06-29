@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockHistorical;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class StockHistoricalService implements CommonController<StockHistorical>
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "time")))
         );
         if (stockHistorical.isEmpty()) {
-            throw new ResourceNotFoundException("all stockHistorical");
+            throw new ResourceNotFoundException();
         }
         return stockHistorical.getContent();
     }

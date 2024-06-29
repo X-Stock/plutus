@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.cashflow;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class CashFlowService implements CommonService<CashFlow> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
         );
         if (cashFlows.isEmpty()) {
-            throw new ResourceNotFoundException("all cash flows");
+            throw new ResourceNotFoundException();
         }
         return cashFlows.getContent();
     }

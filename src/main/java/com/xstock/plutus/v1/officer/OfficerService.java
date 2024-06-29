@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.officer;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class OfficerService implements CommonService<Officer> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "own_percent")))
         );
         if (officers.isEmpty()) {
-            throw new ResourceNotFoundException("all officers");
+            throw new ResourceNotFoundException();
         }
         return officers.getContent();
     }

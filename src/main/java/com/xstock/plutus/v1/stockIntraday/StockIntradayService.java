@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockIntraday;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,7 +31,7 @@ public class StockIntradayService implements CommonService<StockIntraday> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "time")))
         );
         if (stockIntradays.isEmpty()) {
-            throw new ResourceNotFoundException("all stockIntradays");
+            throw new ResourceNotFoundException();
         }
         return stockIntradays.getContent();
     }

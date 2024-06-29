@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.event;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class EventService implements CommonService<Event> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "notifyDate")))
         );
         if (events.isEmpty()) {
-            throw new ResourceNotFoundException("all events");
+            throw new ResourceNotFoundException();
         }
         return events.getContent();
     }

@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.news;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class NewsService implements CommonService<News> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publish_date")))
         );
         if (news.isEmpty()) {
-            throw new ResourceNotFoundException("all news");
+            throw new ResourceNotFoundException();
         }
         return news.getContent();
     }
@@ -37,7 +37,7 @@ public class NewsService implements CommonService<News> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publish_date")))
         );
         if (news.isEmpty()) {
-            throw new ResourceNotFoundException("all news");
+            throw new ResourceNotFoundException();
         }
         return news.getContent();
     }

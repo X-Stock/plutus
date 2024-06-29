@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.incomeStatement;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class IncomeStatementService implements CommonService<IncomeStatement> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
         );
         if (incomeStatements.isEmpty()) {
-            throw new ResourceNotFoundException("all incomeStatements");
+            throw new ResourceNotFoundException();
         }
         return incomeStatements.getContent();
     }

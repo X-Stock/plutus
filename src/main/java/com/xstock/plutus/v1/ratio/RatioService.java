@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.ratio;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class RatioService implements CommonService<Ratio> {
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
         );
         if (ratios.isEmpty()) {
-            throw new ResourceNotFoundException("all ratios");
+            throw new ResourceNotFoundException();
         }
         return ratios.getContent();
     }
