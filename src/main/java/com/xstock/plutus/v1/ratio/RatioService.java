@@ -1,29 +1,30 @@
 package com.xstock.plutus.v1.ratio;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class RatioService implements SingleResponseService<Ratio> {
+public class RatioService implements CommonService<Ratio> {
     private final RatioRepository ratioRepository;
 
     @Override
-    public Ratio getByTicker(String ticker) {
-        Optional<Ratio> financialRatio = ratioRepository.findByCompany_Ticker(ticker);
-        return financialRatio.orElseThrow(() -> new ResourceNotFoundException("financial ratio by " + ticker));
-    }
-
-    @Override
-    public Iterable<Ratio> getAll() {
-        Iterable<Ratio> ratios = ratioRepository.findAll();
-        if (!ratios.iterator().hasNext()) {
-            throw new ResourceNotFoundException("all financial ratios");
+    public Iterable<Ratio> getAllByTicker(String ticker, Pageable pageable) {
+        Page<Ratio> ratios = ratioRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
+        );
+        if (ratios.isEmpty()) {
+            throw new ResourceNotFoundException("all ratios");
         }
-        return ratios;
+        return ratios.getContent();
     }
 }

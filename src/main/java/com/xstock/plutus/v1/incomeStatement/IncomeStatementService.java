@@ -1,29 +1,30 @@
 package com.xstock.plutus.v1.incomeStatement;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class IncomeStatementService implements SingleResponseService<IncomeStatement> {
+public class IncomeStatementService implements CommonService<IncomeStatement> {
     private final IncomeStatementRepository incomeStatementRepository;
 
     @Override
-    public IncomeStatement getByTicker(String ticker) {
-        Optional<IncomeStatement> incomeStatement = incomeStatementRepository.findByCompany_Ticker(ticker);
-        return incomeStatement.orElseThrow(() -> new ResourceNotFoundException("income statement by " + ticker));
-    }
-
-    @Override
-    public Iterable<IncomeStatement> getAll() {
-        Iterable<IncomeStatement> incomeStatements = incomeStatementRepository.findAll();
-        if (!incomeStatements.iterator().hasNext()) {
-            throw new ResourceNotFoundException("all income statements");
+    public Iterable<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
+        Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
+        );
+        if (incomeStatements.isEmpty()) {
+            throw new ResourceNotFoundException("all incomeStatements");
         }
-        return incomeStatements;
+        return incomeStatements.getContent();
     }
 }

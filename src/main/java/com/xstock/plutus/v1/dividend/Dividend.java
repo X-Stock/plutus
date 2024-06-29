@@ -5,6 +5,7 @@ import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.OffsetDateTime;
 
 @Getter
@@ -28,7 +29,7 @@ public class Dividend {
     private Short cashYear;
 
     @Column(name = "cash_dividend_percentage")
-    private Double cashDividendPercentage;
+    private Float cashDividendPercentage;
 
     @Column(name = "issue_method", columnDefinition = "TEXT")
     private String issueMethod;

@@ -1,30 +1,31 @@
 package com.xstock.plutus.v1.stockHistorical;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class StockHistoricalService implements MultiResponseService<StockHistorical> {
+public class StockHistoricalService implements CommonController<StockHistorical> {
     private final StockHistoricalRepository stockHistoricalRepository;
 
     @Override
-    public Iterable<StockHistorical> getAllByTicker(String ticker) {
-        Iterable<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompany_Ticker(ticker);
-        if (!stockHistorical.iterator().hasNext()) {
-            throw new ResourceNotFoundException("stock historical by " + ticker);
+    public Iterable<StockHistorical> getAllByTicker(String ticker, Pageable pageable) {
+        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompany_Ticker(
+                ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "time")))
+        );
+        if (stockHistorical.isEmpty()) {
+            throw new ResourceNotFoundException("all stockHistorical");
         }
-        return stockHistorical;
-    }
-
-    @Override
-    public Iterable<StockHistorical> getAll() {
-        Iterable<StockHistorical> stockHistorical = stockHistoricalRepository.findAll();
-        if (!stockHistorical.iterator().hasNext()) {
-            throw new ResourceNotFoundException("all stock historical");
-        }
-        return stockHistorical;
+        return stockHistorical.getContent();
     }
 }

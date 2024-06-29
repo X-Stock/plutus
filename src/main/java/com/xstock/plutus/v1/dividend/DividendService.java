@@ -1,30 +1,30 @@
 package com.xstock.plutus.v1.dividend;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class DividendService implements MultiResponseService<Dividend> {
+public class DividendService implements CommonService<Dividend> {
     private final DividendRepository dividendRepository;
 
     @Override
-    public Iterable<Dividend> getAllByTicker(String ticker) {
-        Iterable<Dividend> dividends = dividendRepository.findAllByCompany_Ticker(ticker);
-        if (!dividends.iterator().hasNext()) {
-            throw new ResourceNotFoundException("dividends by " + ticker);
-        }
-        return dividends;
-    }
-
-    @Override
-    public Iterable<Dividend> getAll() {
-        Iterable<Dividend> dividends = dividendRepository.findAll();
-        if (!dividends.iterator().hasNext()) {
+    public Iterable<Dividend> getAllByTicker(String ticker, Pageable pageable) {
+        Page<Dividend> dividends = dividendRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "exercise_date")))
+        );
+        if (dividends.isEmpty()) {
             throw new ResourceNotFoundException("all dividends");
         }
-        return dividends;
+        return dividends.getContent();
     }
 }

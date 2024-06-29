@@ -1,7 +1,8 @@
 package com.xstock.plutus.v1.incomeStatement;
 
-import com.xstock.plutus.utils.interfaces.controller.SingleResponseController;
+import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/companies/{ticker}")
-public class IncomeStatementController implements SingleResponseController<IncomeStatement> {
+public class IncomeStatementController implements CommonController<IncomeStatement> {
     private final IncomeStatementService incomeStatementService;
 
     @Override
     @GetMapping(path = "/incomeStatement")
-    public IncomeStatement getByTicker(@PathVariable String ticker) {
-        return incomeStatementService.getByTicker(ticker);
+    public Iterable<IncomeStatement> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
+        return incomeStatementService.getAllByTicker(ticker, pageable);
     }
 }

@@ -1,8 +1,12 @@
 package com.xstock.plutus.v1.stockIntraday;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 import org.springframework.stereotype.Service;
@@ -14,31 +18,27 @@ import java.time.Instant;
 
 @RequiredArgsConstructor
 @Service
-public class StockIntradayService implements MultiResponseService<StockIntraday> {
+public class StockIntradayService implements CommonService<StockIntraday> {
     private final StockIntradayRepository stockIntradayRepository;
     private final TaskScheduler taskScheduler = new SimpleAsyncTaskScheduler();
 
     @Override
-    public Iterable<StockIntraday> getAllByTicker(String ticker) {
-        Iterable<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker);
-        if (!stockIntradays.iterator().hasNext()) {
-            throw new ResourceNotFoundException("intraday by " + ticker);
+    public Iterable<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
+        Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "time")))
+        );
+        if (stockIntradays.isEmpty()) {
+            throw new ResourceNotFoundException("all stockIntradays");
         }
-        return stockIntradays;
+        return stockIntradays.getContent();
     }
 
-    @Override
-    public Iterable<StockIntraday> getAll() {
-        Iterable<StockIntraday> stockIntradays = stockIntradayRepository.findAll();
-        if (!stockIntradays.iterator().hasNext()) {
-            throw new ResourceNotFoundException("all intraday");
-        }
-        return stockIntradays;
-    }
-
-    public SseEmitter getIntraday(String ticker) {
+    public SseEmitter getIntraday(String ticker, Pageable pageable) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
-        var intraday = getAllByTicker(ticker);
+        var intraday = getAllByTicker(ticker, pageable);
         var scheduledFuture = taskScheduler.scheduleAtFixedRate(() -> {
             try {
                 emitter.send(intraday);

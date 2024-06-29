@@ -16,7 +16,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToMany(mappedBy = "companies")
+    @ManyToMany(mappedBy = "company")
     Set<StockIndex> stockIndices;
 
     @Column(columnDefinition = "TEXT", nullable = false)

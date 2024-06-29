@@ -24,19 +24,19 @@ public class Ratio {
     private Short year;
 
     @Column(name = "price_to_earning")
-    private Double priceToEarning;
+    private Float priceToEarning;
 
     @Column(name = "price_to_book")
-    private Double priceToBook;
+    private Float priceToBook;
 
     @Column(name = "value_before_ebitda")
-    private Double valueBeforeEbitda;
+    private Float valueBeforeEbitda;
 
-    private Double dividend;
+    private Float dividend;
 
-    private Double roe;
+    private Float roe;
 
-    private Double roa;
+    private Float roa;
 
     @Column(name = "days_receivable")
     private Integer daysReceivable;
@@ -48,7 +48,7 @@ public class Ratio {
     private Integer daysPayable;
 
     @Column(name = "ebit_on_interest")
-    private Double ebitOnInterest;
+    private Float ebitOnInterest;
 
     @Column(name = "earning_per_share")
     private Integer earningPerShare;
@@ -57,134 +57,134 @@ public class Ratio {
     private Integer bookValuePerShare;
 
     @Column(name = "interest_margin")
-    private Double interestMargin;
+    private Float interestMargin;
 
     @Column(name = "non_interest_on_toi")
-    private Double nonInterestOnToi;
+    private Float nonInterestOnToi;
 
     @Column(name = "bad_debt_percentage")
-    private Double badDebtPercentage;
+    private Float badDebtPercentage;
 
     @Column(name = "provision_on_bad_debt")
-    private Double provisionOnBadDebt;
+    private Float provisionOnBadDebt;
 
     @Column(name = "cost_of_financing")
-    private Double costOfFinancing;
+    private Float costOfFinancing;
 
     @Column(name = "equity_on_total_asset")
-    private Double equityOnTotalAsset;
+    private Float equityOnTotalAsset;
 
     @Column(name = "equity_on_loan")
-    private Double equityOnLoan;
+    private Float equityOnLoan;
 
     @Column(name = "cost_to_income")
-    private Double costToIncome;
+    private Float costToIncome;
 
     @Column(name = "equity_on_liability")
-    private Double equityOnLiability;
+    private Float equityOnLiability;
 
     @Column(name = "current_payment")
-    private Double currentPayment;
+    private Float currentPayment;
 
     @Column(name = "quick_payment")
-    private Double quickPayment;
+    private Float quickPayment;
 
     @Column(name = "eps_change")
-    private Double epsChange;
+    private Float epsChange;
 
     @Column(name = "ebitda_on_stock")
     private Integer ebitdaOnStock;
 
     @Column(name = "gross_profit_margin")
-    private Double grossProfitMargin;
+    private Float grossProfitMargin;
 
     @Column(name = "operating_profit_margin")
-    private Double operatingProfitMargin;
+    private Float operatingProfitMargin;
 
     @Column(name = "post_tax_margin")
-    private Double postTaxMargin;
+    private Float postTaxMargin;
 
     @Column(name = "debt_on_equity")
-    private Double debtOnEquity;
+    private Float debtOnEquity;
 
     @Column(name = "debt_on_asset")
-    private Double debtOnAsset;
+    private Float debtOnAsset;
 
     @Column(name = "debt_on_ebitda")
-    private Double debtOnEbitda;
+    private Float debtOnEbitda;
 
     @Column(name = "short_on_long_debt")
-    private Double shortOnLongDebt;
+    private Float shortOnLongDebt;
 
     @Column(name = "asset_on_equity")
-    private Double assetOnEquity;
+    private Float assetOnEquity;
 
     @Column(name = "capital_balance")
-    private Double capitalBalance;
+    private Float capitalBalance;
 
     @Column(name = "cash_on_equity")
-    private Double cashOnEquity;
+    private Float cashOnEquity;
 
     @Column(name = "cash_on_capitalize")
-    private Double cashOnCapitalize;
+    private Float cashOnCapitalize;
 
     @Column(name = "cash_circulation")
-    private Double cashCirculation;
+    private Float cashCirculation;
 
     @Column(name = "revenue_on_work_capital")
-    private Double revenueOnWorkCapital;
+    private Float revenueOnWorkCapital;
 
     @Column(name = "capex_on_fixed_asset")
-    private Double capexOnFixedAsset;
+    private Float capexOnFixedAsset;
 
     @Column(name = "revenue_on_asset")
-    private Double revenueOnAsset;
+    private Float revenueOnAsset;
 
     @Column(name = "post_tax_on_pre_tax")
-    private Double postTaxOnPreTax;
+    private Float postTaxOnPreTax;
 
     @Column(name = "ebit_on_revenue")
-    private Double ebitOnRevenue;
+    private Float ebitOnRevenue;
 
     @Column(name = "pre_tax_on_ebit")
-    private Double preTaxOnEbit;
+    private Float preTaxOnEbit;
 
     @Column(name = "pre_provision_on_toi")
-    private Double preProvisionOnToi;
+    private Float preProvisionOnToi;
 
     @Column(name = "post_tax_on_toi")
-    private Double postTaxOnToi;
+    private Float postTaxOnToi;
 
     @Column(name = "loan_on_earn_asset")
-    private Double loanOnEarnAsset;
+    private Float loanOnEarnAsset;
 
     @Column(name = "loan_on_asset")
-    private Double loanOnAsset;
+    private Float loanOnAsset;
 
     @Column(name = "loan_on_deposit")
-    private Double loanOnDeposit;
+    private Float loanOnDeposit;
 
     @Column(name = "deposit_on_earn_asset")
-    private Double depositOnEarnAsset;
+    private Float depositOnEarnAsset;
 
     @Column(name = "bad_debt_on_asset")
-    private Double badDebtOnAsset;
+    private Float badDebtOnAsset;
 
     @Column(name = "liquidity_on_liability")
-    private Double liquidityOnLiability;
+    private Float liquidityOnLiability;
 
     @Column(name = "payable_on_equity")
-    private Double payableOnEquity;
+    private Float payableOnEquity;
 
     @Column(name = "cancel_debt")
-    private Double cancelDebt;
+    private Float cancelDebt;
 
     @Column(name = "ebitda_on_stock_change")
-    private Double ebitdaOnStockChange;
+    private Float ebitdaOnStockChange;
 
     @Column(name = "book_value_per_share_change")
-    private Double bookValuePerShareChange;
+    private Float bookValuePerShareChange;
 
     @Column(name = "credit_growth")
-    private Double creditGrowth;
+    private Float creditGrowth;
 }

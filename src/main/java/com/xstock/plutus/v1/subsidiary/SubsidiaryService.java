@@ -1,30 +1,30 @@
 package com.xstock.plutus.v1.subsidiary;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class SubsidiaryService implements MultiResponseService<Subsidiary> {
+public class SubsidiaryService implements CommonService<Subsidiary> {
     private final SubsidiaryRepository subsidiaryRepository;
 
     @Override
-    public final Iterable<Subsidiary> getAllByTicker(String ticker) {
-        Iterable<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompany_Ticker(ticker);
-        if (!subsidiaries.iterator().hasNext()) {
-            throw new ResourceNotFoundException("subsidiaries by " + ticker);
-        }
-        return subsidiaries;
-    }
-
-    @Override
-    public final Iterable<Subsidiary> getAll() {
-        Iterable<Subsidiary> subsidiaries = subsidiaryRepository.findAll();
-        if (!subsidiaries.iterator().hasNext()) {
+    public Iterable<Subsidiary> getAllByTicker(String ticker, Pageable pageable) {
+        Page<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "own_percent")))
+        );
+        if (subsidiaries.isEmpty()) {
             throw new ResourceNotFoundException("all subsidiaries");
         }
-        return subsidiaries;
+        return subsidiaries.getContent();
     }
 }

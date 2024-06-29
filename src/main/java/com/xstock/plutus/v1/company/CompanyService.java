@@ -1,15 +1,19 @@
 package com.xstock.plutus.v1.company;
 
 import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class CompanyService implements SingleResponseService<Company> {
+public class CompanyService implements CommonService<Company> {
     private final CompanyRepository companyRepository;
 
     @Override
@@ -18,11 +22,17 @@ public class CompanyService implements SingleResponseService<Company> {
         return company.orElseThrow(() -> new ResourceNotFoundException("company by " + ticker));
     }
 
-    public Iterable<Company> getAll() {
-        Iterable<Company> companies = companyRepository.findAll();
-        if (!companies.iterator().hasNext()) {
+    @Override
+    public Iterable<Company> getAll(Pageable pageable) {
+        Page<Company> companies = companyRepository.findAll(
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "ticker")))
+        );
+        if (companies.isEmpty()) {
             throw new ResourceNotFoundException("all companies");
         }
-        return companies;
+        return companies.getContent();
     }
 }

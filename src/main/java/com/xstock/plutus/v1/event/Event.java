@@ -14,7 +14,6 @@ import java.time.OffsetDateTime;
 @Table(name = "events")
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
@@ -57,10 +56,7 @@ public class Event {
     @Column(name = "event_description", columnDefinition = "TEXT")
     private String eventDescription;
 
-//    @Column(name = "event_note", columnDefinition = "TEXT")
-//    private String eventNote;
+    private Float rsi;
 
-    private Double rsi;
-
-    private Double rs;
+    private Float rs;
 }

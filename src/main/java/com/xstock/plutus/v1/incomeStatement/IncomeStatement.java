@@ -27,10 +27,10 @@ public class IncomeStatement {
     private Integer revenue;
 
     @Column(name = "year_revenue_growth")
-    private Double yearRevenueGrowth;
+    private Float yearRevenueGrowth;
 
     @Column(name = "quarter_revenue_growth")
-    private Double quarterRevenueGrowth;
+    private Float quarterRevenueGrowth;
 
     @Column(name = "cost_of_good_sold")
     private Integer costOfGoodSold;
@@ -45,10 +45,10 @@ public class IncomeStatement {
     private Integer operationProfit;
 
     @Column(name = "year_operation_profit_growth")
-    private Double yearOperationProfitGrowth;
+    private Float yearOperationProfitGrowth;
 
     @Column(name = "quarter_operation_profit_growth")
-    private Double quarterOperationProfitGrowth;
+    private Float quarterOperationProfitGrowth;
 
     @Column(name = "interest_expense")
     private Integer interestExpense;
@@ -63,10 +63,10 @@ public class IncomeStatement {
     private Integer shareholderIncome;
 
     @Column(name = "year_shareholder_income_growth")
-    private Double yearShareholderIncomeGrowth;
+    private Float yearShareholderIncomeGrowth;
 
     @Column(name = "quarter_shareholder_income_growth")
-    private Double quarterShareholderIncomeGrowth;
+    private Float quarterShareholderIncomeGrowth;
 
     @Column(name = "invest_profit")
     private Integer investProfit;
