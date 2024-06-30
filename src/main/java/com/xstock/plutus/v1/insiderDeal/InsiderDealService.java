@@ -20,7 +20,7 @@ public class InsiderDealService implements CommonService<InsiderDeal> {
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "deal_announce_date")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "dealAnnounceDate")))
         );
         if (insiderDeals.isEmpty()) {
             throw new ResourceNotFoundException();

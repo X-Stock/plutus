@@ -20,7 +20,7 @@ public class NewsService implements CommonService<News> {
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publish_date")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publishDate")))
         );
         if (news.isEmpty()) {
             throw new ResourceNotFoundException();
@@ -34,7 +34,7 @@ public class NewsService implements CommonService<News> {
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publish_date")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publishDate")))
         );
         if (news.isEmpty()) {
             throw new ResourceNotFoundException();

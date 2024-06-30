@@ -20,7 +20,7 @@ public class OfficerService implements CommonService<Officer> {
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "own_percent")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "ownPercent")))
         );
         if (officers.isEmpty()) {
             throw new ResourceNotFoundException();

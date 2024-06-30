@@ -20,7 +20,7 @@ public class DividendService implements CommonService<Dividend> {
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "exercise_date")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "exerciseDate")))
         );
         if (dividends.isEmpty()) {
             throw new ResourceNotFoundException();

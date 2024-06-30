@@ -20,7 +20,7 @@ public class LargeShareholderService implements CommonService<LargeShareholder> 
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "share_own_percent")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "shareOwnPercent")))
         );
         if (largeShareholders.isEmpty()) {
             throw new ResourceNotFoundException();
