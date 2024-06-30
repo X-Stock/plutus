@@ -9,13 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class InsiderDealService implements CommonService<InsiderDeal> {
     private final InsiderDealRepository insiderDealRepository;
 
     @Override
-    public Iterable<InsiderDeal> getAllByTicker(String ticker, Pageable pageable) {
+    public List<InsiderDeal> getAllByTicker(String ticker, Pageable pageable) {
         Page<InsiderDeal> insiderDeals = insiderDealRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),

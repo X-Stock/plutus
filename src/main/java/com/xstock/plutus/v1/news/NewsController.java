@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -16,12 +18,12 @@ public class NewsController implements CommonController<News> {
 
     @Override
     @GetMapping(path = "/companies/{ticker}/news")
-    public Iterable<News> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
+    public List<News> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
         return newsService.getAllByTicker(ticker, pageable);
     }
 
     @GetMapping(path = "/news")
-    public Iterable<News> getAll(Pageable pageable) {
+    public List<News> getAll(Pageable pageable) {
         return newsService.getAll(pageable);
     }
 }

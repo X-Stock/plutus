@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class CompanyService implements CommonService<Company> {
     }
 
     @Override
-    public Iterable<Company> getAll(Pageable pageable) {
+    public List<Company> getAll(Pageable pageable) {
         Page<Company> companies = companyRepository.findAll(
                 PageRequest.of(
                         pageable.getPageNumber(),

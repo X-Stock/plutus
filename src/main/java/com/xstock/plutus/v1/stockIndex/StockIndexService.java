@@ -9,13 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class StockIndexService implements CommonService<StockIndex> {
     private final StockIndexRepository stockIndexRepository;
 
     @Override
-    public Iterable<StockIndex> getAllByTicker(String ticker, Pageable pageable) {
+    public List<StockIndex> getAllByTicker(String ticker, Pageable pageable) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -29,7 +31,7 @@ public class StockIndexService implements CommonService<StockIndex> {
     }
 
     @Override
-    public Iterable<StockIndex> getAll(Pageable pageable) {
+    public List<StockIndex> getAll(Pageable pageable) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAll(
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -40,6 +42,6 @@ public class StockIndexService implements CommonService<StockIndex> {
         if (stockIndices.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return stockIndices;
+        return stockIndices.getContent();
     }
 }

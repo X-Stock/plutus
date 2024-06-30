@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +24,7 @@ public class StockIntradayService implements CommonService<StockIntraday> {
     private final TaskScheduler taskScheduler = new SimpleAsyncTaskScheduler();
 
     @Override
-    public Iterable<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
+    public List<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
         Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),

@@ -9,13 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class IncomeStatementService implements CommonService<IncomeStatement> {
     private final IncomeStatementRepository incomeStatementRepository;
 
     @Override
-    public Iterable<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
+    public List<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
         Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),

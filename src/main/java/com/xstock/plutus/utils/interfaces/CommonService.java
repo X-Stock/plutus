@@ -2,16 +2,18 @@ package com.xstock.plutus.utils.interfaces;
 
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface CommonService<T> {
     default T getByTicker(String ticker) {
         throw new UnsupportedOperationException();
     }
 
-    default Iterable<T> getAllByTicker(String ticker, Pageable pageable) {
+    default List<T> getAllByTicker(String ticker, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 
-    default Iterable<T> getAll(Pageable pageable) {
+    default List<T> getAll(Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 }

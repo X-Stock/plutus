@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/companies")
@@ -22,7 +24,7 @@ public class CompanyController implements CommonController<Company> {
 
     @Override
     @GetMapping
-    public Iterable<Company> getAll(Pageable pageable) {
+    public List<Company> getAll(Pageable pageable) {
         return companyService.getAll(pageable);
     }
 }

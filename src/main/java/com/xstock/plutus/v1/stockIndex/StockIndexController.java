@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -16,12 +18,12 @@ public class StockIndexController implements CommonController<StockIndex> {
 
     @Override
     @GetMapping(path = "/companies/{ticker}/stockIndices")
-    public Iterable<StockIndex> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
+    public List<StockIndex> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
         return stockIndexService.getAllByTicker(ticker, pageable);
     }
 
     @GetMapping(path = "/stockIndices")
-    public Iterable<StockIndex> getAll(Pageable pageable) {
+    public List<StockIndex> getAll(Pageable pageable) {
         return stockIndexService.getAll(pageable);
     }
 }

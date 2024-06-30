@@ -9,13 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class OfficerService implements CommonService<Officer> {
     private final OfficerRepository officerRepository;
 
     @Override
-    public Iterable<Officer> getAllByTicker(String ticker, Pageable pageable) {
+    public List<Officer> getAllByTicker(String ticker, Pageable pageable) {
         Page<Officer> officers = officerRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),

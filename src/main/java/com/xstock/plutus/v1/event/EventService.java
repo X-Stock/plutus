@@ -9,13 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class EventService implements CommonService<Event> {
     private final EventRepository eventRepository;
 
     @Override
-    public Iterable<Event> getAllByTicker(String ticker, Pageable pageable) {
+    public List<Event> getAllByTicker(String ticker, Pageable pageable) {
         Page<Event> events = eventRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
