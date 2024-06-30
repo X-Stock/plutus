@@ -16,30 +16,18 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToMany(mappedBy = "companies")
+    @ManyToMany(mappedBy = "company")
     Set<StockIndex> stockIndices;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String ticker;
 
-    @Column(name = "com_group_code", columnDefinition = "TEXT")
-    private String comGroupCode;
+    @Column(name = "fullname_vi", columnDefinition = "TEXT")
+    private String fullNameVi;
 
-    @Column(name = "com_type_code", columnDefinition = "TEXT")
-    private String comTypeCode;
+    @Column(name = "company_type")
+    private Integer companyType;
 
-    @Column(name = "organ_name", columnDefinition = "TEXT")
-    private String organName;
-
-    @Column(name = "organ_short_name", columnDefinition = "TEXT")
-    private String organShortName;
-
-    @Column(name = "organ_type_code", columnDefinition = "TEXT")
-    private String organTypeCode;
-
-    @Column(name = "icb_name", columnDefinition = "TEXT")
-    private String icbName;
-
-    @Column(name = "icb_code", columnDefinition = "TEXT")
-    private String icbCode;
+    @Column(columnDefinition = "TEXT")
+    private String exchange;
 }

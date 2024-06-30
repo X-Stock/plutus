@@ -1,4 +1,4 @@
-package com.xstock.plutus.v1.cashflow;
+package com.xstock.plutus.v1.ratio;
 
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
@@ -13,20 +13,20 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class CashFlowService implements CommonService<CashFlow> {
-    private final CashFlowRepository cashFlowRepository;
+public class RatioService implements CommonService<Ratio> {
+    private final RatioRepository ratioRepository;
 
     @Override
-    public List<CashFlow> getAllByTicker(String ticker, Pageable pageable) {
-        Page<CashFlow> cashFlows = cashFlowRepository.findAllByCompany_Ticker(ticker,
+    public List<Ratio> getAllByTicker(String ticker, Pageable pageable) {
+        Page<Ratio> ratios = ratioRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
                         pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
         );
-        if (cashFlows.isEmpty()) {
+        if (ratios.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return cashFlows.getContent();
+        return ratios.getContent();
     }
 }

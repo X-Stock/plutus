@@ -1,4 +1,4 @@
-package com.xstock.plutus.v1.cashflow;
+package com.xstock.plutus.v1.ratio;
 
 import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +13,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/companies/{ticker}")
-public class CashFlowController implements CommonController<CashFlow> {
-    private final CashFlowService cashFlowService;
+public class RatioController implements CommonController<Ratio> {
+    private final RatioService ratioService;
 
     @Override
-    @GetMapping(path = "/cashFlows")
-    public List<CashFlow> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return cashFlowService.getAllByTicker(ticker, pageable);
+    @GetMapping(path = "/ratio")
+    public List<Ratio> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
+        return ratioService.getAllByTicker(ticker, pageable);
     }
 }

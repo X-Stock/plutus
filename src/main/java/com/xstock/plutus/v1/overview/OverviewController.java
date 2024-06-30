@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.overview;
 
-import com.xstock.plutus.utils.interfaces.controller.SingleResponseController;
+import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/companies/{ticker}")
-public class OverviewController implements SingleResponseController<Overview> {
+public class OverviewController implements CommonController<Overview> {
     private final OverviewService overviewService;
 
     @Override

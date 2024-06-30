@@ -1,29 +1,32 @@
 package com.xstock.plutus.v1.balanceSheet;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.SingleResponseService;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class BalanceSheetService implements SingleResponseService<BalanceSheet> {
+public class BalanceSheetService implements CommonService<BalanceSheet> {
     private final BalanceSheetRepository balanceSheetRepository;
 
     @Override
-    public BalanceSheet getByTicker(String ticker) {
-        Optional<BalanceSheet> balanceSheet = balanceSheetRepository.findByCompany_Ticker(ticker);
-        return balanceSheet.orElseThrow(() -> new ResourceNotFoundException("balance sheet by ticker " + ticker));
-    }
-
-    @Override
-    public Iterable<BalanceSheet> getAll() {
-        Iterable<BalanceSheet> balanceSheets = balanceSheetRepository.findAll();
-        if (!balanceSheets.iterator().hasNext()) {
-            throw new ResourceNotFoundException("all balance sheets");
+    public List<BalanceSheet> getAllByTicker(String ticker, Pageable pageable) {
+        Page<BalanceSheet> balanceSheets = balanceSheetRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
+        );
+        if (balanceSheets.isEmpty()) {
+            throw new ResourceNotFoundException();
         }
-        return balanceSheets;
+        return balanceSheets.getContent();
     }
 }

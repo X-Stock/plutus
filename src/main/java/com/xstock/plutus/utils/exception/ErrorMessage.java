@@ -1,4 +1,4 @@
-package com.xstock.plutus.exception;
+package com.xstock.plutus.utils.exception;
 
 import java.time.ZonedDateTime;
 
