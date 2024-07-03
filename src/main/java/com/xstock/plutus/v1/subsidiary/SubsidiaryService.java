@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class SubsidiaryService implements CommonService<Subsidiary> {
     private final SubsidiaryRepository subsidiaryRepository;
 
     @Override
-    public List<Subsidiary> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<Subsidiary> getAllByTicker(String ticker, Pageable pageable) {
         Page<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -27,6 +26,6 @@ public class SubsidiaryService implements CommonService<Subsidiary> {
         if (subsidiaries.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return subsidiaries.getContent();
+        return new PaginatedResponse<>(subsidiaries.getTotalPages(), subsidiaries.getContent());
     }
 }

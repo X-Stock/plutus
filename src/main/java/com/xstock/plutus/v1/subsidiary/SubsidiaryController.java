@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -7,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,7 +17,7 @@ public class SubsidiaryController implements CommonController<Subsidiary> {
 
     @Override
     @GetMapping(path = "/subsidiaries")
-    public List<Subsidiary> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
+    public PaginatedResponse<Subsidiary> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
         return subsidiaryService.getAllByTicker(ticker, pageable);
     }
 }

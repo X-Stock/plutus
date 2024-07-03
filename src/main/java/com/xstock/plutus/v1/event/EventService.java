@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.event;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class EventService implements CommonService<Event> {
     private final EventRepository eventRepository;
 
     @Override
-    public List<Event> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable) {
         Page<Event> events = eventRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -27,6 +26,6 @@ public class EventService implements CommonService<Event> {
         if (events.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return events.getContent();
+        return new PaginatedResponse<>(events.getTotalPages(), events.getContent());
     }
 }

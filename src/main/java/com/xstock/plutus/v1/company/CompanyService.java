@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.company;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class CompanyService implements CommonService<Company> {
     }
 
     @Override
-    public List<Company> getAll(Pageable pageable) {
+    public PaginatedResponse<Company> getAll(Pageable pageable) {
         Page<Company> companies = companyRepository.findAll(
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -34,6 +34,6 @@ public class CompanyService implements CommonService<Company> {
         if (companies.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return companies.getContent();
+        return new PaginatedResponse<>(companies.getTotalPages(), companies.getContent());
     }
 }

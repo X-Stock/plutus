@@ -1,5 +1,6 @@
 package com.xstock.plutus.utils.exception;
 
+import com.xstock.plutus.utils.dto.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
