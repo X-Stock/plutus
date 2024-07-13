@@ -1,30 +1,31 @@
 package com.xstock.plutus.v1.largeShareholder;
 
-import com.xstock.plutus.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.service.MultiResponseService;
+import com.xstock.plutus.utils.dto.PaginatedResponse;
+import com.xstock.plutus.utils.exception.ResourceNotFoundException;
+import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class LargeShareholderService implements MultiResponseService<LargeShareholder> {
+public class LargeShareholderService implements CommonService<LargeShareholder> {
     private final LargeShareholderRepository largeShareholderRepository;
 
     @Override
-    public Iterable<LargeShareholder> getAllByTicker(String ticker) {
-        Iterable<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompany_Ticker(ticker);
-        if (!largeShareholders.iterator().hasNext()) {
-            throw new ResourceNotFoundException("large shareholders by " + ticker);
+    public PaginatedResponse<LargeShareholder> getAllByTicker(String ticker, Pageable pageable) {
+        Page<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompany_Ticker(ticker,
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "shareOwnPercent")))
+        );
+        if (largeShareholders.isEmpty()) {
+            throw new ResourceNotFoundException();
         }
-        return largeShareholders;
-    }
-
-    @Override
-    public Iterable<LargeShareholder> getAll() {
-        Iterable<LargeShareholder> largeShareholders = largeShareholderRepository.findAll();
-        if (!largeShareholders.iterator().hasNext()) {
-            throw new ResourceNotFoundException("all large shareholders");
-        }
-        return largeShareholders;
+        return new PaginatedResponse<>(largeShareholders.getTotalPages(), largeShareholders.getContent());
     }
 }

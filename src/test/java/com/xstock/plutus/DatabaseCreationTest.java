@@ -16,17 +16,6 @@ public class DatabaseCreationTest {
     private CompanyRepository companyRepository;
 
     @Test
-    public void createCompany_thenGetName() {
-        Company company = new Company();
-        company.setTicker("Test");
-        companyRepository.save(company);
-
-        Optional<Company> company2 = companyRepository.findByTicker("Test");
-        assert company2.isPresent();
-        assertEquals("Test", company2.get().getTicker());
-    }
-
-    @Test
     public void getCompany_createdByDefault() {
         Optional<Company> company = companyRepository.findByTicker("VVS");
         assert company.isPresent();

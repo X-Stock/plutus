@@ -17,7 +17,7 @@ public class StockIndex {
     private Integer id;
 
     @ManyToMany
-    Set<Company> companies;
+    Set<Company> company;
 
     @Column(name = "index_name", columnDefinition = "TEXT")
     private String indexName;

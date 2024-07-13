@@ -4,11 +4,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      show-sql: false
+      open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/xstock
-    username: data_admin
-    password: data
+    url: jdbc:postgresql://localhost:5432/plutus
+    username: plutus
+    password: password
     driver-class-name: org.postgresql.Driver
   security:
     oauth2:
@@ -18,6 +18,3 @@ spring:
           audiences:
             - account
             - plutus
-  output:
-    ansi:
-      enabled: always
