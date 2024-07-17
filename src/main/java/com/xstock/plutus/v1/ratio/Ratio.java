@@ -14,7 +14,7 @@ public class Ratio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private Company company;
@@ -146,7 +146,7 @@ public class Ratio {
     @Column(name = "ebit_on_revenue")
     private Float ebitOnRevenue;
 
-    @Column(name = "pre_tax_on_ebit")
+    @Column(name = "pretax_on_ebit")
     private Float preTaxOnEbit;
 
     @Column(name = "pre_provision_on_toi")

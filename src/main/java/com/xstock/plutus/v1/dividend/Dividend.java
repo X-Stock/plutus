@@ -17,7 +17,7 @@ public class Dividend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private Company company;
