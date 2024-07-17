@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.stockIntraday;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -24,7 +24,7 @@ public class StockIntradayService implements CommonService<StockIntraday> {
     private final TaskScheduler taskScheduler = new SimpleAsyncTaskScheduler();
 
     @Override
-    public List<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
         Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -34,7 +34,7 @@ public class StockIntradayService implements CommonService<StockIntraday> {
         if (stockIntradays.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return stockIntradays.getContent();
+        return new PaginatedResponse<>(stockIntradays.getTotalPages(), stockIntradays.getContent());
     }
 
     public SseEmitter getIntraday(String ticker, Pageable pageable) {

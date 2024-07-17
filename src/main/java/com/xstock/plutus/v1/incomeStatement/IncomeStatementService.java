@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.incomeStatement;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class IncomeStatementService implements CommonService<IncomeStatement> {
     private final IncomeStatementRepository incomeStatementRepository;
 
     @Override
-    public List<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
         Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -27,6 +26,6 @@ public class IncomeStatementService implements CommonService<IncomeStatement> {
         if (incomeStatements.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return incomeStatements.getContent();
+        return new PaginatedResponse<>(incomeStatements.getTotalPages(), incomeStatements.getContent());
     }
 }

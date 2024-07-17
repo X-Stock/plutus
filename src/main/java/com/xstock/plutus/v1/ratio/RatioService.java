@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.ratio;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class RatioService implements CommonService<Ratio> {
     private final RatioRepository ratioRepository;
 
     @Override
-    public List<Ratio> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<Ratio> getAllByTicker(String ticker, Pageable pageable) {
         Page<Ratio> ratios = ratioRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
@@ -27,6 +26,6 @@ public class RatioService implements CommonService<Ratio> {
         if (ratios.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return ratios.getContent();
+        return new PaginatedResponse<>(ratios.getTotalPages(), ratios.getContent());
     }
 }

@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.stockHistorical;
 
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class StockHistoricalService implements CommonController<StockHistorical> {
     private final StockHistoricalRepository stockHistoricalRepository;
 
     @Override
-    public List<StockHistorical> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable) {
         Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompany_Ticker(
                 ticker,
                 PageRequest.of(
@@ -28,6 +27,6 @@ public class StockHistoricalService implements CommonController<StockHistorical>
         if (stockHistorical.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return stockHistorical.getContent();
+        return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
     }
 }
