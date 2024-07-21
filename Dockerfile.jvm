@@ -1,6 +1,6 @@
 FROM bellsoft/liberica-openjdk-alpine:21 AS builder
+RUN apk add curl bash zip
 RUN <<EOF
-    apk add curl bash zip
     curl -s "https://get.sdkman.io" | bash
     bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle"
 EOF
@@ -11,7 +11,6 @@ COPY src ./src
 RUN gradle build
 
 FROM bellsoft/liberica-openjdk-alpine:21
-RUN apk upgrade --no-cache
 EXPOSE 8080
 WORKDIR /app
 COPY --from=builder /builder/build/libs/*.jar ./*.jar
