@@ -1,6 +1,6 @@
 FROM container-registry.oracle.com/graalvm/native-image:21 AS builder
 RUN <<EOF
-    microdnf install findutils unzip zip
+    microdnf update && microdnf install findutils unzip zip
     curl -s "https://get.sdkman.io" | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"
     sdk install gradle
@@ -11,9 +11,9 @@ COPY build.gradle settings.gradle ./
 COPY src ./src
 RUN gradle nativeCompile
 
-FROM alpine:latest
-RUN apk upgrade --no-cache && apk add gcompat --no-cache
+FROM debian:stable-slim
 EXPOSE 8080
+RUN apt-get update && apt-get upgrade -y && && apt-get clean
 WORKDIR /app
 COPY --from=builder /builder/build/native/nativeCompile/ .
 ENTRYPOINT [ "./plutus" ]
