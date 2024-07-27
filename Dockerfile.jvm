@@ -12,7 +12,6 @@ RUN gradle build
 
 FROM bellsoft/liberica-openjdk-alpine:21
 EXPOSE 8080
-RUN apk --no-cache -U upgrade
 WORKDIR /app
 COPY --from=builder /builder/build/libs/*.jar ./*.jar
 ENTRYPOINT ["java","-jar","./*.jar"]

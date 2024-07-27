@@ -13,7 +13,6 @@ RUN gradle nativeCompile
 
 FROM debian:stable-slim
 EXPOSE 8080
-RUN apt-get update && apt-get upgrade -y && && apt-get clean
 WORKDIR /app
 COPY --from=builder /builder/build/native/nativeCompile/ .
 ENTRYPOINT [ "./plutus" ]
