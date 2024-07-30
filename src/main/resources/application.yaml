@@ -10,3 +10,6 @@ spring:
     username: plutus
     password: password
     driver-class-name: org.postgresql.Driver
+  threads:
+    virtual:
+      enabled: true
