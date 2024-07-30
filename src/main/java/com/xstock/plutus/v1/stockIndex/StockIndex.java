@@ -1,5 +1,6 @@
 package com.xstock.plutus.v1.stockIndex;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.Set;
 public class StockIndex {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
 
     @ManyToMany
