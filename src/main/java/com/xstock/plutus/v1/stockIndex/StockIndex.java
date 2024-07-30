@@ -1,6 +1,7 @@
 package com.xstock.plutus.v1.stockIndex;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,8 +19,9 @@ public class StockIndex {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ManyToMany
-    Set<Company> company;
+    private Set<Company> company;
 
     @Column(name = "index_name", columnDefinition = "TEXT")
     private String indexName;

@@ -19,7 +19,7 @@ public class Company {
     private Integer id;
 
     @ManyToMany(mappedBy = "company")
-    Set<StockIndex> stockIndices;
+    private Set<StockIndex> stockIndices;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String ticker;

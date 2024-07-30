@@ -4,11 +4,13 @@ import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,13 +25,20 @@ public class StockIndexService implements CommonService<StockIndex> {
                         pageable.getPageSize(),
                         pageable.getSortOr(Sort.by(Sort.Direction.ASC, "indexName")))
         );
+
         if (stockIndices.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return new PaginatedResponse<>(stockIndices.getTotalPages(), stockIndices.getContent());
+
+        var contents = stockIndices.getContent();
+        for (var content : contents) {
+            content.setCompany(null);
+        }
+        return new PaginatedResponse<>(stockIndices.getTotalPages(), contents);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PaginatedResponse<StockIndex> getAll(Pageable pageable) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAll(
                 PageRequest.of(
@@ -38,9 +47,15 @@ public class StockIndexService implements CommonService<StockIndex> {
                         pageable.getSortOr(Sort.by(Sort.Direction.ASC, "indexName"))
                 )
         );
+
         if (stockIndices.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        return new PaginatedResponse<>(stockIndices.getTotalPages(), stockIndices.getContent());
+
+        var contents = stockIndices.getContent();
+        for (var content : contents) {
+            Hibernate.initialize(content.getCompany());
+        }
+        return new PaginatedResponse<>(stockIndices.getTotalPages(), contents);
     }
 }
