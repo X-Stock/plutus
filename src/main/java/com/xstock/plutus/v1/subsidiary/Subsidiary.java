@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.subsidiary;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,10 +12,10 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "subsidiaries", uniqueConstraints = @UniqueConstraint(columnNames = {"no", "company_id"}))
+@JsonIgnoreProperties(value = {"id", "company"})
 public class Subsidiary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Integer id;
 
     private Integer no;
@@ -23,7 +23,6 @@ public class Subsidiary {
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Company company;
 
     @Column(columnDefinition = "TEXT")

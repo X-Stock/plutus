@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.stockIndex;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,10 +12,10 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "stock_indices")
+@JsonIgnoreProperties(value = {"id"})
 public class StockIndex {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Integer id;
 
     @ManyToMany

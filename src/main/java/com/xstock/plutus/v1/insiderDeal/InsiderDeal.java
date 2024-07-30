@@ -1,6 +1,6 @@
 package com.xstock.plutus.v1.insiderDeal;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,16 +14,15 @@ import java.time.OffsetDateTime;
 @Setter
 @Entity
 @Table(name = "insider_deals", indexes = @Index(columnList = "company_id"))
+@JsonIgnoreProperties(value = {"id", "company"})
 public class InsiderDeal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Company company;
 
     @Column(name = "deal_announce_date")
