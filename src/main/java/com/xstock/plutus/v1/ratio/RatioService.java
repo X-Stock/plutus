@@ -4,6 +4,8 @@ import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,10 +14,12 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@CacheConfig(cacheNames = "ratio")
 public class RatioService implements CommonService<Ratio> {
     private final RatioRepository ratioRepository;
 
     @Override
+    @Cacheable
     public PaginatedResponse<Ratio> getAllByTicker(String ticker, Pageable pageable) {
         Page<Ratio> ratios = ratioRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(

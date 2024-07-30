@@ -4,6 +4,8 @@ import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,16 +16,19 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@CacheConfig(cacheNames = "companies")
 public class CompanyService implements CommonService<Company> {
     private final CompanyRepository companyRepository;
 
     @Override
+    @Cacheable
     public Company getByTicker(String ticker) {
         Optional<Company> company = companyRepository.findByTicker(ticker);
         return company.orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
+    @Cacheable
     public PaginatedResponse<Company> getAll(Pageable pageable) {
         Page<Company> companies = companyRepository.findAll(
                 PageRequest.of(

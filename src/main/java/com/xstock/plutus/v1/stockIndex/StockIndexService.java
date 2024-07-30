@@ -4,6 +4,8 @@ import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,10 +14,12 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@CacheConfig(cacheNames = "indices")
 public class StockIndexService implements CommonService<StockIndex> {
     private final StockIndexRepository stockIndexRepository;
 
     @Override
+    @Cacheable
     public PaginatedResponse<StockIndex> getAllByTicker(String ticker, Pageable pageable) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompany_Ticker(ticker,
                 PageRequest.of(
@@ -30,6 +34,7 @@ public class StockIndexService implements CommonService<StockIndex> {
     }
 
     @Override
+    @Cacheable
     public PaginatedResponse<StockIndex> getAll(Pageable pageable) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAll(
                 PageRequest.of(
