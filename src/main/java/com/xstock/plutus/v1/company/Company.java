@@ -5,6 +5,8 @@ import com.xstock.plutus.v1.stockIndex.StockIndex;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
 
@@ -19,6 +21,7 @@ public class Company {
     private Integer id;
 
     @ManyToMany(mappedBy = "company")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<StockIndex> stockIndices;
 
     @Column(columnDefinition = "TEXT", nullable = false)
