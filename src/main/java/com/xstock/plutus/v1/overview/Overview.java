@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @Entity
+@Table(indexes = @Index(columnList = "company_id", unique = true))
 @JsonIgnoreProperties(value = {"id", "company"})
 public class Overview {
     @Id

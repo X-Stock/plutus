@@ -13,7 +13,10 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "dividends", indexes = @Index(columnList = "company_id"))
+@Table(name = "dividends",
+        indexes = @Index(columnList = "company_id"),
+        uniqueConstraints = @UniqueConstraint( columnNames = {"company_id", "exercise_date"} )
+)
 @JsonIgnoreProperties(value = {"id", "company"})
 public class Dividend {
     @Id

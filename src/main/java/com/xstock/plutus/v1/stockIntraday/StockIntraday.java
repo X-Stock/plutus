@@ -13,7 +13,9 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "stock_intraday", indexes = @Index(columnList = "company_id"))
+@Table(name = "stock_intraday",
+        indexes = @Index(columnList = "company_id"),
+        uniqueConstraints = @UniqueConstraint( columnNames = {"company_id", "time"}) )
 @JsonIgnoreProperties(value = {"id", "company"})
 public class StockIntraday {
     @Id
