@@ -12,29 +12,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class StockIndexService implements CommonService<StockIndex> {
     private final StockIndexRepository stockIndexRepository;
 
-    @Override
-    public PaginatedResponse<StockIndex> getAllByTicker(String ticker, Pageable pageable) {
+    public PaginatedResponse<String> getAllByTicker(String ticker) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompany_Ticker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "indexName")))
+                Pageable.unpaged(Sort.by(Sort.Direction.ASC, "indexName"))
         );
 
         if (stockIndices.isEmpty()) {
             throw new ResourceNotFoundException();
         }
 
-        var contents = stockIndices.getContent();
-        for (var content : contents) {
-            content.setCompany(null);
+        List<String> contents = new ArrayList<>();
+        for (var content : stockIndices.getContent()) {
+            contents.add(content.getIndexName());
         }
-        return new PaginatedResponse<>(stockIndices.getTotalPages(), contents);
+        return new PaginatedResponse<>(null, contents);
     }
 
     @Override

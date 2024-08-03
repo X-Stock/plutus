@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class StockIndexController implements CommonController<StockIndex> {
     private final StockIndexService stockIndexService;
 
-    @Override
     @GetMapping(path = "/companies/{ticker}/stockIndices")
-    public PaginatedResponse<StockIndex> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return stockIndexService.getAllByTicker(ticker, pageable);
+    public PaginatedResponse<String> getAllByTicker(@PathVariable String ticker) {
+        return stockIndexService.getAllByTicker(ticker);
     }
 
+    @Override
     @GetMapping(path = "/stockIndices")
     public PaginatedResponse<StockIndex> getAll(Pageable pageable) {
         return stockIndexService.getAll(pageable);
