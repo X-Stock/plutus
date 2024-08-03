@@ -11,21 +11,21 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @Entity
-@Table(name = "large_shareholders",
-        indexes = @Index(columnList = "company_id"),
-        uniqueConstraints = @UniqueConstraint(columnNames = {"no", "company_id"}) )
-@JsonIgnoreProperties(value = {"id", "company"})
+@Table(name = "large_shareholders")
+@IdClass(LargeShareholderId.class)
+@JsonIgnoreProperties(value = {"company_id", "company"})
 public class LargeShareholder {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private Integer no;
+    private int company_id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @MapsId
+    @JoinColumn(name = "company_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
+
+    @Id
+    private short no;
 
     @Column(columnDefinition = "TEXT")
     private String shareholder;

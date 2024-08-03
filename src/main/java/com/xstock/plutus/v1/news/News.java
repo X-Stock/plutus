@@ -17,7 +17,7 @@ import java.time.OffsetDateTime;
 @JsonIgnoreProperties(value = {"id", "company"})
 public class News {
     @Id
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)

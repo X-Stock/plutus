@@ -11,15 +11,14 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @Entity
-@Table(indexes = @Index(columnList = "company_id", unique = true ))
-@JsonIgnoreProperties(value = {"id", "company"})
+@JsonIgnoreProperties(value = {"company_id", "company"})
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int company_id;
 
     @OneToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @MapsId
+    @JoinColumn(name = "company_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 

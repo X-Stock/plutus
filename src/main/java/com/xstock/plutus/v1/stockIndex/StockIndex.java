@@ -17,12 +17,12 @@ import java.util.Set;
 public class StockIndex {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @ManyToMany
     private Set<Company> company;
 
-    @Column(name = "index_name", columnDefinition = "TEXT")
+    @Column(name = "index_name", columnDefinition = "TEXT", nullable = false)
     private String indexName;
 }

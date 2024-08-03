@@ -13,20 +13,20 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "stock_historical",
-        indexes = @Index(columnList = "company_id"),
-        uniqueConstraints = @UniqueConstraint( columnNames = {"company_id", "time"} ))
-@JsonIgnoreProperties(value = {"id", "company"})
+@Table(name = "stock_historical")
+@IdClass(StockHistoricalId.class)
+@JsonIgnoreProperties(value = {"company_id", "company"})
 public class StockHistorical {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int company_id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @MapsId
+    @JoinColumn(name = "company_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
+    @Id
     private OffsetDateTime time;
 
     private Integer open;

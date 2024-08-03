@@ -13,20 +13,20 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "insider_deals",
-        indexes = @Index(columnList = "company_id"),
-        uniqueConstraints = @UniqueConstraint(columnNames = {"company_id", "deal_announce_date"} ))
-@JsonIgnoreProperties(value = {"id", "company"})
+@Table(name = "insider_deals")
+@IdClass(InsiderDealId.class)
+@JsonIgnoreProperties(value = {"company_id", "company"})
 public class InsiderDeal {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int company_id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @MapsId
+    @JoinColumn(name = "company_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
+    @Id
     @Column(name = "deal_announce_date")
     private OffsetDateTime dealAnnounceDate;
 

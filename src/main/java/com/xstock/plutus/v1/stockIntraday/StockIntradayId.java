@@ -1,0 +1,12 @@
+package com.xstock.plutus.v1.stockIntraday;
+
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.OffsetDateTime;
+
+@EqualsAndHashCode
+public class StockIntradayId implements Serializable {
+    private int company_id;
+    private OffsetDateTime time;
+}
