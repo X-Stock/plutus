@@ -5,6 +5,8 @@ import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +19,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@CacheConfig(cacheNames = "indices")
 public class StockIndexService implements CommonService<StockIndex> {
     private final StockIndexRepository stockIndexRepository;
 
+    @Cacheable
     public PaginatedResponse<String> getAllByTicker(String ticker) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompany_Ticker(ticker,
                 Pageable.unpaged(Sort.by(Sort.Direction.ASC, "indexName"))
@@ -37,6 +41,7 @@ public class StockIndexService implements CommonService<StockIndex> {
     }
 
     @Override
+    @Cacheable
     @Transactional(readOnly = true)
     public PaginatedResponse<StockIndex> getAll(Pageable pageable) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAll(

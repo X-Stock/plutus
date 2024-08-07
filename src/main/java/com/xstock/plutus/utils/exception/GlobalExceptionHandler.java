@@ -7,17 +7,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.ZonedDateTime;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = {ResourceNotFoundException.class})
+    @ExceptionHandler(value = ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorMessage handleNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         return new ErrorMessage(
                 ex.getMessage(),
-                ZonedDateTime.now(),
                 request.getDescription(false)
         );
     }
