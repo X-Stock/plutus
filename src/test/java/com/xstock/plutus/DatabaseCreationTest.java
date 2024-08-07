@@ -5,11 +5,13 @@ import com.xstock.plutus.v1.company.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@TestPropertySource(properties = "spring.jpa.defer-datasource-initialization = true")
 @DataJpaTest
 public class DatabaseCreationTest {
     @Autowired
@@ -19,6 +21,6 @@ public class DatabaseCreationTest {
     public void getCompany_createdByDefault() {
         Optional<Company> company = companyRepository.findByTicker("VVS");
         assert company.isPresent();
-        assertEquals("VVS", company.get().getTicker());
+        assertThat(company.get().getTicker()).isEqualTo("VVS");
     }
 }

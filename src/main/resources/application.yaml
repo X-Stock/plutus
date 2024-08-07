@@ -2,14 +2,26 @@ spring:
   application:
     name: plutus
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
-    open-in-view: false
+    properties:
+      hibernate:
+        auto_quote_keyword: true
   datasource:
     url: jdbc:postgresql://localhost:5432/plutus
     username: plutus
     password: password
     driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwk-set-uri: "http://localhost:9000/realms/xStock/protocol/openid-connect/certs"
+        jwt:
+          issuer-uri: "http://localhost:9000/realms/xStock"
+          audiences:
+            - account
+            - plutus
   threads:
     virtual:
       enabled: true
