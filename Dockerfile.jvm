@@ -1,16 +1,10 @@
-FROM bellsoft/liberica-openjdk-alpine:21 AS builder
-RUN <<EOF
-    apk update && apk add curl bash zip
-    curl -s "https://get.sdkman.io" | bash
-    bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle"
-EOF
-ENV PATH="$PATH:/root/.sdkman/candidates/gradle/current/bin"
+FROM gradle:jdk21 AS builder
 WORKDIR /builder
 COPY build.gradle settings.gradle ./
 COPY src ./src
 RUN gradle build
 
-FROM bellsoft/liberica-openjdk-alpine:21
+FROM eclipse-temurin:21-jre-alpine
 EXPOSE 8080
 WORKDIR /app
 COPY --from=builder /builder/build/libs/*.jar ./*.jar

@@ -18,6 +18,12 @@ repositories {
 	mavenCentral()
 }
 
+graalvmNative {
+	binaries.configureEach {
+		buildArgs.add("-J-Xmx7g")
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
