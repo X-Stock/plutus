@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.aot.DisabledInAotMode;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
@@ -28,15 +29,15 @@ public class SecurityTests {
     private CompanyService companyService;
 
     @Test
-    void shouldReturnCompaniesWhenAuthorized() throws Exception {
+    void shouldReturnCompanyWhenAuthorized() throws Exception {
         Company mockCompany = new Company();
-        mockCompany.setTicker("VVS");
+        ReflectionTestUtils.setField(mockCompany, "ticker", "VVS");
         when(companyService.getByTicker("VVS")).thenReturn(mockCompany);
 
         mvc.perform(get(url + "/companies/VVS")
                         .with(jwt()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(6))
+                .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$.ticker").value("VVS"));
     }
 
