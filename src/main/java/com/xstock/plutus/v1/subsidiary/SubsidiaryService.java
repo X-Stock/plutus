@@ -21,7 +21,7 @@ public class SubsidiaryService implements CommonService<Subsidiary> {
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "ownPercent")))
+                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "no")))
         );
         if (subsidiaries.isEmpty()) {
             throw new ResourceNotFoundException();

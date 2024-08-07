@@ -1,22 +1,23 @@
 package com.xstock.plutus.v1.profile;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
-@Setter
 @Entity
+@JsonIgnoreProperties(value = {"company_id", "company"})
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int company_id;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "company_id")
-    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Column(name = "companyName", columnDefinition = "TEXT")

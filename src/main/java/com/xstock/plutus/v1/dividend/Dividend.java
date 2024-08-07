@@ -1,27 +1,30 @@
 package com.xstock.plutus.v1.dividend;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.OffsetDateTime;
 
 @Getter
-@Setter
 @Entity
-@Table(name = "dividends")
+@Table(name = "dividends" )
+@IdClass(DividendId.class)
+@JsonIgnoreProperties(value = {"company_id", "company"})
 public class Dividend {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int company_id;
 
     @ManyToOne
+    @MapsId
     @JoinColumn(name = "company_id")
-    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
+    @Id
     @Column(name = "exercise_date")
     private OffsetDateTime exerciseDate;
 

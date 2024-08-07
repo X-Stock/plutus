@@ -1,24 +1,25 @@
 package com.xstock.plutus.v1.event;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.OffsetDateTime;
 
 @Getter
-@Setter
 @Entity
-@Table(name = "events")
+@Table(name = "events", indexes = @Index(columnList = "company_id"))
+@JsonIgnoreProperties(value = {"id", "company"})
 public class Event {
     @Id
-    private Integer id;
+    private long id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
-    @JsonIgnore
+    @JoinColumn(name = "company_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     private Integer price;

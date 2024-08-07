@@ -4,9 +4,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      open-in-view: false
+    open-in-view: false
   datasource:
     url: jdbc:postgresql://localhost:5432/plutus
     username: plutus
     password: password
     driver-class-name: org.postgresql.Driver
+  threads:
+    virtual:
+      enabled: true

@@ -1,23 +1,26 @@
 package com.xstock.plutus.v1.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.v1.stockIndex.StockIndex;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "companies", indexes = @Index(columnList = "ticker", unique = true))
+@JsonIgnoreProperties(value = {"id", "stockIndices"})
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToMany(mappedBy = "company")
-    Set<StockIndex> stockIndices;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<StockIndex> stockIndices;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String ticker;
