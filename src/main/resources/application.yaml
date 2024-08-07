@@ -16,9 +16,9 @@ spring:
   security:
     oauth2:
       resourceserver:
-        jwk-set-uri: "http://localhost:9000/realms/xStock/protocol/openid-connect/certs"
+        jwk-set-uri: "http://localhost:9000/realms/XStock/protocol/openid-connect/certs"
         jwt:
-          issuer-uri: "http://localhost:9000/realms/xStock"
+          issuer-uri: "http://localhost:9000/realms/XStock"
           audiences:
             - account
             - plutus
