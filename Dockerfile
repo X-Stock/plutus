@@ -1,6 +1,6 @@
 FROM gradle:jdk21-graal AS builder
 WORKDIR /builder
-COPY build.gradle settings.gradle ./
+COPY build.gradle.kts settings.gradle.kts ./
 COPY src ./src
 RUN gradle nativeCompile
 
