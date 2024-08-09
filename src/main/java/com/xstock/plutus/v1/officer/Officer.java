@@ -11,19 +11,19 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "officers")
 @IdClass(OfficerId.class)
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class Officer {
     @Id
-    private int company_id;
+    private Integer companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Id
-    private short no;
+    private Short no;
 
     @Column(columnDefinition = "TEXT")
     private String name;
@@ -31,6 +31,5 @@ public class Officer {
     @Column(columnDefinition = "TEXT")
     private String position;
 
-    @Column(name = "own_percent")
     private Float ownPercent;
 }

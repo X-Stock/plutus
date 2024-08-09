@@ -11,23 +11,22 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "subsidiaries")
 @IdClass(SubsidiaryId.class)
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class Subsidiary {
     @Id
-    private int company_id;
+    private Integer companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Id
-    private short no;
+    private Short no;
 
     @Column(columnDefinition = "TEXT")
     private String name;
 
-    @Column(name = "own_percent")
     private Float ownPercent;
 }

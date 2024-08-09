@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @EqualsAndHashCode
 public class CashFlowId implements Serializable {
-    private int company_id;
-    private short quarter;
-    private short year;
+    private Integer companyId;
+    private Short quarter;
+    private Short year;
 }

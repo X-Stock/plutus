@@ -9,14 +9,14 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Entity
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class Overview {
     @Id
-    private int company_id;
+    private int companyId;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
@@ -26,49 +26,37 @@ public class Overview {
     @Column(columnDefinition = "TEXT")
     private String industry;
 
-    @Column(name = "company_type", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String companyType;
 
-    @Column(name = "number_of_shareholders")
     private Integer numberOfShareholders;
 
-    @Column(name = "foreign_percent")
     private Float foreignPercent;
 
-    @Column(name = "outstanding_share")
     private Float outstandingShare;
 
-    @Column(name = "issue_share")
     private Float issueShare;
 
-    @Column(name = "established_year")
     private Integer establishedYear;
 
-    @Column(name = "number_of_employees")
     private Integer numberOfEmployees;
 
-    @Column(name = "stock_rating")
     private Float stockRating;
 
-    @Column(name = "delta_in_week")
     private Float deltaInWeek;
 
-    @Column(name = "delta_in_month")
     private Float deltaInMonth;
 
-    @Column(name = "delta_in_year")
     private Float deltaInYear;
 
-    @Column(name = "short_name", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String shortName;
 
-    @Column(name = "industry_en", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String industryEn;
 
-    @Column(name = "industry_id")
     private Integer industryId;
 
-    @Column(name = "industry_id_v2")
     private Integer industryIdV2;
 
     @Column(columnDefinition = "TEXT")

@@ -7,6 +7,6 @@ import java.time.OffsetDateTime;
 
 @EqualsAndHashCode
 public class DividendId implements Serializable {
-    private int company_id;
+    private int companyId;
     private OffsetDateTime exerciseDate;
 }

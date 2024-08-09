@@ -21,7 +21,7 @@ public class EventService implements CommonService<Event> {
     @Override
     @Cacheable
     public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Event> events = eventRepository.findAllByCompany_Ticker(ticker,
+        Page<Event> events = eventRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

@@ -13,33 +13,29 @@ import java.time.OffsetDateTime;
 @Entity
 @Table(name = "insider_deals")
 @IdClass(InsiderDealId.class)
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class InsiderDeal {
     @Id
-    private int company_id;
+    private int companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Id
-    @Column(name = "deal_announce_date")
     private OffsetDateTime dealAnnounceDate;
 
-    @Column(name = "deal_method", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String dealMethod;
 
-    @Column(name = "deal_action", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String dealAction;
 
-    @Column(name = "deal_quantity")
     private Integer dealQuantity;
 
-    @Column(name = "deal_price")
     private Integer dealPrice;
 
-    @Column(name = "deal_ratio")
     private Float dealRatio;
 }

@@ -18,7 +18,7 @@ public class OverviewService implements CommonService<Overview> {
     @Override
     @Cacheable
     public Overview getByTicker(String ticker) {
-        Optional<Overview> overview = overviewRepository.findByCompany_Ticker(ticker);
+        Optional<Overview> overview = overviewRepository.findByCompanyTicker(ticker);
         return overview.orElseThrow(ResourceNotFoundException::new);
     }
 }

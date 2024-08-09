@@ -7,6 +7,6 @@ import java.time.OffsetDateTime;
 
 @EqualsAndHashCode
 public class InsiderDealId implements Serializable {
-    private int company_id;
+    private int companyId;
     private OffsetDateTime dealAnnounceDate;
 }

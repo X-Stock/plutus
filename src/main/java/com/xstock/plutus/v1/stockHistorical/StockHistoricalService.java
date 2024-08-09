@@ -21,7 +21,7 @@ public class StockHistoricalService implements CommonController<StockHistorical>
     @Override
     @Cacheable
     public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable) {
-        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompany_Ticker(
+        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(
                 ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),

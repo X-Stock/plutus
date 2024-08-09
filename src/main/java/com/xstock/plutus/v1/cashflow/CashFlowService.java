@@ -21,7 +21,7 @@ public class CashFlowService implements CommonService<CashFlow> {
     @Override
     @Cacheable
     public PaginatedResponse<CashFlow> getAllByTicker(String ticker, Pageable pageable) {
-        Page<CashFlow> cashFlows = cashFlowRepository.findAllByCompany_Ticker(ticker,
+        Page<CashFlow> cashFlows = cashFlowRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

@@ -21,7 +21,7 @@ public class DividendService implements CommonService<Dividend> {
     @Override
     @Cacheable
     public PaginatedResponse<Dividend> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Dividend> dividends = dividendRepository.findAllByCompany_Ticker(ticker,
+        Page<Dividend> dividends = dividendRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

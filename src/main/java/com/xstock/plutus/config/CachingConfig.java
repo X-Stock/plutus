@@ -23,9 +23,9 @@ class CachingConfig implements CachingConfigurer {
                 .entryTtl(TIME_TO_LIVE)
                 .disableCachingNullValues()
                 .serializeValuesWith(
-                    RedisSerializationContext.SerializationPair.fromSerializer(
-                            new GenericJackson2JsonRedisSerializer()
-                    )
+                        RedisSerializationContext.SerializationPair.fromSerializer(
+                                new GenericJackson2JsonRedisSerializer()
+                        )
                 );
     }
 

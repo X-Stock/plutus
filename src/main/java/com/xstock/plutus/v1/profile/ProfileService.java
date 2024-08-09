@@ -18,7 +18,7 @@ public class ProfileService implements CommonService<Profile> {
     @Override
     @Cacheable
     public Profile getByTicker(String ticker) {
-        Optional<Profile> profile = profileRepository.findByCompany_Ticker(ticker);
+        Optional<Profile> profile = profileRepository.findByCompanyTicker(ticker);
         return profile.orElseThrow(ResourceNotFoundException::new);
     }
 }

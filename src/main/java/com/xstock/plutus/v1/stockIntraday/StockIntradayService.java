@@ -25,7 +25,7 @@ public class StockIntradayService implements CommonService<StockIntraday> {
 
     @Override
     public PaginatedResponse<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
-        Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompany_Ticker(ticker,
+        Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

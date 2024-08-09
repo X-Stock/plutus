@@ -16,7 +16,7 @@ import java.util.Set;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToMany(mappedBy = "company")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -25,10 +25,9 @@ public class Company {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String ticker;
 
-    @Column(name = "fullname_vi", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String fullNameVi;
 
-    @Column(name = "company_type")
     private Integer companyType;
 
     @Column(columnDefinition = "TEXT")

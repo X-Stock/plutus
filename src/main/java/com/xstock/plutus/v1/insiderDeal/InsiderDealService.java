@@ -21,7 +21,7 @@ public class InsiderDealService implements CommonService<InsiderDeal> {
     @Override
     @Cacheable
     public PaginatedResponse<InsiderDeal> getAllByTicker(String ticker, Pageable pageable) {
-        Page<InsiderDeal> insiderDeals = insiderDealRepository.findAllByCompany_Ticker(ticker,
+        Page<InsiderDeal> insiderDeals = insiderDealRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

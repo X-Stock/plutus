@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @NoRepositoryBean
 public interface CommonRepository<T> extends PagingAndSortingRepository<T, Integer> {
-    Optional<T> findByCompany_Ticker(String ticker);
+    Optional<T> findByCompanyTicker(String ticker);
 
-    Page<T> findAllByCompany_Ticker(String ticker, Pageable pageable);
+    Page<T> findAllByCompanyTicker(String ticker, Pageable pageable);
 }
