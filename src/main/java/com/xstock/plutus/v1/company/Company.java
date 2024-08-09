@@ -26,7 +26,7 @@ public class Company {
     private String ticker;
 
     @Column(columnDefinition = "TEXT")
-    private String fullNameVi;
+    private String fullnameVi;
 
     private Integer companyType;
 
