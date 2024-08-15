@@ -8,4 +8,7 @@ FROM debian:stable-slim
 EXPOSE 8080
 WORKDIR /app
 COPY --from=builder /builder/build/native/nativeCompile/ .
+RUN groupadd --gid 1000 plutus \
+  && useradd --uid 1000 --gid plutus -M plutus
+USER plutus
 ENTRYPOINT [ "./plutus" ]
