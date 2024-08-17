@@ -1,14 +1,14 @@
-FROM gradle:jdk21-graal AS builder
+FROM gradle:jdk21 AS builder
 WORKDIR /builder
 COPY build.gradle.kts settings.gradle.kts ./
 COPY src ./src
-RUN gradle nativeCompile
+RUN gradle build
 
-FROM debian:stable-slim
+FROM eclipse-temurin:21-jre-alpine
 EXPOSE 8080
 WORKDIR /app
-COPY --from=builder /builder/build/native/nativeCompile/ .
-RUN groupadd --gid 1000 plutus \
-  && useradd --uid 1000 --gid plutus -M plutus
+COPY --from=builder /builder/build/libs/*.jar ./plutus.jar
+RUN addgroup -g 1000 plutus  \
+    && adduser -u 1000 -G plutus -D -H plutus
 USER plutus
-ENTRYPOINT [ "./plutus" ]
+ENTRYPOINT ["java","-jar","./plutus.jar"]
