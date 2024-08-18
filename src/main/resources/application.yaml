@@ -14,12 +14,8 @@ spring:
     password: password
     driver-class-name: org.postgresql.Driver
   security:
-    user:
-      name: plutus
-      password: password
     oauth2:
       resourceserver:
-        jwk-set-uri: "http://localhost:9000/realms/xStock/protocol/openid-connect/certs"
         jwt:
           issuer-uri: "http://localhost:9000/realms/xStock"
           audiences:
@@ -31,6 +27,7 @@ spring:
 springdoc:
   show-actuator: true
   use-management-port: true
+
 management:
   endpoints:
     web:

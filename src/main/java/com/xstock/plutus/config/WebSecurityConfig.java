@@ -18,18 +18,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    @Value("${spring.security.user.name}")
-    private String userName;
+    @Value("${spring.actuator.username:admin}")
+    private String actuatorUsername;
 
-    @Value("${spring.security.user.password}")
-    private String userPassword;
+    @Value("${spring.actuator.password:password}")
+    private String actuatorPassword;
 
     @Bean
     public UserDetailsService userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         UserDetails userDetails = User.builder()
-                .username(userName)
-                .password(encoder.encode(userPassword))
+                .username(actuatorUsername)
+                .password(encoder.encode(actuatorPassword))
                 .roles("ACTUATOR")
                 .build();
         return new InMemoryUserDetailsManager(userDetails);
