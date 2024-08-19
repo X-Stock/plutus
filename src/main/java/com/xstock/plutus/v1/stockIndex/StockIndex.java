@@ -14,11 +14,11 @@ import java.util.Set;
 public class StockIndex {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToMany
     private Set<Company> company;
 
-    @Column(name = "index_name", columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String indexName;
 }

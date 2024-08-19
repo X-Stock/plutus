@@ -10,75 +10,59 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Entity
 @IdClass(BalanceSheetId.class)
-@Table(name = "balance_sheet")
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class BalanceSheet {
     @Id
-    private int company_id;
+    private Integer companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Id
-    private short quarter;
+    private Short quarter;
 
     @Id
-    private short year;
+    private Short year;
 
     private Integer asset;
 
-    @Column(name = "short_asset")
     private Integer shortAsset;
 
-    @Column(name = "fixed_asset")
     private Integer fixedAsset;
 
-    @Column(name = "long_asset")
     private Integer longAsset;
 
-    @Column(name = "other_asset")
     private Integer otherAsset;
 
     private Integer debt;
 
-    @Column(name = "short_debt")
     private Integer shortDebt;
 
-    @Column(name = "long_debt")
     private Integer longDebt;
 
-    @Column(name = "other_debt")
     private Integer otherDebt;
 
     private Integer deposit;
 
-    @Column(name = "central_bank_deposit")
     private Integer centralBankDeposit;
 
-    @Column(name = "other_bank_deposit")
     private Integer otherBankDeposit;
 
-    @Column(name = "customer_loan")
     private Integer customerLoan;
 
-    @Column(name = "net_customer_loan")
     private Integer netCustomerLoan;
 
-    @Column(name = "bad_loan")
     private Integer badLoan;
 
-    @Column(name = "other_bank_loan")
     private Integer otherBankLoan;
 
     private Integer cash;
 
-    @Column(name = "short_invest")
     private Integer shortInvest;
 
-    @Column(name = "short_receivable")
     private Integer shortReceivable;
 
     private Integer inventory;
@@ -87,35 +71,26 @@ public class BalanceSheet {
 
     private Integer capital;
 
-    @Column(name = "stock_invest")
     private Integer stockInvest;
 
     private Integer provision;
 
-    @Column(name = "other_bank_credit")
     private Integer otherBankCredit;
 
-    @Column(name = "owe_other_bank")
     private Integer oweOtherBank;
 
-    @Column(name = "owe_central_bank")
     private Integer oweCentralBank;
 
-    @Column(name = "valuable_paper")
     private Integer valuablePaper;
 
-    @Column(name = "payable_interest")
     private Integer payableInterest;
 
-    @Column(name = "receivable_interest")
     private Integer receivableInterest;
 
     private Integer fund;
 
-    @Column(name = "un_distributed_income")
     private Integer unDistributedIncome;
 
-    @Column(name = "minor_shareholder_profit")
     private Integer minorShareholderProfit;
 
     private Integer payable;

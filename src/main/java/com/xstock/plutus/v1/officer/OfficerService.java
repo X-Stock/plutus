@@ -21,7 +21,7 @@ public class OfficerService implements CommonService<Officer> {
     @Override
     @Cacheable
     public PaginatedResponse<Officer> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Officer> officers = officerRepository.findAllByCompany_Ticker(ticker,
+        Page<Officer> officers = officerRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

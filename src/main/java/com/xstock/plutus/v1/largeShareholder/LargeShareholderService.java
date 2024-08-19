@@ -21,7 +21,7 @@ public class LargeShareholderService implements CommonService<LargeShareholder> 
     @Override
     @Cacheable
     public PaginatedResponse<LargeShareholder> getAllByTicker(String ticker, Pageable pageable) {
-        Page<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompany_Ticker(ticker,
+        Page<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

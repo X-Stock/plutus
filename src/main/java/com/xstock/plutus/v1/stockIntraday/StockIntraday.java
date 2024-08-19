@@ -11,29 +11,27 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Entity
-@Table(name = "stock_intraday")
 @IdClass(StockIntradayId.class)
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class StockIntraday {
     @Id
-    private int company_id;
+    private int companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Id
     private OffsetDateTime time;
 
-    @Column(name = "order_type", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String orderType;
 
     private Integer volume;
 
     private Float price;
 
-    @Column(name = "previous_price_change")
     private Float previousPriceChange;
 }

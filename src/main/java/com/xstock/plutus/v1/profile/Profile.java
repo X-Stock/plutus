@@ -9,18 +9,18 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Entity
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class Profile {
     @Id
-    private int company_id;
+    private int companyId;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
-    @Column(name = "companyName", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String companyName;
 
     @Column(columnDefinition = "TEXT")
@@ -32,12 +32,12 @@ public class Profile {
     @Column(columnDefinition = "TEXT")
     private String promise;
 
-    @Column(name = "business_risk", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String businessRisk;
 
-    @Column(name = "key_developments", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String keyDevelopments;
 
-    @Column(name = "business_strategies", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String businessStrategies;
 }

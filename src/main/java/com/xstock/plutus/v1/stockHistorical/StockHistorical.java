@@ -11,16 +11,15 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Entity
-@Table(name = "stock_historical")
 @IdClass(StockHistoricalId.class)
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class StockHistorical {
     @Id
-    private int company_id;
+    private int companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 

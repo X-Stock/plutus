@@ -21,7 +21,7 @@ public class NewsService implements CommonService<News> {
     @Override
     @Cacheable
     public PaginatedResponse<News> getAllByTicker(String ticker, Pageable pageable) {
-        Page<News> news = newsRepository.findAllByCompany_Ticker(ticker,
+        Page<News> news = newsRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

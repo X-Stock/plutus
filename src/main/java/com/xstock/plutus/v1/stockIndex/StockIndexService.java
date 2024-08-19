@@ -25,7 +25,7 @@ public class StockIndexService implements CommonService<StockIndex> {
 
     @Cacheable
     public PaginatedResponse<String> getAllByTicker(String ticker) {
-        Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompany_Ticker(ticker,
+        Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompanyTicker(ticker,
                 Pageable.unpaged(Sort.by(Sort.Direction.ASC, "indexName"))
         );
 

@@ -7,6 +7,6 @@ import java.time.OffsetDateTime;
 
 @EqualsAndHashCode
 public class StockIntradayId implements Serializable {
-    private int company_id;
+    private int companyId;
     private OffsetDateTime time;
 }

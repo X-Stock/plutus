@@ -21,7 +21,7 @@ public class IncomeStatementService implements CommonService<IncomeStatement> {
     @Override
     @Cacheable
     public PaginatedResponse<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
-        Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompany_Ticker(ticker,
+        Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

@@ -21,7 +21,7 @@ public class BalanceSheetService implements CommonService<BalanceSheet> {
     @Override
     @Cacheable
     public PaginatedResponse<BalanceSheet> getAllByTicker(String ticker, Pageable pageable) {
-        Page<BalanceSheet> balanceSheets = balanceSheetRepository.findAllByCompany_Ticker(ticker,
+        Page<BalanceSheet> balanceSheets = balanceSheetRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

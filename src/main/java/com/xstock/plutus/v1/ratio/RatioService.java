@@ -21,7 +21,7 @@ public class RatioService implements CommonService<Ratio> {
     @Override
     @Cacheable
     public PaginatedResponse<Ratio> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Ratio> ratios = ratioRepository.findAllByCompany_Ticker(ticker,
+        Page<Ratio> ratios = ratioRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

@@ -16,12 +16,22 @@ spring:
   security:
     oauth2:
       resourceserver:
-        jwk-set-uri: "http://localhost:9000/realms/xStock/protocol/openid-connect/certs"
         jwt:
           issuer-uri: "http://localhost:9000/realms/xStock"
           audiences:
             - account
-            - plutus
   threads:
     virtual:
       enabled: true
+
+springdoc:
+  show-actuator: true
+  use-management-port: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, openapi, swagger-ui
+  server:
+    port: 9090

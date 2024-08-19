@@ -11,29 +11,26 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Entity
-@Table(name = "dividends" )
+@Table(name = "dividends")
 @IdClass(DividendId.class)
-@JsonIgnoreProperties(value = {"company_id", "company"})
+@JsonIgnoreProperties(value = {"companyId", "company"})
 public class Dividend {
     @Id
-    private int company_id;
+    private Integer companyId;
 
     @ManyToOne
     @MapsId
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Id
-    @Column(name = "exercise_date")
     private OffsetDateTime exerciseDate;
 
-    @Column(name = "cash_year")
     private Short cashYear;
 
-    @Column(name = "cash_dividend_percentage")
     private Float cashDividendPercentage;
 
-    @Column(name = "issue_method", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String issueMethod;
 }

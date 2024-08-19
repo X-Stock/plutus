@@ -21,7 +21,7 @@ public class SubsidiaryService implements CommonService<Subsidiary> {
     @Override
     @Cacheable
     public PaginatedResponse<Subsidiary> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompany_Ticker(ticker,
+        Page<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompanyTicker(ticker,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
