@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorMessage handleNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         return new ErrorMessage(
+                404,
                 ex.getMessage(),
                 request.getDescription(false)
         );
