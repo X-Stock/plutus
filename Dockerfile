@@ -1,6 +1,7 @@
 FROM gradle:jdk21 AS builder
 WORKDIR /builder
 COPY build.gradle.kts settings.gradle.kts ./
+RUN gradle build 2>/dev/null || true
 COPY src ./src
 RUN gradle build
 

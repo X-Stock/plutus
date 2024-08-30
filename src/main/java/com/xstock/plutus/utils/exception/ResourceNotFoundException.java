@@ -2,7 +2,7 @@ package com.xstock.plutus.utils.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException() {
-        super("Not Found");
+        super("Resource Not Found");
     }
 
     public ResourceNotFoundException(String message) {
