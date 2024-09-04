@@ -57,6 +57,7 @@ public class Overview {
 
     private Integer industryId;
 
+    @Column(name = "industry_id_v2")
     private Integer industryIdV2;
 
     @Column(columnDefinition = "TEXT")

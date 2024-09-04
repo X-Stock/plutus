@@ -26,9 +26,9 @@ public class News {
 
     private Integer priceChange;
 
-    private Float priceChangeRatio;
+    private Float weeklyPriceChangeRatio;
 
-    private Float MonthlyPriceChangeRatio;
+    private Float monthlyPriceChangeRatio;
 
     @Column(columnDefinition = "TEXT")
     private String title;
