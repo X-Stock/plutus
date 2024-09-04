@@ -26,8 +26,6 @@ public class Event {
 
     private Integer priceChange;
 
-    private Float priceChangeRatio;
-
     private Float weeklyPriceChangeRatio;
 
     private Float monthlyPriceChangeRatio;
