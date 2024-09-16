@@ -4,3 +4,4 @@ build
 *.md
 Dockerfile
 Dockerfile.native
+.github
