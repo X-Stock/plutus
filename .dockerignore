@@ -2,6 +2,6 @@
 .idea
 build
 *.md
+Dockerfile.jvm
 Dockerfile
-Dockerfile.native
 .github

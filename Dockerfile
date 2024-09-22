@@ -1,15 +1,17 @@
-FROM gradle:jdk21 AS builder
+FROM container-registry.oracle.com/graalvm/native-image:21-muslib AS builder
 WORKDIR /builder
-COPY build.gradle.kts settings.gradle.kts ./
-RUN gradle build 2>/dev/null || true
+COPY gradle gradlew build.gradle.kts settings.gradle.kts ./
 COPY src ./src
-RUN gradle build -x test
+RUN ./gradlew nativeCompile
 
-FROM eclipse-temurin:21-jre-alpine
+FROM debian:stable-slim AS user
+RUN groupadd --gid 1000 plutus \
+  && useradd --uid 1000 --gid plutus -M plutus
+
+FROM scratch
 EXPOSE 8080
 WORKDIR /app
-COPY --from=builder /builder/build/libs/*.jar ./plutus.jar
-RUN addgroup -g 1000 plutus  \
-    && adduser -u 1000 -G plutus -D -H plutus
+COPY --from=builder /builder/build/native/nativeCompile/ .
+COPY --from=user /etc/passwd /etc/passwd
 USER plutus
-ENTRYPOINT ["java","-jar","./plutus.jar"]
+ENTRYPOINT [ "./plutus" ]

@@ -2,6 +2,7 @@ plugins {
 	id("java")
 	id("org.springframework.boot") version "3.3.4"
 	id("io.spring.dependency-management") version "1.1.6"
+	id ("org.graalvm.buildtools.native") version "0.10.3"
 }
 
 group = "com.xStock"
@@ -10,6 +11,12 @@ version = "0.0.1-SNAPSHOT"
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+graalvmNative {
+	binaries.all {
+		buildArgs.addAll("--static", "--libc=musl")
 	}
 }
 
