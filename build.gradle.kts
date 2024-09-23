@@ -16,7 +16,12 @@ java {
 
 graalvmNative {
 	binaries.all {
-		buildArgs.addAll("--static", "--libc=musl")
+		buildArgs.addAll(
+			"--static",
+			"--libc=musl",
+			"--gc=G1",
+			"--strict-image-heap"
+		)
 	}
 }
 
