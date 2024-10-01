@@ -1,18 +1,18 @@
 package com.xstock.plutus;
 
-import com.xstock.plutus.v1.company.Company;
-import com.xstock.plutus.v1.company.CompanyController;
-import com.xstock.plutus.v1.company.CompanyService;
+import com.xstock.plutus.api.v1.company.Company;
+import com.xstock.plutus.api.v1.company.CompanyController;
+import com.xstock.plutus.api.v1.company.CompanyService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.aot.DisabledInAotMode;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,16 +29,15 @@ public class SecurityTests {
     private CompanyService companyService;
 
     @Test
+    @WithMockUser
     void shouldReturnCompanyWhenAuthorized() throws Exception {
-        Company mockCompany = new Company();
-        ReflectionTestUtils.setField(mockCompany, "ticker", "VVS");
+        Company mockCompany = Mockito.mock(Company.class);
         when(companyService.getByTicker("VVS")).thenReturn(mockCompany);
 
-        mvc.perform(get(url + "/companies/VVS")
-                        .with(jwt()))
+        mvc.perform(get(url + "/companies/VVS"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(4))
-                .andExpect(jsonPath("$.ticker").value("VVS"));
+                .andExpect(jsonPath("$.ticker").value(mockCompany.getTicker()));
     }
 
     @Test
