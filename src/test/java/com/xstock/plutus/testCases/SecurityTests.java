@@ -1,8 +1,8 @@
-package com.xstock.plutus;
+package com.xstock.plutus.testCases;
 
-import com.xstock.plutus.api.v1.company.Company;
-import com.xstock.plutus.api.v1.company.CompanyController;
-import com.xstock.plutus.api.v1.company.CompanyService;
+import com.xstock.plutus.api.stock.v1.company.Company;
+import com.xstock.plutus.api.stock.v1.company.CompanyController;
+import com.xstock.plutus.api.stock.v1.company.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @DisabledInAotMode
 @WebMvcTest(CompanyController.class)
-public class SecurityTests {
-    private final String url = "/api/v1";
+class SecurityTests {
+    private static final String url = "/api/v1";
 
     @Autowired
     private MockMvc mvc;

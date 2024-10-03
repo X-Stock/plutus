@@ -1,4 +1,4 @@
-package com.xstock.plutus;
+package com.xstock.plutus.testCases;
 
 import com.xstock.plutus.api.user.account.Account;
 import com.xstock.plutus.api.user.account.AccountRepository;
@@ -23,6 +23,12 @@ import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig(classes = {WebSecurityConfig.class, AccountService.class})
 public class AccountServiceTests {
+    private static final String uuid = "051c7240-8bc3-4577-9161-4f3f28dab600";
+    private static final UUID id = UUID.fromString(uuid);
+    private static final String authority = "profile";
+    private static String config;
+    private static Account account;
+
     @Autowired
     private AccountService accountService;
 
@@ -32,23 +38,15 @@ public class AccountServiceTests {
     @MockBean
     private AccountRepository accountRepository;
 
-    private static final String uuid = "051c7240-8bc3-4577-9161-4f3f28dab600";
-    private static final String authority = "profile";
-
-    private static String config;
-    private static UUID id;
-    private static Account account;
-
     @BeforeAll
-    public static void setUp() {
-        id = UUID.fromString(uuid);
+    static void setUp() {
         config = "config";
         account = new Account(id, config);
     }
 
     @Test
     @WithMockUser(username = uuid)
-    public void Should_Deny_When_WrongAuthority() {
+    void Should_Deny_When_WrongAuthority() {
         assertThrows(AccessDeniedException.class, () -> accountService.getConfig(id));
         assertThrows(AccessDeniedException.class, () -> accountService.createConfig(id, config));
         assertThrows(AccessDeniedException.class, () -> accountService.updateConfig(id, config));
@@ -56,7 +54,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(authorities = authority)
-    public void Should_Deny_When_WrongID() {
+    void Should_Deny_When_WrongID() {
         assertThrows(AccessDeniedException.class, () -> accountService.getConfig(id));
         assertThrows(AccessDeniedException.class, () -> accountService.createConfig(id, config));
         assertThrows(AccessDeniedException.class, () -> accountService.updateConfig(id, config));
@@ -64,7 +62,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(authorities = authority, username = uuid)
-    public void Should_AllowAccess_When_Authorized() {
+    void Should_AllowAccess_When_Authorized() {
         when(accountRepository.findById(id)).thenReturn(Optional.of(account));
         assertEquals(config, accountService.getConfig(id));
         assertDoesNotThrow(() -> accountService.createConfig(id, config));
@@ -73,7 +71,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(authorities = authority, username = uuid)
-    public void Should_UpdateOrCreate_Config() {
+    void Should_UpdateOrCreate_Config() {
         assertEquals(ResponseEntity.status(HttpStatus.CREATED).build(), accountService.updateConfig(id, config));
         when(accountRepository.findById(id)).thenReturn(Optional.of(account));
         assertEquals(ResponseEntity.status(HttpStatus.OK).build(), accountService.updateConfig(id, config));
