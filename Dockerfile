@@ -5,7 +5,7 @@ COPY gradle ./gradle
 COPY gradlew build.gradle.kts settings.gradle.kts ./
 RUN ./gradlew build 2>/dev/null || true
 COPY src ./src
-RUN ./gradlew nativeCompile
+RUN ./gradlew nativeCompile -x test
 
 FROM debian:stable-slim AS user
 RUN groupadd --gid 1000 plutus \
