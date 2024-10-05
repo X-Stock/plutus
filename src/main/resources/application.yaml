@@ -8,16 +8,17 @@ spring:
     properties:
       hibernate:
         auto_quote_keyword: true
+        hbm2ddl:
+          create_namespaces: true
   datasource:
     url: jdbc:postgresql://localhost:5432/plutus
     username: plutus
     password: password
-    driver-class-name: org.postgresql.Driver
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: "http://localhost:9000/realms/xStock"
+          issuer-uri: "https://auth.xstock.vn/realms/xStock"
           audiences:
             - account
   threads:
