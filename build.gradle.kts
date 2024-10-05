@@ -15,13 +15,19 @@ java {
 }
 
 graalvmNative {
-	binaries.all {
-		buildArgs.addAll(
-			"--static",
-			"--libc=musl",
-			"--gc=G1",
-			"--strict-image-heap"
-		)
+	binaries {
+		named("main") {
+			buildArgs.addAll(
+				"--gc=G1",
+				"--strict-image-heap"
+			)
+		}
+		named("test") {
+			buildArgs.addAll(
+				"-Ob",
+				"-g"
+			)
+		}
 	}
 }
 
