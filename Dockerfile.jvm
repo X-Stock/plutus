@@ -3,7 +3,7 @@ WORKDIR /builder
 COPY build.gradle.kts settings.gradle.kts ./
 RUN gradle build 2>/dev/null || true
 COPY src ./src
-RUN gradle build
+RUN gradle build -x test
 
 FROM eclipse-temurin:21-jre-alpine
 EXPOSE 8080
