@@ -9,7 +9,7 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration(proxyBeanMethods = false)
 public class DatabaseTestcontainers {
     private static final DockerImageName timescaleImage = DockerImageName
-            .parse("timescale/timescaledb:latest-pg16")
+            .parse("timescale/timescaledb:latest-pg17")
             .asCompatibleSubstituteFor("postgres");
 
     @Bean
