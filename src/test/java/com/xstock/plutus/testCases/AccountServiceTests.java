@@ -1,8 +1,8 @@
 package com.xstock.plutus.testCases;
 
-import com.xstock.plutus.api.user.account.Account;
-import com.xstock.plutus.api.user.account.AccountRepository;
-import com.xstock.plutus.api.user.account.AccountService;
+import com.xstock.plutus.api.user.v1.account.Account;
+import com.xstock.plutus.api.user.v1.account.AccountRepository;
+import com.xstock.plutus.api.user.v1.account.AccountService;
 import com.xstock.plutus.config.WebSecurityConfig;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
