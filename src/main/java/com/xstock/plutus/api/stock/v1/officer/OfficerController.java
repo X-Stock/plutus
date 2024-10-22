@@ -5,7 +5,6 @@ import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +16,7 @@ public class OfficerController implements CommonController<Officer> {
 
     @Override
     @GetMapping(path = "/officers")
-    public PaginatedResponse<Officer> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return officerService.getAllByTicker(ticker, pageable);
+    public PaginatedResponse<Officer> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        return officerService.getAllByTicker(ticker, pageable, unpaged);
     }
 }

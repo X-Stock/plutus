@@ -43,14 +43,13 @@ public class StockIndexService implements CommonService<StockIndex> {
     @Override
     @Cacheable
     @Transactional(readOnly = true)
-    public PaginatedResponse<StockIndex> getAll(Pageable pageable) {
-        Page<StockIndex> stockIndices = stockIndexRepository.findAll(
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "indexName"))
-                )
-        );
+    public PaginatedResponse<StockIndex> getAll(Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "indexName");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<StockIndex> stockIndices = stockIndexRepository.findAll(paging);
 
         if (stockIndices.isEmpty()) {
             throw new ResourceNotFoundException();

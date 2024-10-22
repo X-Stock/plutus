@@ -20,13 +20,13 @@ public class EventService implements CommonService<Event> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Event> events = eventRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "notifyDate")))
-        );
+    public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "notifyDate");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<Event> events = eventRepository.findAllByCompanyTicker(ticker, paging);
         if (events.isEmpty()) {
             throw new ResourceNotFoundException();
         }

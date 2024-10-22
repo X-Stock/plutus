@@ -20,13 +20,13 @@ public class LargeShareholderService implements CommonService<LargeShareholder> 
 
     @Override
     @Cacheable
-    public PaginatedResponse<LargeShareholder> getAllByTicker(String ticker, Pageable pageable) {
-        Page<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "no")))
-        );
+    public PaginatedResponse<LargeShareholder> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "no");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<LargeShareholder> largeShareholders = largeShareholderRepository.findAllByCompanyTicker(ticker, paging);
         if (largeShareholders.isEmpty()) {
             throw new ResourceNotFoundException();
         }

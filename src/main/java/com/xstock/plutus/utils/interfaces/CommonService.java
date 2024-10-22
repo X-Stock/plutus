@@ -8,11 +8,11 @@ public interface CommonService<T> {
         throw new UnsupportedOperationException();
     }
 
-    default PaginatedResponse<T> getAllByTicker(String ticker, Pageable pageable) {
+    default PaginatedResponse<T> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         throw new UnsupportedOperationException();
     }
 
-    default PaginatedResponse<T> getAll(Pageable pageable) {
+    default PaginatedResponse<T> getAll(Pageable pageable, boolean unpaged) {
         throw new UnsupportedOperationException();
     }
 }

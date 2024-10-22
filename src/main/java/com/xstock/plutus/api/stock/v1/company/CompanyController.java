@@ -5,7 +5,6 @@ import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,13 +16,13 @@ public class CompanyController implements CommonController<Company> {
 
     @Override
     @GetMapping("/{ticker}")
-    public Company getByTicker(@PathVariable String ticker) {
+    public Company getByTicker(String ticker) {
         return companyService.getByTicker(ticker);
     }
 
     @Override
     @GetMapping
-    public PaginatedResponse<Company> getAll(Pageable pageable) {
-        return companyService.getAll(pageable);
+    public PaginatedResponse<Company> getAll(Pageable pageable, boolean unpaged) {
+        return companyService.getAll(pageable, unpaged);
     }
 }

@@ -20,13 +20,13 @@ public class DividendService implements CommonService<Dividend> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<Dividend> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Dividend> dividends = dividendRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "exerciseDate")))
-        );
+    public PaginatedResponse<Dividend> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "exerciseDate");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<Dividend> dividends = dividendRepository.findAllByCompanyTicker(ticker, paging);
         if (dividends.isEmpty()) {
             throw new ResourceNotFoundException();
         }

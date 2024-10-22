@@ -20,13 +20,13 @@ public class InsiderDealService implements CommonService<InsiderDeal> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<InsiderDeal> getAllByTicker(String ticker, Pageable pageable) {
-        Page<InsiderDeal> insiderDeals = insiderDealRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "dealAnnounceDate")))
-        );
+    public PaginatedResponse<InsiderDeal> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "dealAnnounceDate");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<InsiderDeal> insiderDeals = insiderDealRepository.findAllByCompanyTicker(ticker, paging);
         if (insiderDeals.isEmpty()) {
             throw new ResourceNotFoundException();
         }

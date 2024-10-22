@@ -20,13 +20,13 @@ public class NewsService implements CommonService<News> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<News> getAllByTicker(String ticker, Pageable pageable) {
-        Page<News> news = newsRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publishDate")))
-        );
+    public PaginatedResponse<News> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "publishDate");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<News> news = newsRepository.findAllByCompanyTicker(ticker, paging);
         if (news.isEmpty()) {
             throw new ResourceNotFoundException();
         }
@@ -35,13 +35,13 @@ public class NewsService implements CommonService<News> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<News> getAll(Pageable pageable) {
-        Page<News> news = newsRepository.findAll(
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "publishDate")))
-        );
+    public PaginatedResponse<News> getAll(Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "publishDate");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<News> news = newsRepository.findAll(paging);
         if (news.isEmpty()) {
             throw new ResourceNotFoundException();
         }

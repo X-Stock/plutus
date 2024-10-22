@@ -20,13 +20,13 @@ public class SubsidiaryService implements CommonService<Subsidiary> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<Subsidiary> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "no")))
-        );
+    public PaginatedResponse<Subsidiary> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "no");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<Subsidiary> subsidiaries = subsidiaryRepository.findAllByCompanyTicker(ticker, paging);
         if (subsidiaries.isEmpty()) {
             throw new ResourceNotFoundException();
         }

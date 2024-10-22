@@ -20,13 +20,13 @@ public class CashFlowService implements CommonService<CashFlow> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<CashFlow> getAllByTicker(String ticker, Pageable pageable) {
-        Page<CashFlow> cashFlows = cashFlowRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
-        );
+    public PaginatedResponse<CashFlow> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "quarter", "year");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<CashFlow> cashFlows = cashFlowRepository.findAllByCompanyTicker(ticker, paging);
         if (cashFlows.isEmpty()) {
             throw new ResourceNotFoundException();
         }
