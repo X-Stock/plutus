@@ -5,7 +5,6 @@ import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +15,8 @@ public class IncomeStatementController implements CommonController<IncomeStateme
     private final IncomeStatementService incomeStatementService;
 
     @Override
-    @GetMapping(path = "/incomeStatement")
-    public PaginatedResponse<IncomeStatement> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return incomeStatementService.getAllByTicker(ticker, pageable);
+    @GetMapping(path = "/income-statement")
+    public PaginatedResponse<IncomeStatement> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        return incomeStatementService.getAllByTicker(ticker, pageable, unpaged);
     }
 }

@@ -20,13 +20,13 @@ public class BalanceSheetService implements CommonService<BalanceSheet> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<BalanceSheet> getAllByTicker(String ticker, Pageable pageable) {
-        Page<BalanceSheet> balanceSheets = balanceSheetRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
-        );
+    public PaginatedResponse<BalanceSheet> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "quarter", "year");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<BalanceSheet> balanceSheets = balanceSheetRepository.findAllByCompanyTicker(ticker, paging);
         if (balanceSheets.isEmpty()) {
             throw new ResourceNotFoundException();
         }

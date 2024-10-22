@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.user.account;
+package com.xstock.plutus.api.user.v1.account;
 
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +42,13 @@ public class AccountService {
             createConfig(id, config);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
+    }
+
+    @Transactional
+    public void deleteConfig(UUID id) {
+        if (!accountRepository.existsById(id)) {
+            throw new ResourceNotFoundException();
+        }
+        accountRepository.deleteById(id);
     }
 }

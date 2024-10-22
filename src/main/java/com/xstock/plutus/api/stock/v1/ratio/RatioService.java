@@ -20,13 +20,13 @@ public class RatioService implements CommonService<Ratio> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<Ratio> getAllByTicker(String ticker, Pageable pageable) {
-        Page<Ratio> ratios = ratioRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
-        );
+    public PaginatedResponse<Ratio> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "quarter", "year");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<Ratio> ratios = ratioRepository.findAllByCompanyTicker(ticker, paging);
         if (ratios.isEmpty()) {
             throw new ResourceNotFoundException();
         }

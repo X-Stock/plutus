@@ -20,13 +20,13 @@ public class IncomeStatementService implements CommonService<IncomeStatement> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<IncomeStatement> getAllByTicker(String ticker, Pageable pageable) {
-        Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "quarter", "year")))
-        );
+    public PaginatedResponse<IncomeStatement> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "quarter", "year");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<IncomeStatement> incomeStatements = incomeStatementRepository.findAllByCompanyTicker(ticker, paging);
         if (incomeStatements.isEmpty()) {
             throw new ResourceNotFoundException();
         }

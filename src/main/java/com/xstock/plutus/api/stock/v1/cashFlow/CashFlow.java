@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.stock.v1.cashflow;
+package com.xstock.plutus.api.stock.v1.cashFlow;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.stock.v1.company.Company;

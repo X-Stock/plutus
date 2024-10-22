@@ -5,7 +5,6 @@ import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +16,7 @@ public class EventController implements CommonController<Event> {
 
     @Override
     @GetMapping(path = "/events")
-    public PaginatedResponse<Event> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return eventService.getAllByTicker(ticker, pageable);
+    public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        return eventService.getAllByTicker(ticker, pageable, unpaged);
     }
 }

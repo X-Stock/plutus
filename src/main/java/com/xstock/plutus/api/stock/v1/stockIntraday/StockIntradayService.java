@@ -24,22 +24,26 @@ public class StockIntradayService implements CommonService<StockIntraday> {
     private final TaskScheduler taskScheduler = new SimpleAsyncTaskScheduler();
 
     @Override
-    public PaginatedResponse<StockIntraday> getAllByTicker(String ticker, Pageable pageable) {
-        Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompanyTicker(ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "time")))
-        );
+    public PaginatedResponse<StockIntraday> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "time");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<StockIntraday> stockIntradays = stockIntradayRepository.findAllByCompanyTicker(ticker, paging);
         if (stockIntradays.isEmpty()) {
             throw new ResourceNotFoundException();
         }
         return new PaginatedResponse<>(stockIntradays.getTotalPages(), stockIntradays.getContent());
     }
 
-    public SseEmitter getIntraday(String ticker, Pageable pageable) {
+    public SseEmitter getIntraday(String ticker, Pageable pageable, boolean unpaged) {
+        Pageable paging = unpaged
+                ? Pageable.unpaged()
+                : pageable;
+
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
-        var intraday = getAllByTicker(ticker, pageable);
+        var intraday = getAllByTicker(ticker, paging, unpaged);
         var scheduledFuture = taskScheduler.scheduleAtFixedRate(() -> {
             try {
                 emitter.send(intraday);

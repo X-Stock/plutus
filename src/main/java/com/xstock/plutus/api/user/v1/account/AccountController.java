@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.user.account;
+package com.xstock.plutus.api.user.v1.account;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/api/user/{uuid}/config")
+@RequestMapping(path = "/api/v1/user/{id}/config")
 public class AccountController {
     private final AccountService accountService;
 
@@ -20,12 +20,17 @@ public class AccountController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createConfig(@RequestParam UUID id, @RequestBody String config) {
+    public void createConfig(@PathVariable UUID id, @RequestBody String config) {
         accountService.createConfig(id, config);
     }
 
     @PutMapping
-    public ResponseEntity<HttpStatus> updateConfig(@RequestParam UUID id, @RequestBody String config) {
+    public ResponseEntity<HttpStatus> updateConfig(@PathVariable UUID id, @RequestBody String config) {
         return accountService.updateConfig(id, config);
+    }
+
+    @DeleteMapping
+    public void deleteConfig(@PathVariable UUID id) {
+        accountService.deleteConfig(id);
     }
 }

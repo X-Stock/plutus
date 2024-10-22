@@ -20,14 +20,13 @@ public class StockHistoricalService implements CommonController<StockHistorical>
 
     @Override
     @Cacheable
-    public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable) {
-        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(
-                ticker,
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "time")))
-        );
+    public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "time");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(ticker, paging);
         if (stockHistorical.isEmpty()) {
             throw new ResourceNotFoundException();
         }

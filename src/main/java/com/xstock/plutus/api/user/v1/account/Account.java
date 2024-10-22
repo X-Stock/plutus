@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.user.account;
+package com.xstock.plutus.api.user.v1.account;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

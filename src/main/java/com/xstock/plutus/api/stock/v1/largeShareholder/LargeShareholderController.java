@@ -5,7 +5,6 @@ import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +15,8 @@ public class LargeShareholderController implements CommonController<LargeShareho
     private final LargeShareholderService largeShareholderService;
 
     @Override
-    @GetMapping(path = "/shareHolders")
-    public PaginatedResponse<LargeShareholder> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return largeShareholderService.getAllByTicker(ticker, pageable);
+    @GetMapping(path = "/shareholders")
+    public PaginatedResponse<LargeShareholder> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        return largeShareholderService.getAllByTicker(ticker, pageable, unpaged);
     }
 }

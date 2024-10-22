@@ -29,13 +29,13 @@ public class CompanyService implements CommonService<Company> {
 
     @Override
     @Cacheable
-    public PaginatedResponse<Company> getAll(Pageable pageable) {
-        Page<Company> companies = companyRepository.findAll(
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "ticker")))
-        );
+    public PaginatedResponse<Company> getAll(Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "ticker");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<Company> companies = companyRepository.findAll(paging);
         if (companies.isEmpty()) {
             throw new ResourceNotFoundException();
         }

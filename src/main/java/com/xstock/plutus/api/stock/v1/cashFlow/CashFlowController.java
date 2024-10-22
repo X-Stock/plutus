@@ -1,11 +1,10 @@
-package com.xstock.plutus.api.stock.v1.cashflow;
+package com.xstock.plutus.api.stock.v1.cashFlow;
 
 import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +15,8 @@ public class CashFlowController implements CommonController<CashFlow> {
     private final CashFlowService cashFlowService;
 
     @Override
-    @GetMapping(path = "/cashFlows")
-    public PaginatedResponse<CashFlow> getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return cashFlowService.getAllByTicker(ticker, pageable);
+    @GetMapping(path = "/cash-flows")
+    public PaginatedResponse<CashFlow> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        return cashFlowService.getAllByTicker(ticker, pageable, unpaged);
     }
 }

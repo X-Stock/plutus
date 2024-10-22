@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -14,8 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class StockIntradayController {
     private final StockIntradayService stockIntradayService;
 
-    @GetMapping("/stockIntraday")
-    public SseEmitter getAllByTicker(@PathVariable String ticker, Pageable pageable) {
-        return stockIntradayService.getIntraday(ticker, pageable);
+    @GetMapping("/stock-intraday")
+    public SseEmitter getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
+        return stockIntradayService.getIntraday(ticker, pageable, unpaged);
     }
 }
