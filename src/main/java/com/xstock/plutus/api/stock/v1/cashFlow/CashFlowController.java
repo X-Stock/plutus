@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.stock.v1.cashflow;
+package com.xstock.plutus.api.stock.v1.cashFlow;
 
 import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.interfaces.CommonController;
@@ -15,7 +15,7 @@ public class CashFlowController implements CommonController<CashFlow> {
     private final CashFlowService cashFlowService;
 
     @Override
-    @GetMapping(path = "/cashFlows")
+    @GetMapping(path = "/cash-flows")
     public PaginatedResponse<CashFlow> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return cashFlowService.getAllByTicker(ticker, pageable, unpaged);
     }

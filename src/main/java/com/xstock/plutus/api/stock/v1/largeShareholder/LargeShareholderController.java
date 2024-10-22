@@ -15,7 +15,7 @@ public class LargeShareholderController implements CommonController<LargeShareho
     private final LargeShareholderService largeShareholderService;
 
     @Override
-    @GetMapping(path = "/shareHolders")
+    @GetMapping(path = "/shareholders")
     public PaginatedResponse<LargeShareholder> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return largeShareholderService.getAllByTicker(ticker, pageable, unpaged);
     }

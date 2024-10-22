@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.stock.v1.cashflow;
+package com.xstock.plutus.api.stock.v1.cashFlow;
 
 import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;

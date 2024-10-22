@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class StockIndexController implements CommonController<StockIndex> {
     private final StockIndexService stockIndexService;
 
-    @GetMapping(path = "/companies/{ticker}/stockIndices")
+    @GetMapping(path = "/companies/{ticker}/stock-indices")
     public PaginatedResponse<String> getAllByTicker(String ticker) {
         return stockIndexService.getAllByTicker(ticker);
     }
 
     @Override
-    @GetMapping(path = "/stockIndices")
+    @GetMapping(path = "/stock-indices")
     public PaginatedResponse<StockIndex> getAll(Pageable pageable, boolean unpaged) {
         return stockIndexService.getAll(pageable, unpaged);
     }

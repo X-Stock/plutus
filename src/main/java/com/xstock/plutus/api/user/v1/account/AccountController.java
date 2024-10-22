@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/user/{uuid}/config")
+@RequestMapping(path = "/api/v1/user/{id}/config")
 public class AccountController {
     private final AccountService accountService;
 

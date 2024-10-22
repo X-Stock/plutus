@@ -15,7 +15,7 @@ public class BalanceSheetController implements CommonController<BalanceSheet> {
     private final BalanceSheetService balanceSheetService;
 
     @Override
-    @GetMapping(path = "/balanceSheets")
+    @GetMapping(path = "/balance-sheets")
     public PaginatedResponse<BalanceSheet> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return balanceSheetService.getAllByTicker(ticker, pageable, unpaged);
     }

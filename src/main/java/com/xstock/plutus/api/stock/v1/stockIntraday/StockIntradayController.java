@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class StockIntradayController {
     private final StockIntradayService stockIntradayService;
 
-    @GetMapping("/stockIntraday")
+    @GetMapping("/stock-intraday")
     public SseEmitter getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return stockIntradayService.getIntraday(ticker, pageable, unpaged);
     }

@@ -15,7 +15,7 @@ public class IncomeStatementController implements CommonController<IncomeStateme
     private final IncomeStatementService incomeStatementService;
 
     @Override
-    @GetMapping(path = "/incomeStatement")
+    @GetMapping(path = "/income-statement")
     public PaginatedResponse<IncomeStatement> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return incomeStatementService.getAllByTicker(ticker, pageable, unpaged);
     }

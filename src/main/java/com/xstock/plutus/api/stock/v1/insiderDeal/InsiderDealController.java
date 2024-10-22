@@ -15,7 +15,7 @@ public class InsiderDealController implements CommonController<InsiderDeal> {
     private final InsiderDealService insiderDealService;
 
     @Override
-    @GetMapping(path = "/insiderDeals")
+    @GetMapping(path = "/insider-deals")
     public PaginatedResponse<InsiderDeal> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return insiderDealService.getAllByTicker(ticker, pageable, unpaged);
     }

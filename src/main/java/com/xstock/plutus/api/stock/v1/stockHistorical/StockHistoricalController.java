@@ -15,7 +15,7 @@ public class StockHistoricalController implements CommonController<StockHistoric
     private final StockHistoricalService stockHistoricalService;
 
     @Override
-    @GetMapping(path = "/stockHistorical")
+    @GetMapping(path = "/stock-historical")
     public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return stockHistoricalService.getAllByTicker(ticker, pageable, unpaged);
     }
