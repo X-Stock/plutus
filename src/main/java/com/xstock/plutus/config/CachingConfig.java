@@ -1,5 +1,7 @@
 package com.xstock.plutus.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -19,12 +21,13 @@ class CachingConfig implements CachingConfigurer {
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(TIME_TO_LIVE)
                 .disableCachingNullValues()
                 .serializeValuesWith(
                         RedisSerializationContext.SerializationPair.fromSerializer(
-                                new GenericJackson2JsonRedisSerializer()
+                                new GenericJackson2JsonRedisSerializer(objectMapper)
                         )
                 );
     }
