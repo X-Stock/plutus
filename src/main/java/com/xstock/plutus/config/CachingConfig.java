@@ -20,8 +20,8 @@ class CachingConfig implements CachingConfigurer {
     private static final Duration TIME_TO_LIVE = Duration.ofHours(6);
 
     @Bean
-    public RedisCacheConfiguration cacheConfiguration() {
-        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    public RedisCacheConfiguration cacheConfiguration(ObjectMapper objectMapper) {
+        objectMapper = objectMapper.copy().registerModule(new JavaTimeModule());
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(TIME_TO_LIVE)
                 .disableCachingNullValues()
