@@ -1,7 +1,9 @@
 package com.xstock.plutus.config;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.xstock.plutus.utils.dto.PaginatedResponse;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -19,9 +21,22 @@ import java.time.Duration;
 class CachingConfig implements CachingConfigurer {
     private static final Duration TIME_TO_LIVE = Duration.ofHours(6);
 
+    @JsonTypeInfo(use=JsonTypeInfo.Id. CLASS, property="@class")
+    private record MixIn() {}
+
     @Bean
     public RedisCacheConfiguration cacheConfiguration(ObjectMapper objectMapper) {
-        objectMapper = objectMapper.copy().registerModule(new JavaTimeModule());
+        objectMapper = objectMapper.copy();
+
+        objectMapper = objectMapper
+                .registerModule(new JavaTimeModule())
+                .activateDefaultTyping(
+                        objectMapper.getPolymorphicTypeValidator(),
+                        ObjectMapper.DefaultTyping.NON_FINAL,
+                        JsonTypeInfo.As.PROPERTY
+                )
+                .addMixIn(PaginatedResponse.class, MixIn.class);
+
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(TIME_TO_LIVE)
                 .disableCachingNullValues()
