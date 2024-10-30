@@ -5,12 +5,12 @@ RUN gradle build 2>/dev/null || true
 COPY src ./src
 RUN gradle build
 
-FROM bellsoft/liberica-runtime-container:jdk-21-crac-slim-musl AS optimizer
+FROM bellsoft/liberica-runtime-container:jre-21-crac-slim-musl AS optimizer
 WORKDIR /builder
 COPY --from=builder /builder/build/libs/*.jar plutus.jar
 RUN java -Djarmode=tools -jar plutus.jar extract --layers --destination extracted
 
-FROM bellsoft/liberica-runtime-container:jdk-21-crac-slim-musl
+FROM bellsoft/liberica-runtime-container:jre-21-crac-slim-musl
 EXPOSE 8080
 WORKDIR /app
 COPY --from=optimizer /builder/extracted/dependencies/ ./
