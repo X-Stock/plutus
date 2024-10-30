@@ -3,7 +3,7 @@ WORKDIR /builder
 COPY build.gradle.kts settings.gradle.kts ./
 RUN gradle build 2>/dev/null || true
 COPY src ./src
-RUN gradle build -x test
+RUN gradle build
 
 FROM bellsoft/liberica-runtime-container:jdk-21-crac-slim-musl AS optimizer
 WORKDIR /builder

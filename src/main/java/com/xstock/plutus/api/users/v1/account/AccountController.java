@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.user.v1.account;
+package com.xstock.plutus.api.users.v1.account;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.xstock.plutus.api.user.v1.account;
+package com.xstock.plutus.api.users.v1.account;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Entity
-@Table(name = "accounts", schema = "user")
+@Table(name = "accounts", schema = "users")
 public class Account {
     @Id
     private UUID id;

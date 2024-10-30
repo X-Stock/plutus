@@ -1,4 +1,4 @@
-package com.xstock.plutus.testCases;
+package com.xstock.plutus;
 
 import com.xstock.plutus.api.stock.v1.company.Company;
 import com.xstock.plutus.api.stock.v1.company.CompanyController;
