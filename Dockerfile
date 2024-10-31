@@ -5,7 +5,7 @@ RUN gradle build 2>/dev/null || true
 COPY src ./src
 RUN gradle build
 
-FROM bellsoft/liberica-runtime-container:jre-21-crac-slim-musl as base
+FROM bellsoft/liberica-runtime-container:jre-21-crac-slim-musl AS base
 
 FROM base AS optimizer
 WORKDIR /builder
@@ -21,7 +21,6 @@ COPY --from=optimizer /builder/extracted/snapshot-dependencies/ ./
 COPY --from=optimizer /builder/extracted/application/ ./
 RUN java -XX:ArchiveClassesAtExit=plutus.jsa  \
     -Dspring.context.exit=onRefresh \
-    -Dspring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect \
     -Dspring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=false \
     -Dspring.jpa.hibernate.ddl-auto=none \
     -Dspring.sql.init.mode=never \
