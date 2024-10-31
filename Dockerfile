@@ -21,6 +21,7 @@ COPY --from=optimizer /builder/extracted/snapshot-dependencies/ ./
 COPY --from=optimizer /builder/extracted/application/ ./
 RUN java -XX:ArchiveClassesAtExit=plutus.jsa  \
     -Dspring.context.exit=onRefresh \
+    -Dspring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect \
     -Dspring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=false \
     -Dspring.jpa.hibernate.ddl-auto=none \
     -Dspring.sql.init.mode=never \
