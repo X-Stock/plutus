@@ -18,7 +18,8 @@ graalvmNative {
 	binaries.all {
 		buildArgs.addAll(
 			"--gc=G1",
-			"--strict-image-heap"
+			"--strict-image-heap",
+			"-J-Xmx7g"
 		)
 	}
 	binaries {
