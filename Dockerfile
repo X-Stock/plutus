@@ -5,13 +5,16 @@ COPY gradle ./gradle
 COPY gradlew build.gradle.kts settings.gradle.kts ./
 RUN ./gradlew build 2>/dev/null || true
 COPY src ./src
-RUN ./gradlew nativeCompile -x test
+RUN ./gradlew nativeCompile
 
-FROM debian:stable-slim
+FROM debian:stable-slim AS user
+RUN groupadd --gid 1000 plutus \
+  && useradd --uid 1000 --gid plutus -M plutus
+
+FROM scratch
 EXPOSE 8080
 WORKDIR /app
 COPY --from=builder /builder/build/native/nativeCompile/ .
-RUN groupadd --gid 1000 plutus \
-  && useradd --uid 1000 --gid plutus -M plutus
+COPY --from=user /etc/passwd /etc/passwd
 USER plutus
 ENTRYPOINT [ "./plutus" ]
