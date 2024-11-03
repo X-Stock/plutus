@@ -26,13 +26,7 @@ spring:
       enabled: true
 
 springdoc:
-  show-actuator: true
-  use-management-port: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, openapi, swagger-ui
-  server:
-    port: 9090
+  swagger-ui:
+    path: /docs/swagger-ui.html
+  api-docs:
+    path: /docs/api-docs
