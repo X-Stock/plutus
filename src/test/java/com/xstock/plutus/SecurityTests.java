@@ -1,8 +1,8 @@
 package com.xstock.plutus;
 
-import com.xstock.plutus.api.stock.v1.company.Company;
-import com.xstock.plutus.api.stock.v1.company.CompanyController;
-import com.xstock.plutus.api.stock.v1.company.CompanyService;
+import com.xstock.plutus.api.v1.stock.company.Company;
+import com.xstock.plutus.api.v1.stock.company.CompanyController;
+import com.xstock.plutus.api.v1.stock.company.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
