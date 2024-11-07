@@ -33,7 +33,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         List<IpAddressMatcher> allowedIps = new ArrayList<>(baseAllowedIps);
         if (allowIps.length > 0) {
-            log.warn(allowIps);
             try {
                 for (String ip : allowIps) {
                     allowedIps.add(new IpAddressMatcher(ip));
