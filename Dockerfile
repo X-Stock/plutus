@@ -14,11 +14,12 @@ RUN java -Djarmode=tools -jar plutus.jar extract --layers --destination extracte
 
 FROM base
 EXPOSE 8080
+RUN addgroup --system -g 1000 plutus && adduser --system -u 1000 -G plutus plutus
 WORKDIR /app
-COPY --from=optimizer /builder/extracted/dependencies/ ./
-COPY --from=optimizer /builder/extracted/spring-boot-loader/ ./
-COPY --from=optimizer /builder/extracted/snapshot-dependencies/ ./
-COPY --from=optimizer /builder/extracted/application/ ./
+COPY --from=optimizer --chown=plutus:plutus /builder/extracted/dependencies/ ./
+COPY --from=optimizer --chown=plutus:plutus /builder/extracted/spring-boot-loader/ ./
+COPY --from=optimizer --chown=plutus:plutus /builder/extracted/snapshot-dependencies/ ./
+COPY --from=optimizer --chown=plutus:plutus /builder/extracted/application/ ./
 RUN java -XX:ArchiveClassesAtExit=application.jsa  \
     -Dspring.aot.enabled=true \
     -Dspring.context.exit=onRefresh \
@@ -27,7 +28,5 @@ RUN java -XX:ArchiveClassesAtExit=application.jsa  \
     -Dspring.jpa.hibernate.ddl-auto=none \
     -Dspring.sql.init.mode=never \
     -jar plutus.jar
-RUN addgroup -g 1000 plutus  \
-    && adduser -u 1000 -G plutus -D -H plutus
 USER plutus
 ENTRYPOINT ["java", "-XX:SharedArchiveFile=application.jsa", "-Dspring.aot.enabled=true", "-jar", "plutus.jar"]
