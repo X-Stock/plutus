@@ -4,68 +4,70 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @IdClass(IncomeStatementId.class)
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class IncomeStatement {
     @Id
-    private Integer companyId;
+    private final Integer companyId;
 
     @ManyToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Id
-    private Short quarter;
+    private final Short quarter;
 
     @Id
-    private Short year;
+    private final Short year;
 
-    private Integer revenue;
+    private final Integer revenue;
 
-    private Float yearRevenueGrowth;
+    private final Float yearRevenueGrowth;
 
-    private Float quarterRevenueGrowth;
+    private final Float quarterRevenueGrowth;
 
-    private Integer costOfGoodSold;
+    private final Integer costOfGoodSold;
 
-    private Integer grossProfit;
+    private final Integer grossProfit;
 
-    private Integer operationExpense;
+    private final Integer operationExpense;
 
-    private Integer operationProfit;
+    private final Integer operationProfit;
 
-    private Float yearOperationProfitGrowth;
+    private final Float yearOperationProfitGrowth;
 
-    private Float quarterOperationProfitGrowth;
+    private final Float quarterOperationProfitGrowth;
 
-    private Integer interestExpense;
+    private final Integer interestExpense;
 
-    private Integer preTaxProfit;
+    private final Integer preTaxProfit;
 
-    private Integer postTaxProfit;
+    private final Integer postTaxProfit;
 
-    private Integer shareholderIncome;
+    private final Integer shareholderIncome;
 
-    private Float yearShareholderIncomeGrowth;
+    private final Float yearShareholderIncomeGrowth;
 
-    private Float quarterShareholderIncomeGrowth;
+    private final Float quarterShareholderIncomeGrowth;
 
-    private Integer investProfit;
+    private final Integer investProfit;
 
-    private Integer serviceProfit;
+    private final Integer serviceProfit;
 
-    private Integer otherProfit;
+    private final Integer otherProfit;
 
-    private Integer provisionExpense;
+    private final Integer provisionExpense;
 
-    private Integer operationIncome;
+    private final Integer operationIncome;
 
-    private Integer ebitda;
+    private final Integer ebitda;
 }

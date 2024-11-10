@@ -4,50 +4,52 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.OffsetDateTime;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @Table(name = "events", indexes = @Index(columnList = "companyId"))
 @JsonIgnoreProperties(value = {"id", "company"})
 public class Event {
     @Id
-    private long id;
+    private final Long id;
 
     @ManyToOne
     @JoinColumn(name = "companyId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
-    private Integer price;
+    private final Integer price;
 
-    private Integer priceChange;
+    private final Integer priceChange;
 
-    private Float weeklyPriceChangeRatio;
+    private final Float weeklyPriceChangeRatio;
 
-    private Float monthlyPriceChangeRatio;
-
-    @Column(columnDefinition = "TEXT")
-    private String eventName;
+    private final Float monthlyPriceChangeRatio;
 
     @Column(columnDefinition = "TEXT")
-    private String eventCode;
-
-    private OffsetDateTime notifyDate;
-
-    private OffsetDateTime exerciseDate;
-
-    private OffsetDateTime registrationFinalDate;
-
-    private OffsetDateTime exRightsDate;
+    private final String eventName;
 
     @Column(columnDefinition = "TEXT")
-    private String eventDescription;
+    private final String eventCode;
 
-    private Float rsi;
+    private final OffsetDateTime notifyDate;
 
-    private Float rs;
+    private final OffsetDateTime exerciseDate;
+
+    private final OffsetDateTime registrationFinalDate;
+
+    private final OffsetDateTime exRightsDate;
+
+    @Column(columnDefinition = "TEXT")
+    private final String eventDescription;
+
+    private final Float rsi;
+
+    private final Float rs;
 }

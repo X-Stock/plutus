@@ -12,14 +12,14 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Getter
 @Entity
 @Table(name = "accounts", schema = "users")
 public class Account {
     @Id
-    private UUID id;
+    private final UUID id;
 
     @Setter
     @NotNull

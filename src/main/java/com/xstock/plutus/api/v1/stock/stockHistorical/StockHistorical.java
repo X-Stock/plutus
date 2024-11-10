@@ -4,35 +4,37 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.OffsetDateTime;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @IdClass(StockHistoricalId.class)
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class StockHistorical {
     @Id
-    private int companyId;
+    private final Integer companyId;
 
     @ManyToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Id
-    private OffsetDateTime time;
+    private final OffsetDateTime time;
 
-    private Integer open;
+    private final Integer open;
 
-    private Integer high;
+    private final Integer high;
 
-    private Integer low;
+    private final Integer low;
 
-    private Integer close;
+    private final Integer close;
 
-    private Integer volume;
+    private final Integer volume;
 }

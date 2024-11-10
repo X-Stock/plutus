@@ -4,94 +4,96 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @IdClass(BalanceSheetId.class)
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class BalanceSheet {
     @Id
-    private Integer companyId;
+    private final Integer companyId;
 
     @ManyToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Id
-    private Short quarter;
+    private final Short quarter;
 
     @Id
-    private Short year;
+    private final Short year;
 
-    private Integer asset;
+    private final Integer asset;
 
-    private Integer shortAsset;
+    private final Integer shortAsset;
 
-    private Integer fixedAsset;
+    private final Integer fixedAsset;
 
-    private Integer longAsset;
+    private final Integer longAsset;
 
-    private Integer otherAsset;
+    private final Integer otherAsset;
 
-    private Integer debt;
+    private final Integer debt;
 
-    private Integer shortDebt;
+    private final Integer shortDebt;
 
-    private Integer longDebt;
+    private final Integer longDebt;
 
-    private Integer otherDebt;
+    private final Integer otherDebt;
 
-    private Integer deposit;
+    private final Integer deposit;
 
-    private Integer centralBankDeposit;
+    private final Integer centralBankDeposit;
 
-    private Integer otherBankDeposit;
+    private final Integer otherBankDeposit;
 
-    private Integer customerLoan;
+    private final Integer customerLoan;
 
-    private Integer netCustomerLoan;
+    private final Integer netCustomerLoan;
 
-    private Integer badLoan;
+    private final Integer badLoan;
 
-    private Integer otherBankLoan;
+    private final Integer otherBankLoan;
 
-    private Integer cash;
+    private final Integer cash;
 
-    private Integer shortInvest;
+    private final Integer shortInvest;
 
-    private Integer shortReceivable;
+    private final Integer shortReceivable;
 
-    private Integer inventory;
+    private final Integer inventory;
 
-    private Integer equity;
+    private final Integer equity;
 
-    private Integer capital;
+    private final Integer capital;
 
-    private Integer stockInvest;
+    private final Integer stockInvest;
 
-    private Integer provision;
+    private final Integer provision;
 
-    private Integer otherBankCredit;
+    private final Integer otherBankCredit;
 
-    private Integer oweOtherBank;
+    private final Integer oweOtherBank;
 
-    private Integer oweCentralBank;
+    private final Integer oweCentralBank;
 
-    private Integer valuablePaper;
+    private final Integer valuablePaper;
 
-    private Integer payableInterest;
+    private final Integer payableInterest;
 
-    private Integer receivableInterest;
+    private final Integer receivableInterest;
 
-    private Integer fund;
+    private final Integer fund;
 
-    private Integer unDistributedIncome;
+    private final Integer unDistributedIncome;
 
-    private Integer minorShareholderProfit;
+    private final Integer minorShareholderProfit;
 
-    private Integer payable;
+    private final Integer payable;
 }

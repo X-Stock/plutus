@@ -4,62 +4,64 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class Overview {
     @Id
-    private int companyId;
+    private final Integer companyId;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Column(columnDefinition = "TEXT")
-    private String exchange;
+    private final String exchange;
 
     @Column(columnDefinition = "TEXT")
-    private String industry;
+    private final String industry;
 
     @Column(columnDefinition = "TEXT")
-    private String companyType;
+    private final String companyType;
 
-    private Integer numberOfShareholders;
+    private final Integer numberOfShareholders;
 
-    private Float foreignPercent;
+    private final Float foreignPercent;
 
-    private Float outstandingShare;
+    private final Float outstandingShare;
 
-    private Float issueShare;
+    private final Float issueShare;
 
-    private Integer establishedYear;
+    private final Integer establishedYear;
 
-    private Integer numberOfEmployees;
+    private final Integer numberOfEmployees;
 
-    private Float stockRating;
+    private final Float stockRating;
 
-    private Float deltaInWeek;
+    private final Float deltaInWeek;
 
-    private Float deltaInMonth;
+    private final Float deltaInMonth;
 
-    private Float deltaInYear;
-
-    @Column(columnDefinition = "TEXT")
-    private String shortName;
+    private final Float deltaInYear;
 
     @Column(columnDefinition = "TEXT")
-    private String industryEn;
+    private final String shortName;
 
-    private Integer industryId;
+    @Column(columnDefinition = "TEXT")
+    private final String industryEn;
+
+    private final Integer industryId;
 
     @Column(name = "industry_id_v2")
-    private Integer industryIdV2;
+    private final Integer industryIdV2;
 
     @Column(columnDefinition = "TEXT")
-    private String website;
+    private final String website;
 }

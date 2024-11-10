@@ -4,41 +4,43 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.OffsetDateTime;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @Table(indexes = @Index(columnList = "companyId"))
 @JsonIgnoreProperties(value = {"id", "company"})
 public class News {
     @Id
-    private long id;
+    private final Long id;
 
     @ManyToOne
     @JoinColumn(name = "companyId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
-    private Integer price;
+    private final Integer price;
 
-    private Integer priceChange;
+    private final Integer priceChange;
 
-    private Float weeklyPriceChangeRatio;
+    private final Float weeklyPriceChangeRatio;
 
-    private Float monthlyPriceChangeRatio;
-
-    @Column(columnDefinition = "TEXT")
-    private String title;
+    private final Float monthlyPriceChangeRatio;
 
     @Column(columnDefinition = "TEXT")
-    private String source;
+    private final String title;
 
-    private OffsetDateTime publishDate;
+    @Column(columnDefinition = "TEXT")
+    private final String source;
 
-    private Float rsi;
+    private final OffsetDateTime publishDate;
 
-    private Float rs;
+    private final Float rsi;
+
+    private final Float rs;
 }

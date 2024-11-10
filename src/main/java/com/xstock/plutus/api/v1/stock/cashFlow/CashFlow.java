@@ -4,36 +4,38 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @IdClass(CashFlowId.class)
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class CashFlow {
     @Id
-    private Integer companyId;
+    private final Integer companyId;
 
     @ManyToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Id
-    private Short quarter;
+    private final Short quarter;
 
     @Id
-    private Short year;
+    private final Short year;
 
-    private Integer investCost;
+    private final Integer investCost;
 
-    private Integer fromInvest;
+    private final Integer fromInvest;
 
-    private Integer fromFinancial;
+    private final Integer fromFinancial;
 
-    private Integer fromSale;
+    private final Integer fromSale;
 
-    private Integer freeCashFlow;
+    private final Integer freeCashFlow;
 }

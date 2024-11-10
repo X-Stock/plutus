@@ -4,138 +4,140 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @IdClass(RatioId.class)
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class Ratio {
     @Id
-    private Integer companyId;
+    private final Integer companyId;
 
     @ManyToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Id
-    private Short quarter;
+    private final Short quarter;
 
     @Id
-    private Short year;
+    private final Short year;
 
-    private Float priceToEarning;
+    private final Float priceToEarning;
 
-    private Float priceToBook;
+    private final Float priceToBook;
 
-    private Float valueBeforeEbitda;
+    private final Float valueBeforeEbitda;
 
-    private Float dividend;
+    private final Float dividend;
 
-    private Float roe;
+    private final Float roe;
 
-    private Float roa;
+    private final Float roa;
 
-    private Integer daysReceivable;
+    private final Integer daysReceivable;
 
-    private Integer daysInventory;
+    private final Integer daysInventory;
 
-    private Integer daysPayable;
+    private final Integer daysPayable;
 
-    private Float ebitOnInterest;
+    private final Float ebitOnInterest;
 
-    private Integer earningPerShare;
+    private final Integer earningPerShare;
 
-    private Integer bookValuePerShare;
+    private final Integer bookValuePerShare;
 
-    private Float interestMargin;
+    private final Float interestMargin;
 
-    private Float nonInterestOnToi;
+    private final Float nonInterestOnToi;
 
-    private Float badDebtPercentage;
+    private final Float badDebtPercentage;
 
-    private Float provisionOnBadDebt;
+    private final Float provisionOnBadDebt;
 
-    private Float costOfFinancing;
+    private final Float costOfFinancing;
 
-    private Float equityOnTotalAsset;
+    private final Float equityOnTotalAsset;
 
-    private Float equityOnLoan;
+    private final Float equityOnLoan;
 
-    private Float costToIncome;
+    private final Float costToIncome;
 
-    private Float equityOnLiability;
+    private final Float equityOnLiability;
 
-    private Float currentPayment;
+    private final Float currentPayment;
 
-    private Float quickPayment;
+    private final Float quickPayment;
 
-    private Float epsChange;
+    private final Float epsChange;
 
-    private Integer ebitdaOnStock;
+    private final Integer ebitdaOnStock;
 
-    private Float grossProfitMargin;
+    private final Float grossProfitMargin;
 
-    private Float operatingProfitMargin;
+    private final Float operatingProfitMargin;
 
-    private Float postTaxMargin;
+    private final Float postTaxMargin;
 
-    private Float debtOnEquity;
+    private final Float debtOnEquity;
 
-    private Float debtOnAsset;
+    private final Float debtOnAsset;
 
-    private Float debtOnEbitda;
+    private final Float debtOnEbitda;
 
-    private Float shortOnLongDebt;
+    private final Float shortOnLongDebt;
 
-    private Float assetOnEquity;
+    private final Float assetOnEquity;
 
-    private Float capitalBalance;
+    private final Float capitalBalance;
 
-    private Float cashOnEquity;
+    private final Float cashOnEquity;
 
-    private Float cashOnCapitalize;
+    private final Float cashOnCapitalize;
 
-    private Float cashCirculation;
+    private final Float cashCirculation;
 
-    private Float revenueOnWorkCapital;
+    private final Float revenueOnWorkCapital;
 
-    private Float capexOnFixedAsset;
+    private final Float capexOnFixedAsset;
 
-    private Float revenueOnAsset;
+    private final Float revenueOnAsset;
 
-    private Float postTaxOnPreTax;
+    private final Float postTaxOnPreTax;
 
-    private Float ebitOnRevenue;
+    private final Float ebitOnRevenue;
 
-    private Float preTaxOnEbit;
+    private final Float preTaxOnEbit;
 
-    private Float preProvisionOnToi;
+    private final Float preProvisionOnToi;
 
-    private Float postTaxOnToi;
+    private final Float postTaxOnToi;
 
-    private Float loanOnEarnAsset;
+    private final Float loanOnEarnAsset;
 
-    private Float loanOnAsset;
+    private final Float loanOnAsset;
 
-    private Float loanOnDeposit;
+    private final Float loanOnDeposit;
 
-    private Float depositOnEarnAsset;
+    private final Float depositOnEarnAsset;
 
-    private Float badDebtOnAsset;
+    private final Float badDebtOnAsset;
 
-    private Float liquidityOnLiability;
+    private final Float liquidityOnLiability;
 
-    private Float payableOnEquity;
+    private final Float payableOnEquity;
 
-    private Float cancelDebt;
+    private final Float cancelDebt;
 
-    private Float ebitdaOnStockChange;
+    private final Float ebitdaOnStockChange;
 
-    private Float bookValuePerShareChange;
+    private final Float bookValuePerShareChange;
 
-    private Float creditGrowth;
+    private final Float creditGrowth;
 }

@@ -4,38 +4,40 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xstock.plutus.api.v1.stock.company.Company;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.OffsetDateTime;
 
 @Getter
+@NoArgsConstructor(force = true)
 @Entity
 @Table(name = "insider_deals")
 @IdClass(InsiderDealId.class)
 @JsonIgnoreProperties(value = {"companyId", "company"})
 public class InsiderDeal {
     @Id
-    private int companyId;
+    private final Integer companyId;
 
     @ManyToOne
     @MapsId
     @JoinColumn(name = "companyId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Company company;
+    private final Company company;
 
     @Id
-    private OffsetDateTime dealAnnounceDate;
+    private final OffsetDateTime dealAnnounceDate;
 
     @Column(columnDefinition = "TEXT")
-    private String dealMethod;
+    private final String dealMethod;
 
     @Column(columnDefinition = "TEXT")
-    private String dealAction;
+    private final String dealAction;
 
-    private Integer dealQuantity;
+    private final Integer dealQuantity;
 
-    private Integer dealPrice;
+    private final Integer dealPrice;
 
-    private Float dealRatio;
+    private final Float dealRatio;
 }
