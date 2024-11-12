@@ -11,7 +11,7 @@ spring:
         hbm2ddl:
           create_namespaces: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/plutus
+    url: "jdbc:postgresql://localhost:5432/plutus"
     username: plutus
     password: password
   security:
@@ -27,8 +27,11 @@ spring:
     virtual:
       enabled: true
 
+grpc:
+  server: "localhost:50051"
+
 springdoc:
   swagger-ui:
-    path: /docs/swagger-ui.html
+    path: "/docs/swagger-ui.html"
   api-docs:
-    path: /docs/api-docs
+    path: "/docs/api-docs"

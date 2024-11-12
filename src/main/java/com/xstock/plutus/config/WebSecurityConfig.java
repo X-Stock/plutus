@@ -21,16 +21,13 @@ import java.util.List;
 public class WebSecurityConfig {
     private static final Log log = LogFactory.getLog(WebSecurityConfig.class);
 
-    @Value("${spring.allow-ips:}")
-    private String[] allowIps;
-
     private static final List<IpAddressMatcher> baseAllowedIps = List.of(
             new IpAddressMatcher("127.0.0.1"),
             new IpAddressMatcher("::1")
     );
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, @Value("${spring.allow-ips:}") String[] allowIps) throws Exception {
         List<IpAddressMatcher> allowedIps = new ArrayList<>(baseAllowedIps);
         if (allowIps.length > 0) {
             try {

@@ -1,8 +1,11 @@
+import com.google.protobuf.gradle.id
+
 plugins {
 	id("java")
 	id("org.springframework.boot") version "3.4.0"
 	id("org.springframework.boot.aot") version "3.4.0"
 	id("io.spring.dependency-management") version "1.1.6"
+	id("com.google.protobuf") version "0.9.4"
 }
 
 group = "com.xStock"
@@ -18,6 +21,24 @@ repositories {
 	mavenCentral()
 }
 
+protobuf {
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.25.5"
+	}
+	plugins {
+		id("grpc") {
+			artifact = "io.grpc:protoc-gen-grpc-java:1.68.1"
+		}
+	}
+	generateProtoTasks {
+		all().forEach { task ->
+			task.plugins {
+				id("grpc")
+			}
+		}
+	}
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -27,10 +48,16 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+	implementation("io.grpc:grpc-protobuf:1.68.1")
+	implementation("io.grpc:grpc-stub:1.68.1")
+	implementation("com.google.protobuf:protobuf-java-util:4.28.3")
+
 
 	runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("io.grpc:grpc-netty-shaded:1.68.1")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	compileOnly("org.apache.tomcat:annotations-api:6.0.53") // necessary for Java 9+
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 

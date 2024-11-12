@@ -19,4 +19,14 @@ public class GlobalExceptionHandler {
                 request.getDescription(false)
         );
     }
+
+    @ExceptionHandler(value = GrpcResponseException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorMessage handleGrpcException(GrpcResponseException ex, WebRequest request) {
+        return new ErrorMessage(
+                422,
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
 }
