@@ -32,4 +32,19 @@ public class EventService implements CommonService<Event> {
         }
         return new PaginatedResponse<>(events.getTotalPages(), events.getContent());
     }
+
+    @Override
+    @Cacheable
+    public PaginatedResponse<Event> getAll(Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "publishDate");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<Event> events = eventRepository.findAll(paging);
+        if (events.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+        return new PaginatedResponse<>(events.getTotalPages(), events.getContent());
+    }
 }

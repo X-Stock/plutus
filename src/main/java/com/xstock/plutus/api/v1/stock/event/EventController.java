@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/companies/{ticker}")
+@RequestMapping(path = "/api/v1")
 public class EventController implements CommonController<Event> {
     private final EventService eventService;
 
     @Override
-    @GetMapping(path = "/events")
+    @GetMapping(path = "/companies/{ticker}/events")
     public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         return eventService.getAllByTicker(ticker, pageable, unpaged);
+    }
+
+    @GetMapping(path = "/events")
+    public PaginatedResponse<Event> getAll(Pageable pageable, boolean unpaged) {
+        return eventService.getAll(pageable, unpaged);
     }
 }
