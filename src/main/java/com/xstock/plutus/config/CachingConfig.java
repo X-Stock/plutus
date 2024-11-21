@@ -19,7 +19,7 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 class CachingConfig implements CachingConfigurer {
-    private static final Duration TIME_TO_LIVE = Duration.ofHours(6);
+    private static final Duration TIME_TO_LIVE = Duration.ofHours(3);
 
     @JsonTypeInfo(use=JsonTypeInfo.Id. CLASS, property="@class")
     private record MixIn() {}

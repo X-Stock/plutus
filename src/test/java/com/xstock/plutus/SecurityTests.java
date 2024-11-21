@@ -1,9 +1,12 @@
 package com.xstock.plutus;
 
-import com.xstock.plutus.api.stock.v1.company.Company;
-import com.xstock.plutus.api.stock.v1.company.CompanyController;
-import com.xstock.plutus.api.stock.v1.company.CompanyService;
+import com.xstock.plutus.api.v1.stock.company.Company;
+import com.xstock.plutus.api.v1.stock.company.CompanyController;
+import com.xstock.plutus.api.v1.stock.company.CompanyService;
+import com.xstock.plutus.config.WebSecurityConfig;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisabledInAotMode
-@WebMvcTest(CompanyController.class)
+@WebMvcTest({CompanyController.class, WebSecurityConfig.class})
 class SecurityTests {
     private static final String url = "/api/v1";
 
@@ -28,9 +32,16 @@ class SecurityTests {
     @MockBean
     private CompanyService companyService;
 
+    private RequestPostProcessor mockRemoteIp(String ipAddress) {
+        return request -> {
+            request.setRemoteAddr(ipAddress);
+            return request;
+        };
+    }
+
     @Test
     @WithMockUser
-    void shouldReturnCompanyWhenAuthorized() throws Exception {
+    void Should_Return_Company_When_Authorized() throws Exception {
         Company mockCompany = Mockito.mock(Company.class);
         when(companyService.getByTicker("VVS")).thenReturn(mockCompany);
 
@@ -41,8 +52,17 @@ class SecurityTests {
     }
 
     @Test
-    void shouldNotReturnWhenUnauthorized() throws Exception {
-        mvc.perform(get(url + "/companies"))
+    void ShouldNot_Return_When_Unauthorized() throws Exception {
+        mvc.perform(get(url + "/companies")
+                .with(mockRemoteIp("192.168.0.1")))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "127.0.0.1", "::1"})
+    void Should_AllowAccess_With_AllowedIps(String ipAddress) throws Exception {
+        mvc.perform(get(url + "/companies")
+                        .with(mockRemoteIp(ipAddress))).
+                andExpect(status().isOk());
     }
 }
