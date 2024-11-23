@@ -15,6 +15,6 @@ public class OptimizePortfolioController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public String getOptimizedPortfolio(@RequestBody OptimizePortfolio portfolio) {
-        return optimizePortfolioService.getOptimizedPortfolio(portfolio.tickers());
+        return optimizePortfolioService.getOptimizedPortfolio(portfolio);
     }
 }
