@@ -1,6 +1,5 @@
 package com.xstock.plutus.grpc;
 
-import com.xstock.grpcProto.optimizePortfolio.Asset;
 import com.xstock.grpcProto.optimizePortfolio.OptimizePortfolioGrpc;
 import com.xstock.grpcProto.optimizePortfolio.OptimizedPortfolioRequest;
 import com.xstock.grpcProto.optimizePortfolio.OptimizedPortfolioResponse;
@@ -11,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
 
 public class GrpcClient {
     private static final Log log = LogFactory.getLog(GrpcClient.class.getName());
@@ -35,16 +33,13 @@ public class GrpcClient {
         }
     }
 
-    public Optional<OptimizedPortfolioResponse> optimizePortfolio(Iterable<Asset> assets) {
-        OptimizedPortfolioRequest request = OptimizedPortfolioRequest.newBuilder().addAllAssets(assets).build();
-
-        OptimizedPortfolioResponse response;
+    public Optional<OptimizedPortfolioResponse> optimizePortfolio(OptimizedPortfolioRequest request) {
+        OptimizedPortfolioResponse response = null;
         try {
             response = blockingStub.optimize(request);
         } catch (StatusRuntimeException e) {
             log.error("RPC failed: " + e.getStatus().getCause());
-            return Optional.empty();
         }
-        return Optional.of(response);
+        return Optional.ofNullable(response);
     }
 }

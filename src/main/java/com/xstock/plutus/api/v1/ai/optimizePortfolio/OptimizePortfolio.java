@@ -4,5 +4,7 @@ import java.util.List;
 
 public record OptimizePortfolio(
         String industry,
-        List<String> tickers
+        List<String> tickers,
+        String objective,
+        Long capital
 ) { }
