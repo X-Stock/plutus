@@ -3,10 +3,9 @@ package com.xstock.plutus.api.v1.ai.optimizePortfolio;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.Struct;
 import com.google.protobuf.util.JsonFormat;
-import com.xstock.grpcProto.optimizePortfolio.Asset;
-import com.xstock.grpcProto.optimizePortfolio.OptimizedPortfolioRequest;
+import com.xstock.proto.optimizePortfolio.Asset;
+import com.xstock.proto.optimizePortfolio.OptimizedPortfolioRequest;
 import com.xstock.plutus.api.v1.stock.company.Company;
-import com.xstock.plutus.api.v1.stock.company.CompanyService;
 import com.xstock.plutus.api.v1.stock.industry.IndustryService;
 import com.xstock.plutus.api.v1.stock.stockHistorical.StockHistoricalService;
 import com.xstock.plutus.grpc.GrpcClient;
@@ -26,8 +25,6 @@ import java.util.List;
 public class OptimizePortfolioService {
     private final GrpcClient grpcClient;
 
-    private final CompanyService companyService;
-
     private final IndustryService industryService;
 
     private final StockHistoricalService stockHistoricalService;
@@ -36,14 +33,16 @@ public class OptimizePortfolioService {
 
     private final ObjectMapper objectMapper;
 
-    private List<String> getTickers(String industry) {
-        List<Company> companies = industry.equals("all")
-                ? companyService.getAll(defaultPageRequest, true).content()
-                : industryService.getCompaniesByIndustry(industry, defaultPageRequest, true).content();
-
-        List<String> tickers = new ArrayList<>(companies.size());
-        companies.forEach(company -> tickers.add(company.getTicker()));
-        return tickers;
+    private List<String> getTickers(List<String> industries) {
+        List<Company> companies = industries
+                .stream()
+                .flatMap(industry ->
+                        industryService
+                                .getCompaniesByIndustry(industry, defaultPageRequest, true)
+                                .content()
+                                .stream())
+                .toList();
+        return companies.stream().map(Company::getTicker).toList();
     }
 
     private List<Asset> createAssetList(List<String> tickers) throws Exception {
@@ -67,7 +66,7 @@ public class OptimizePortfolioService {
     @Cacheable
     public String getOptimizedPortfolio(OptimizePortfolio portfolio) {
         List<String> tickers = portfolio.tickers().isEmpty()
-                ? getTickers(portfolio.industry())
+                ? getTickers(portfolio.industries())
                 : portfolio.tickers();
 
         try {

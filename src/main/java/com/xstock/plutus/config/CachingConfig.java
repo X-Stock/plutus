@@ -21,9 +21,6 @@ import java.time.Duration;
 class CachingConfig implements CachingConfigurer {
     private static final Duration TIME_TO_LIVE = Duration.ofHours(3);
 
-    @JsonTypeInfo(use=JsonTypeInfo.Id. CLASS, property="@class")
-    private record MixIn() {}
-
     @Bean
     public RedisCacheConfiguration cacheConfiguration(ObjectMapper objectMapper) {
         objectMapper = objectMapper.copy();
@@ -50,5 +47,9 @@ class CachingConfig implements CachingConfigurer {
     @Override
     public CacheErrorHandler errorHandler() {
         return new LoggingCacheErrorHandler();
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
+    private record MixIn() {
     }
 }

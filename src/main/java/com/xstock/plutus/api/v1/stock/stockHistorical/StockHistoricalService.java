@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
 @RequiredArgsConstructor
 @Service
 @CacheConfig(cacheNames = "stockHistorical")
@@ -27,6 +29,19 @@ public class StockHistoricalService implements CommonController<StockHistorical>
                 : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
 
         Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(ticker, paging);
+        if (stockHistorical.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+        return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
+    }
+
+    public PaginatedResponse<StockHistorical> getAllByTickerInRange(String ticker, OffsetDateTime startDate, OffsetDateTime endDate, Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "time");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, startDate, endDate, paging);
         if (stockHistorical.isEmpty()) {
             throw new ResourceNotFoundException();
         }

@@ -37,11 +37,9 @@ public class IndustryService {
     @Cacheable(key = "#root.methodName")
     public Iterable<Industry> getAll() {
         List<Industry> industries = industryRepository.findAll();
-
         if (industries.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-
         return industries;
     }
 }

@@ -1,8 +1,8 @@
 package com.xstock.plutus.grpc;
 
-import com.xstock.grpcProto.optimizePortfolio.OptimizePortfolioGrpc;
-import com.xstock.grpcProto.optimizePortfolio.OptimizedPortfolioRequest;
-import com.xstock.grpcProto.optimizePortfolio.OptimizedPortfolioResponse;
+import com.xstock.proto.optimizePortfolio.OptimizePortfolioGrpc;
+import com.xstock.proto.optimizePortfolio.OptimizedPortfolioRequest;
+import com.xstock.proto.optimizePortfolio.OptimizedPortfolioResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.StatusRuntimeException;
 import org.apache.commons.logging.Log;

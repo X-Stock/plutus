@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor(force = true)
 @Entity
 @Table(name = "events", indexes = @Index(columnList = "companyId"))
-@JsonIgnoreProperties(value = {"id", "company"})
+@JsonIgnoreProperties(value = {"company"})
 public class Event {
     @Id
     private final Long id;

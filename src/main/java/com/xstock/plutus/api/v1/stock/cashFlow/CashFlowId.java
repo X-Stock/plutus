@@ -2,8 +2,9 @@ package com.xstock.plutus.api.v1.stock.cashFlow;
 
 import java.io.Serializable;
 
-record CashFlowId (
+record CashFlowId(
         Integer companyId,
         Short quarter,
         Short year
-) implements Serializable {}
+) implements Serializable {
+}

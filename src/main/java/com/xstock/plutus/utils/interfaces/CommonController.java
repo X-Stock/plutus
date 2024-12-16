@@ -21,8 +21,8 @@ public interface CommonController<T> {
     }
 
     default PaginatedResponse<T> getAll(
-           @ParameterObject Pageable pageable,
-           @RequestParam(defaultValue = "false") boolean unpaged) {
+            @ParameterObject Pageable pageable,
+            @RequestParam(defaultValue = "false") boolean unpaged) {
         throw new UnsupportedOperationException();
     }
 }

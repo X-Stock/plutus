@@ -25,4 +25,9 @@ public class CompanyController implements CommonController<Company> {
     public PaginatedResponse<Company> getAll(Pageable pageable, boolean unpaged) {
         return companyService.getAll(pageable, unpaged);
     }
+
+    @GetMapping("/metrics")
+    public PaginatedResponse<CompanyMetrics> getCompaniesByIndustry(Pageable pageable, boolean unpaged) {
+        return companyService.getAllWithMetrics(pageable, unpaged);
+    }
 }
