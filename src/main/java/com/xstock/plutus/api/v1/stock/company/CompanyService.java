@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -45,17 +44,15 @@ public class CompanyService implements CommonService<Company> {
 
     @Cacheable
     public PaginatedResponse<CompanyMetrics> getAllWithMetrics(Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "ratio");
         Pageable paging = unpaged
-                ? Pageable.unpaged()
-                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
 
-        Page<Object[]> result = companyRepository.findAllWithMetrics(paging);
-        if (result.isEmpty()) {
+        Page<CompanyMetrics> companyMetrics = companyRepository.findAllWithMetrics(paging);
+        if (companyMetrics.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-        List<CompanyMetrics> companies = result.getContent().stream()
-                .map(CompanyMetrics::new)
-                .toList();
-        return new PaginatedResponse<>(result.getTotalPages(), companies);
+        return new PaginatedResponse<>(companyMetrics.getTotalPages(), companyMetrics.getContent());
     }
 }
