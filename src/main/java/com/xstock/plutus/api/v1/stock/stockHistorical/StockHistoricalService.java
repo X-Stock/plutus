@@ -12,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @RequiredArgsConstructor
 @Service
@@ -35,13 +37,34 @@ public class StockHistoricalService implements CommonController<StockHistorical>
         return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
     }
 
-    public PaginatedResponse<StockHistorical> getAllByTickerInRange(String ticker, OffsetDateTime startDate, OffsetDateTime endDate, Pageable pageable, boolean unpaged) {
+    public PaginatedResponse<StockHistorical> getAllByTickerInRange(String ticker, LocalDate startDate, LocalDate endDate, Pageable pageable, boolean unpaged) {
         Sort sort = Sort.by(Sort.Direction.DESC, "time");
         Pageable paging = unpaged
                 ? Pageable.unpaged(sort)
                 : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
 
-        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, startDate, endDate, paging);
+        OffsetDateTime offsetStartDate = OffsetDateTime.of(startDate.atStartOfDay(), ZoneOffset.UTC);
+        OffsetDateTime offsetEndDate = OffsetDateTime.of(endDate.atStartOfDay(), ZoneOffset.UTC);
+
+        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, offsetStartDate, offsetEndDate, paging);
+        if (stockHistorical.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+        return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
+    }
+
+    public PaginatedResponse<StockHistoricalReturns> getReturnsByTicker(
+            String ticker,
+            String interval,
+            Pageable pageable,
+            boolean unpaged
+    ) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "time");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<StockHistoricalReturns> stockHistorical = stockHistoricalRepository.findReturnsByCompanyTicker(ticker, interval, paging);
         if (stockHistorical.isEmpty()) {
             throw new ResourceNotFoundException();
         }
