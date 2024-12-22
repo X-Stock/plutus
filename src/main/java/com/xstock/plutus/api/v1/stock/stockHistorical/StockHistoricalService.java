@@ -2,7 +2,6 @@ package com.xstock.plutus.api.v1.stock.stockHistorical;
 
 import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
-import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,43 +18,14 @@ import java.time.ZoneOffset;
 @RequiredArgsConstructor
 @Service
 @CacheConfig(cacheNames = "stockHistorical")
-public class StockHistoricalService implements CommonController<StockHistorical> {
+public class StockHistoricalService {
     private final StockHistoricalRepository stockHistoricalRepository;
 
-    @Override
     @Cacheable
-    public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "time");
-        Pageable paging = unpaged
-                ? Pageable.unpaged(sort)
-                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
-
-        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(ticker, paging);
-        if (stockHistorical.isEmpty()) {
-            throw new ResourceNotFoundException();
-        }
-        return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
-    }
-
-    public PaginatedResponse<StockHistorical> getAllByTickerInRange(String ticker, LocalDate startDate, LocalDate endDate, Pageable pageable, boolean unpaged) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "time");
-        Pageable paging = unpaged
-                ? Pageable.unpaged(sort)
-                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
-
-        OffsetDateTime offsetStartDate = OffsetDateTime.of(startDate.atStartOfDay(), ZoneOffset.UTC);
-        OffsetDateTime offsetEndDate = OffsetDateTime.of(endDate.atStartOfDay(), ZoneOffset.UTC);
-
-        Page<StockHistorical> stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, offsetStartDate, offsetEndDate, paging);
-        if (stockHistorical.isEmpty()) {
-            throw new ResourceNotFoundException();
-        }
-        return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
-    }
-
-    public PaginatedResponse<StockHistoricalReturns> getReturnsByTicker(
+    public PaginatedResponse<StockHistorical> getAllByTicker(
             String ticker,
-            String interval,
+            LocalDate startDate,
+            LocalDate endDate,
             Pageable pageable,
             boolean unpaged
     ) {
@@ -64,7 +34,66 @@ public class StockHistoricalService implements CommonController<StockHistorical>
                 ? Pageable.unpaged(sort)
                 : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
 
-        Page<StockHistoricalReturns> stockHistorical = stockHistoricalRepository.findReturnsByCompanyTicker(ticker, interval, paging);
+        Page<StockHistorical> stockHistorical;
+
+        OffsetDateTime offsetStartDate = null;
+        OffsetDateTime offsetEndDate = null;
+        if (startDate != null) {
+            offsetStartDate = OffsetDateTime.of(startDate.atStartOfDay(), ZoneOffset.UTC);
+        }
+        if (endDate != null) {
+            offsetEndDate = OffsetDateTime.of(endDate.atStartOfDay(), ZoneOffset.UTC);
+        }
+        if (offsetStartDate == null && offsetEndDate == null) {
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(ticker, paging);
+        } else if (offsetEndDate == null) {
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerFromDate(ticker, offsetStartDate, paging);
+        } else if (offsetStartDate == null) {
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerToDate(ticker, offsetEndDate, paging);
+        } else {
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, offsetStartDate, offsetEndDate, paging);
+        }
+
+        if (stockHistorical.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+        return new PaginatedResponse<>(stockHistorical.getTotalPages(), stockHistorical.getContent());
+    }
+
+    @Cacheable
+    public PaginatedResponse<StockHistoricalReturns> getReturnsByTicker(
+            String ticker,
+            String interval,
+            LocalDate startDate,
+            LocalDate endDate,
+            Pageable pageable,
+            boolean unpaged
+    ) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "time");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<StockHistoricalReturns> stockHistorical;
+
+        OffsetDateTime offsetStartDate = null;
+        OffsetDateTime offsetEndDate = null;
+        if (startDate != null) {
+            offsetStartDate = OffsetDateTime.of(startDate.atStartOfDay(), ZoneOffset.UTC);
+        }
+        if (endDate != null) {
+            offsetEndDate = OffsetDateTime.of(endDate.atStartOfDay(), ZoneOffset.UTC);
+        }
+        if (offsetStartDate == null && offsetEndDate == null) {
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTicker(ticker, interval, paging);
+        } else if (offsetEndDate == null) {
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerFromDate(ticker, interval, offsetStartDate, paging);
+        } else if (offsetStartDate == null) {
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerToDate(ticker, interval, offsetEndDate, paging);
+        } else {
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerInRange(ticker, interval, offsetStartDate, offsetEndDate, paging);
+        }
+
         if (stockHistorical.isEmpty()) {
             throw new ResourceNotFoundException();
         }

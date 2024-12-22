@@ -18,6 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,11 +51,15 @@ public class PortfolioService {
         return companies.stream().map(Company::getTicker).toList();
     }
 
-    private List<Asset> createAssetList(List<String> tickers) throws Exception {
+    private List<Asset> createAssetList(
+            List<String> tickers,
+            LocalDate startDate,
+            LocalDate endDate
+    ) throws Exception {
         List<Asset> assets = new ArrayList<>(tickers.size());
         for (String ticker : tickers) {
             var historical = stockHistoricalService
-                    .getAllByTicker(ticker, null, true)
+                    .getAllByTicker(ticker, startDate, endDate, null, true)
                     .content();
 
             List<Struct> historicalStructs = new ArrayList<>(historical.size());
@@ -69,13 +74,17 @@ public class PortfolioService {
     }
 
     @Cacheable
-    public String getOptimizedPortfolio(PortfolioRequest portfolio) {
+    public String getOptimizedPortfolio(
+            PortfolioRequest portfolio,
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
         List<String> tickers = portfolio.tickers().isEmpty()
                 ? getTickers(portfolio.industries())
                 : portfolio.tickers();
 
         try {
-            List<Asset> assets = createAssetList(tickers);
+            List<Asset> assets = createAssetList(tickers, startDate, endDate);
             OptimizedPortfolioRequest request = OptimizedPortfolioRequest.newBuilder()
                     .addAllAssets(assets)
                     .setObjective(portfolio.objective())
@@ -89,13 +98,19 @@ public class PortfolioService {
         }
     }
 
-    public List<IntersectedHistorical> intersectHistorical(Set<String> tickers, String interval) {
+    @Cacheable
+    public List<IntersectedHistorical> intersectHistorical(
+            Set<String> tickers,
+            String interval,
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
         Map<String, List<StockHistoricalReturns>> historical = tickers
                 .parallelStream()
                 .collect(Collectors.toMap(
                         ticker -> ticker,
                         ticker -> stockHistoricalService
-                                .getReturnsByTicker(ticker, interval, null, true)
+                                .getReturnsByTicker(ticker, interval, startDate, endDate, null, true)
                                 .content()
                 ));
 
@@ -123,11 +138,17 @@ public class PortfolioService {
                 .toList();
     }
 
-    public List<StockHistoricalReturns> getPortfolioReturns(List<PortfolioReturnsRequest> request, String interval) {
+    @Cacheable
+    public List<StockHistoricalReturns> getPortfolioReturns(
+            List<PortfolioReturnsRequest> request,
+            String interval,
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
         Map<String, Float> portfolio = request
                 .stream()
                 .collect(Collectors.toUnmodifiableMap(PortfolioReturnsRequest::ticker, PortfolioReturnsRequest::weight));
-        List<IntersectedHistorical> intersectedHistorical = intersectHistorical(portfolio.keySet(), interval);
+        List<IntersectedHistorical> intersectedHistorical = intersectHistorical(portfolio.keySet(), interval, startDate, endDate);
 
         int timePoints = intersectedHistorical.getFirst().historical().size();
         return IntStream.iterate(timePoints - 1, i -> i - 1)
