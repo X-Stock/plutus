@@ -4,8 +4,6 @@ import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.exception.ResourceNotFoundException;
 import com.xstock.plutus.utils.interfaces.CommonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,12 +12,10 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-@CacheConfig(cacheNames = "subsidiaries")
 public class SubsidiaryService implements CommonService<Subsidiary> {
     private final SubsidiaryRepository subsidiaryRepository;
 
     @Override
-    @Cacheable
     public PaginatedResponse<Subsidiary> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         Sort sort = Sort.by(Sort.Direction.ASC, "no");
         Pageable paging = unpaged

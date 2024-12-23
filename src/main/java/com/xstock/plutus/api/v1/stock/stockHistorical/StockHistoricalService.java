@@ -21,7 +21,6 @@ import java.time.ZoneOffset;
 public class StockHistoricalService {
     private final StockHistoricalRepository stockHistoricalRepository;
 
-    @Cacheable
     public PaginatedResponse<StockHistorical> getAllByTicker(
             String ticker,
             LocalDate startDate,

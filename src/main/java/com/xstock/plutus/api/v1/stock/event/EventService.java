@@ -19,7 +19,6 @@ public class EventService implements CommonService<Event> {
     private final EventRepository eventRepository;
 
     @Override
-    @Cacheable
     public PaginatedResponse<Event> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         Sort sort = Sort.by(Sort.Direction.DESC, "notifyDate");
         Pageable paging = unpaged

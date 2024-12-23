@@ -19,7 +19,7 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 class CachingConfig implements CachingConfigurer {
-    private static final Duration TIME_TO_LIVE = Duration.ofHours(3);
+    private static final Duration TIME_TO_LIVE = Duration.ofHours(12);
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration(ObjectMapper objectMapper) {

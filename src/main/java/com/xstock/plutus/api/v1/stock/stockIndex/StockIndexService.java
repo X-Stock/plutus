@@ -23,7 +23,6 @@ import java.util.List;
 public class StockIndexService implements CommonService<StockIndex> {
     private final StockIndexRepository stockIndexRepository;
 
-    @Cacheable
     public PaginatedResponse<String> getAllByTicker(String ticker) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompanyTicker(ticker,
                 Pageable.unpaged(Sort.by(Sort.Direction.ASC, "indexName"))

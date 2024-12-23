@@ -21,7 +21,6 @@ public class CompanyService implements CommonService<Company> {
     private final CompanyRepository companyRepository;
 
     @Override
-    @Cacheable
     public Company getByTicker(String ticker) {
         Optional<Company> company = companyRepository.findByTicker(ticker);
         return company.orElseThrow(ResourceNotFoundException::new);
