@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 public interface StockHistoricalRepository extends CommonRepository<StockHistorical> {
     String findAllQuery = """
@@ -50,22 +50,22 @@ public interface StockHistoricalRepository extends CommonRepository<StockHistori
     @Query(findAllQuery + " AND h.time BETWEEN :fromDate AND :toDate")
     Page<StockHistorical> findAllByCompanyTickerInRange(
             @Param("ticker") String ticker,
-            @Param("fromDate") OffsetDateTime fromDate,
-            @Param("toDate") OffsetDateTime toDate,
+            @Param("fromDate") Instant fromDate,
+            @Param("toDate") Instant toDate,
             Pageable pageable
     );
 
     @Query(findAllQuery + " AND h.time >= :fromDate")
     Page<StockHistorical> findAllByCompanyTickerFromDate(
             @Param("ticker") String ticker,
-            @Param("fromDate") OffsetDateTime fromDate,
+            @Param("fromDate") Instant fromDate,
             Pageable pageable
     );
 
     @Query(findAllQuery + " AND h.time <= :toDate")
     Page<StockHistorical> findAllByCompanyTickerToDate(
             @Param("ticker") String ticker,
-            @Param("toDate") OffsetDateTime toDate,
+            @Param("toDate") Instant toDate,
             Pageable pageable
     );
 
@@ -83,8 +83,8 @@ public interface StockHistoricalRepository extends CommonRepository<StockHistori
     Page<StockHistoricalReturns> findReturnsByCompanyTickerInRange(
             @Param("ticker") String ticker,
             @Param("interval") String interval,
-            @Param("fromDate") OffsetDateTime fromDate,
-            @Param("toDate") OffsetDateTime toDate,
+            @Param("fromDate") Instant fromDate,
+            @Param("toDate") Instant toDate,
             Pageable pageable
     );
 
@@ -95,7 +95,7 @@ public interface StockHistoricalRepository extends CommonRepository<StockHistori
     Page<StockHistoricalReturns> findReturnsByCompanyTickerFromDate(
             @Param("ticker") String ticker,
             @Param("interval") String interval,
-            @Param("fromDate") OffsetDateTime fromDate,
+            @Param("fromDate") Instant fromDate,
             Pageable pageable
     );
 
@@ -106,7 +106,7 @@ public interface StockHistoricalRepository extends CommonRepository<StockHistori
     Page<StockHistoricalReturns> findReturnsByCompanyTickerToDate(
             @Param("ticker") String ticker,
             @Param("interval") String interval,
-            @Param("toDate") OffsetDateTime toDate,
+            @Param("toDate") Instant toDate,
             Pageable pageable
     );
 }

@@ -1,10 +1,10 @@
 package com.xstock.plutus.api.v1.stock.insiderDeal;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 record InsiderDealId(
         Integer companyId,
-        OffsetDateTime dealAnnounceDate
+        Instant dealAnnounceDate
 ) implements Serializable {
 }

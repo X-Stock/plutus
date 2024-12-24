@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Getter
 @NoArgsConstructor(force = true)
@@ -38,13 +38,13 @@ public class Event {
     @Column(columnDefinition = "TEXT")
     private final String eventCode;
 
-    private final OffsetDateTime notifyDate;
+    private final Instant notifyDate;
 
-    private final OffsetDateTime exerciseDate;
+    private final Instant exerciseDate;
 
-    private final OffsetDateTime registrationFinalDate;
+    private final Instant registrationFinalDate;
 
-    private final OffsetDateTime exRightsDate;
+    private final Instant exRightsDate;
 
     @Column(columnDefinition = "TEXT")
     private final String eventDescription;

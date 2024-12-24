@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Getter
 @NoArgsConstructor(force = true)
@@ -26,7 +26,7 @@ public class StockHistorical {
     private final Company company;
 
     @Id
-    private final OffsetDateTime time;
+    private final Instant time;
 
     private final Integer open;
 

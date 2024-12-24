@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,9 +19,9 @@ public class StockHistoricalController {
     public PaginatedResponse<StockHistorical> getAllByTicker(
             @PathVariable String ticker,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            OffsetDateTime fromDate,
+            Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            OffsetDateTime startDate,
+            Instant startDate,
             @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "false") boolean unpaged
     ) {
@@ -33,9 +33,9 @@ public class StockHistoricalController {
             @PathVariable String ticker,
             @RequestParam String interval,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            OffsetDateTime fromDate,
+            Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            OffsetDateTime toDate,
+            Instant toDate,
             @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "false") boolean unpaged
     ) {

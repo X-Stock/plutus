@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +21,8 @@ public class StockHistoricalService {
 
     public PaginatedResponse<StockHistorical> getAllByTicker(
             String ticker,
-            OffsetDateTime fromDate,
-            OffsetDateTime toDate,
+            Instant fromDate,
+            Instant toDate,
             Pageable pageable,
             boolean unpaged
     ) {
@@ -53,8 +53,8 @@ public class StockHistoricalService {
     public PaginatedResponse<StockHistoricalReturns> getReturnsByTicker(
             String ticker,
             String interval,
-            OffsetDateTime fromDate,
-            OffsetDateTime toDate,
+            Instant fromDate,
+            Instant toDate,
             Pageable pageable,
             boolean unpaged
     ) {

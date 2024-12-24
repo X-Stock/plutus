@@ -1,9 +1,9 @@
-package com.xstock.plutus.api.v1.analysis.portfolio;
+package com.xstock.plutus.api.v1.analysis.intersectHistorical;
 
+import com.xstock.plutus.api.v1.stock.stockHistorical.StockHistorical;
 import com.xstock.plutus.api.v1.stock.stockHistorical.StockHistoricalReturns;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -12,30 +12,30 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/portfolio")
-public class PortfolioController {
-    private final PortfolioService portfolioService;
+@RequestMapping(path = "/api/v1/intersect-historical")
+public class IntersectedHistoricalController {
+    private final IntersectedHistoricalService intersectedHistoricalService;
 
-    @PostMapping(path = "/optimize", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getOptimizedPortfolio(
-            @RequestBody PortfolioRequest portfolio,
+    @PostMapping
+    public List<IntersectedHistorical<StockHistorical>> getIntersectedHistoricalPrice(
+            @RequestBody Set<String> tickers,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             Instant toDate
     ) {
-        return portfolioService.getOptimizedPortfolio(portfolio, fromDate, toDate);
+        return intersectedHistoricalService.intersectHistoricalPrices(tickers, fromDate, toDate);
     }
 
-    @PostMapping(path ="/historical-returns")
-    public List<StockHistoricalReturns> getPortfolioReturns(
-            @RequestBody Set<PortfolioReturnsRequest> request,
+    @PostMapping(path = "/returns")
+    public List<IntersectedHistorical<StockHistoricalReturns>> getIntersectedHistoricalReturns(
+            @RequestBody Set<String> tickers,
             @RequestParam String interval,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             Instant toDate
     ) {
-        return portfolioService.getPortfolioReturns(request, interval, fromDate, toDate);
+        return intersectedHistoricalService.intersectHistoricalReturns(tickers, interval, fromDate, toDate);
     }
 }
