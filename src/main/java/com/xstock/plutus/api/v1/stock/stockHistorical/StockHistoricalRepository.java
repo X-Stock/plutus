@@ -47,25 +47,25 @@ public interface StockHistoricalRepository extends CommonRepository<StockHistori
             JOIN companies c ON c.id = h.company_id AND c.ticker = :ticker
             """;
 
-    @Query(findAllQuery + " AND h.time BETWEEN :startDate AND :endDate")
+    @Query(findAllQuery + " AND h.time BETWEEN :fromDate AND :toDate")
     Page<StockHistorical> findAllByCompanyTickerInRange(
             @Param("ticker") String ticker,
-            @Param("startDate") OffsetDateTime startDate,
-            @Param("endDate") OffsetDateTime endDate,
+            @Param("fromDate") OffsetDateTime fromDate,
+            @Param("toDate") OffsetDateTime toDate,
             Pageable pageable
     );
 
-    @Query(findAllQuery + " AND h.time >= :startDate")
+    @Query(findAllQuery + " AND h.time >= :fromDate")
     Page<StockHistorical> findAllByCompanyTickerFromDate(
             @Param("ticker") String ticker,
-            @Param("startDate") OffsetDateTime startDate,
+            @Param("fromDate") OffsetDateTime fromDate,
             Pageable pageable
     );
 
-    @Query(findAllQuery + " AND h.time <= :endDate")
+    @Query(findAllQuery + " AND h.time <= :toDate")
     Page<StockHistorical> findAllByCompanyTickerToDate(
             @Param("ticker") String ticker,
-            @Param("endDate") OffsetDateTime endDate,
+            @Param("toDate") OffsetDateTime toDate,
             Pageable pageable
     );
 
@@ -77,36 +77,36 @@ public interface StockHistoricalRepository extends CommonRepository<StockHistori
     );
 
     @NativeQuery(
-            value= findReturnsQuery + " WHERE bucket BETWEEN :startDate AND :endDate",
-            countQuery = findReturnsCountQuery + " WHERE h.time BETWEEN :startDate AND :endDate"
+            value= findReturnsQuery + " WHERE bucket BETWEEN :fromDate AND :toDate",
+            countQuery = findReturnsCountQuery + " WHERE h.time BETWEEN :fromDate AND :toDate"
     )
     Page<StockHistoricalReturns> findReturnsByCompanyTickerInRange(
             @Param("ticker") String ticker,
             @Param("interval") String interval,
-            @Param("startDate") OffsetDateTime startDate,
-            @Param("endDate") OffsetDateTime endDate,
+            @Param("fromDate") OffsetDateTime fromDate,
+            @Param("toDate") OffsetDateTime toDate,
             Pageable pageable
     );
 
     @NativeQuery(
-            value= findReturnsQuery + " WHERE bucket >= :startDate",
-            countQuery = findReturnsCountQuery + " WHERE h.time >= :startDate"
+            value= findReturnsQuery + " WHERE bucket >= :fromDate",
+            countQuery = findReturnsCountQuery + " WHERE h.time >= :fromDate"
     )
     Page<StockHistoricalReturns> findReturnsByCompanyTickerFromDate(
             @Param("ticker") String ticker,
             @Param("interval") String interval,
-            @Param("startDate") OffsetDateTime startDate,
+            @Param("fromDate") OffsetDateTime fromDate,
             Pageable pageable
     );
 
     @NativeQuery(
-            value= findReturnsQuery + " WHERE bucket <= :endDate",
-            countQuery = findReturnsCountQuery + " WHERE h.time <= :endDate"
+            value= findReturnsQuery + " WHERE bucket <= :toDate",
+            countQuery = findReturnsCountQuery + " WHERE h.time <= :toDate"
     )
     Page<StockHistoricalReturns> findReturnsByCompanyTickerToDate(
             @Param("ticker") String ticker,
             @Param("interval") String interval,
-            @Param("endDate") OffsetDateTime endDate,
+            @Param("toDate") OffsetDateTime toDate,
             Pageable pageable
     );
 }

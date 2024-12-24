@@ -11,9 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 @RequiredArgsConstructor
 @Service
@@ -23,8 +21,8 @@ public class StockHistoricalService {
 
     public PaginatedResponse<StockHistorical> getAllByTicker(
             String ticker,
-            LocalDate startDate,
-            LocalDate endDate,
+            OffsetDateTime fromDate,
+            OffsetDateTime toDate,
             Pageable pageable,
             boolean unpaged
     ) {
@@ -35,22 +33,14 @@ public class StockHistoricalService {
 
         Page<StockHistorical> stockHistorical;
 
-        OffsetDateTime offsetStartDate = null;
-        OffsetDateTime offsetEndDate = null;
-        if (startDate != null) {
-            offsetStartDate = OffsetDateTime.of(startDate.atStartOfDay(), ZoneOffset.UTC);
-        }
-        if (endDate != null) {
-            offsetEndDate = OffsetDateTime.of(endDate.atStartOfDay(), ZoneOffset.UTC);
-        }
-        if (offsetStartDate == null && offsetEndDate == null) {
+        if (fromDate == null && toDate == null) {
             stockHistorical = stockHistoricalRepository.findAllByCompanyTicker(ticker, paging);
-        } else if (offsetEndDate == null) {
-            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerFromDate(ticker, offsetStartDate, paging);
-        } else if (offsetStartDate == null) {
-            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerToDate(ticker, offsetEndDate, paging);
+        } else if (toDate == null) {
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerFromDate(ticker, fromDate, paging);
+        } else if (fromDate == null) {
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerToDate(ticker, toDate, paging);
         } else {
-            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, offsetStartDate, offsetEndDate, paging);
+            stockHistorical = stockHistoricalRepository.findAllByCompanyTickerInRange(ticker, fromDate, toDate, paging);
         }
 
         if (stockHistorical.isEmpty()) {
@@ -63,8 +53,8 @@ public class StockHistoricalService {
     public PaginatedResponse<StockHistoricalReturns> getReturnsByTicker(
             String ticker,
             String interval,
-            LocalDate startDate,
-            LocalDate endDate,
+            OffsetDateTime fromDate,
+            OffsetDateTime toDate,
             Pageable pageable,
             boolean unpaged
     ) {
@@ -75,22 +65,14 @@ public class StockHistoricalService {
 
         Page<StockHistoricalReturns> stockHistorical;
 
-        OffsetDateTime offsetStartDate = null;
-        OffsetDateTime offsetEndDate = null;
-        if (startDate != null) {
-            offsetStartDate = OffsetDateTime.of(startDate.atStartOfDay(), ZoneOffset.UTC);
-        }
-        if (endDate != null) {
-            offsetEndDate = OffsetDateTime.of(endDate.atStartOfDay(), ZoneOffset.UTC);
-        }
-        if (offsetStartDate == null && offsetEndDate == null) {
+        if (fromDate == null && toDate == null) {
             stockHistorical = stockHistoricalRepository.findReturnsByCompanyTicker(ticker, interval, paging);
-        } else if (offsetEndDate == null) {
-            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerFromDate(ticker, interval, offsetStartDate, paging);
-        } else if (offsetStartDate == null) {
-            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerToDate(ticker, interval, offsetEndDate, paging);
+        } else if (toDate == null) {
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerFromDate(ticker, interval, fromDate, paging);
+        } else if (fromDate == null) {
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerToDate(ticker, interval, toDate, paging);
         } else {
-            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerInRange(ticker, interval, offsetStartDate, offsetEndDate, paging);
+            stockHistorical = stockHistoricalRepository.findReturnsByCompanyTickerInRange(ticker, interval, fromDate, toDate, paging);
         }
 
         if (stockHistorical.isEmpty()) {

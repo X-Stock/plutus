@@ -18,7 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -49,13 +49,13 @@ public class PortfolioService {
 
     private List<Asset> createAssetList(
             List<String> tickers,
-            LocalDate startDate,
-            LocalDate endDate
+            OffsetDateTime fromDate,
+            OffsetDateTime toDate
     ) throws Exception {
         List<Asset> assets = new ArrayList<>(tickers.size());
         for (String ticker : tickers) {
             var historical = stockHistoricalService
-                    .getAllByTicker(ticker, startDate, endDate, null, true)
+                    .getAllByTicker(ticker, fromDate, toDate, null, true)
                     .content();
 
             List<Struct> historicalStructs = new ArrayList<>(historical.size());
@@ -72,15 +72,15 @@ public class PortfolioService {
     @Cacheable
     public String getOptimizedPortfolio(
             PortfolioRequest portfolio,
-            LocalDate startDate,
-            LocalDate endDate
+            OffsetDateTime fromDate,
+            OffsetDateTime toDate
     ) {
         List<String> tickers = portfolio.tickers().isEmpty()
                 ? getTickers(portfolio.industries())
                 : portfolio.tickers();
 
         try {
-            List<Asset> assets = createAssetList(tickers, startDate, endDate);
+            List<Asset> assets = createAssetList(tickers, fromDate, toDate);
             OptimizedPortfolioRequest request = OptimizedPortfolioRequest.newBuilder()
                     .addAllAssets(assets)
                     .setObjective(portfolio.objective())
@@ -98,15 +98,15 @@ public class PortfolioService {
     public List<IntersectedHistorical> intersectHistorical(
             Set<String> tickers,
             String interval,
-            LocalDate startDate,
-            LocalDate endDate
+            OffsetDateTime fromDate,
+            OffsetDateTime toDate
     ) {
         Map<String, List<StockHistoricalReturns>> historical = tickers
                 .parallelStream()
                 .collect(Collectors.toMap(
                         ticker -> ticker,
                         ticker -> stockHistoricalService
-                                .getReturnsByTicker(ticker, interval, startDate, endDate, null, true)
+                                .getReturnsByTicker(ticker, interval, fromDate, toDate, null, true)
                                 .content()
                 ));
 
@@ -138,13 +138,13 @@ public class PortfolioService {
     public List<StockHistoricalReturns> getPortfolioReturns(
             List<PortfolioReturnsRequest> request,
             String interval,
-            LocalDate startDate,
-            LocalDate endDate
+            OffsetDateTime fromDate,
+            OffsetDateTime toDate
     ) {
         Map<String, Float> portfolio = request
                 .stream()
                 .collect(Collectors.toUnmodifiableMap(PortfolioReturnsRequest::ticker, PortfolioReturnsRequest::weight));
-        List<IntersectedHistorical> intersectedHistorical = intersectHistorical(portfolio.keySet(), interval, startDate, endDate);
+        List<IntersectedHistorical> intersectedHistorical = intersectHistorical(portfolio.keySet(), interval, fromDate, toDate);
 
         int timePoints = intersectedHistorical.getFirst().historical().size();
         return IntStream.iterate(timePoints - 1, i -> i - 1)
