@@ -34,8 +34,9 @@ public class PortfolioController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            Instant toDate
+            Instant toDate,
+            @RequestParam(defaultValue = "false") boolean cumulative
     ) {
-        return portfolioService.getPortfolioReturns(request, interval, fromDate, toDate);
+        return portfolioService.getPortfolioReturns(request, interval, fromDate, toDate, cumulative);
     }
 }

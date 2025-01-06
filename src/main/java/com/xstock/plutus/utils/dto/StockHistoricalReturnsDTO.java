@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @RequiredArgsConstructor
 @Getter
-public class StockHistoricalReturnsDto implements StockHistoricalReturns {
+public class StockHistoricalReturnsDTO implements StockHistoricalReturns {
     private final Instant time;
     private final Float returns;
 }
