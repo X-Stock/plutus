@@ -47,7 +47,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.1")
 	implementation("io.grpc:grpc-protobuf:1.68.1")
 	implementation("io.grpc:grpc-stub:1.68.1")
 	implementation("com.google.protobuf:protobuf-java-util:4.28.3")
