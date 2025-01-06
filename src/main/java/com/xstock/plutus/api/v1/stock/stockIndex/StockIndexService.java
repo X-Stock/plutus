@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,7 +22,6 @@ import java.util.List;
 public class StockIndexService implements CommonService<StockIndex> {
     private final StockIndexRepository stockIndexRepository;
 
-    @Cacheable
     public PaginatedResponse<String> getAllByTicker(String ticker) {
         Page<StockIndex> stockIndices = stockIndexRepository.findAllByCompanyTicker(ticker,
                 Pageable.unpaged(Sort.by(Sort.Direction.ASC, "indexName"))
@@ -33,11 +31,11 @@ public class StockIndexService implements CommonService<StockIndex> {
             throw new ResourceNotFoundException();
         }
 
-        List<String> contents = new ArrayList<>();
-        for (var content : stockIndices.getContent()) {
-            contents.add(content.getIndexName());
-        }
-        return new PaginatedResponse<>(null, contents);
+        List<String> indexNames = stockIndices.getContent().stream()
+                .map(StockIndex::getIndexName)
+                .toList();
+
+        return new PaginatedResponse<>(null, indexNames);
     }
 
     @Override
@@ -55,10 +53,9 @@ public class StockIndexService implements CommonService<StockIndex> {
             throw new ResourceNotFoundException();
         }
 
-        var contents = stockIndices.getContent();
-        for (var content : contents) {
-            Hibernate.initialize(content.getCompany());
-        }
-        return new PaginatedResponse<>(stockIndices.getTotalPages(), contents);
+        List<StockIndex> indices = stockIndices.getContent();
+        indices.parallelStream()
+                .forEach(stockIndex -> Hibernate.initialize(stockIndex.getCompany()));
+        return new PaginatedResponse<>(stockIndices.getTotalPages(), indices);
     }
 }

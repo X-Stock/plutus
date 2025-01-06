@@ -21,7 +21,6 @@ public class CompanyService implements CommonService<Company> {
     private final CompanyRepository companyRepository;
 
     @Override
-    @Cacheable
     public Company getByTicker(String ticker) {
         Optional<Company> company = companyRepository.findByTicker(ticker);
         return company.orElseThrow(ResourceNotFoundException::new);
@@ -40,5 +39,19 @@ public class CompanyService implements CommonService<Company> {
             throw new ResourceNotFoundException();
         }
         return new PaginatedResponse<>(companies.getTotalPages(), companies.getContent());
+    }
+
+    @Cacheable
+    public PaginatedResponse<CompanyMetrics> getAllWithMetrics(Pageable pageable, boolean unpaged) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "ratio");
+        Pageable paging = unpaged
+                ? Pageable.unpaged(sort)
+                : PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(sort));
+
+        Page<CompanyMetrics> companyMetrics = companyRepository.findAllWithMetrics(paging);
+        if (companyMetrics.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+        return new PaginatedResponse<>(companyMetrics.getTotalPages(), companyMetrics.getContent());
     }
 }

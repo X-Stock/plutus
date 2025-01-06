@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Getter
 @NoArgsConstructor(force = true)
@@ -27,7 +27,7 @@ public class Dividend {
     private final Company company;
 
     @Id
-    private final OffsetDateTime exerciseDate;
+    private final Instant exerciseDate;
 
     private final Short cashYear;
 

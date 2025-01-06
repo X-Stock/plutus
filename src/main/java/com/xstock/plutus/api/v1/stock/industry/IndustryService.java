@@ -34,14 +34,12 @@ public class IndustryService {
         return new PaginatedResponse<>(companies.getTotalPages(), companies.getContent());
     }
 
-    @Cacheable(key = "#root.methodName")
+    @Cacheable
     public Iterable<Industry> getAll() {
         List<Industry> industries = industryRepository.findAll();
-
         if (industries.isEmpty()) {
             throw new ResourceNotFoundException();
         }
-
         return industries;
     }
 }

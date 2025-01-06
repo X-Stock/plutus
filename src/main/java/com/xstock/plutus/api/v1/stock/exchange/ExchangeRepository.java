@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface ExchangeRepository extends PagingAndSortingRepository<Company, Integer> {
-  Page<Company> findAllByExchange(String exchange, Pageable pageable);
+    Page<Company> findAllByExchange(String exchange, Pageable pageable);
 
-  @Query("SELECT DISTINCT c.exchange FROM Company c")
-  Iterable<String> findAll();
+    @Query("SELECT DISTINCT c.exchange FROM Company c")
+    Iterable<String> findAll();
 }

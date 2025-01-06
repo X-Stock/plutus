@@ -1,22 +1,44 @@
 package com.xstock.plutus.api.v1.stock.stockHistorical;
 
 import com.xstock.plutus.utils.dto.PaginatedResponse;
-import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/companies/{ticker}")
-public class StockHistoricalController implements CommonController<StockHistorical> {
+@RequestMapping(path = "/api/v1/companies/{ticker}/stock-historical")
+public class StockHistoricalController {
     private final StockHistoricalService stockHistoricalService;
 
-    @Override
-    @GetMapping(path = "/stock-historical")
-    public PaginatedResponse<StockHistorical> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
-        return stockHistoricalService.getAllByTicker(ticker, pageable, unpaged);
+    @GetMapping
+    public PaginatedResponse<StockHistorical> getAllByTicker(
+            @PathVariable String ticker,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            Instant fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            Instant startDate,
+            @ParameterObject Pageable pageable,
+            @RequestParam(defaultValue = "false") boolean unpaged
+    ) {
+        return stockHistoricalService.getAllByTicker(ticker, fromDate, startDate, pageable, unpaged);
+    }
+
+    @GetMapping(path = "/returns")
+    public PaginatedResponse<StockHistoricalReturns> getReturns(
+            @PathVariable String ticker,
+            @RequestParam String interval,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            Instant fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            Instant toDate,
+            @ParameterObject Pageable pageable,
+            @RequestParam(defaultValue = "false") boolean unpaged
+    ) {
+        return stockHistoricalService.getReturnsByTicker(ticker, interval, fromDate, toDate, pageable, unpaged);
     }
 }

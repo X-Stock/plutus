@@ -3,9 +3,11 @@ package com.xstock.plutus.api.v1.stock.company;
 import com.xstock.plutus.utils.dto.PaginatedResponse;
 import com.xstock.plutus.utils.interfaces.CommonController;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -24,5 +26,12 @@ public class CompanyController implements CommonController<Company> {
     @GetMapping
     public PaginatedResponse<Company> getAll(Pageable pageable, boolean unpaged) {
         return companyService.getAll(pageable, unpaged);
+    }
+
+    @GetMapping("/metrics")
+    public PaginatedResponse<CompanyMetrics> getCompaniesByIndustry(
+            @ParameterObject Pageable pageable,
+            @RequestParam(defaultValue = "false") boolean unpaged) {
+        return companyService.getAllWithMetrics(pageable, unpaged);
     }
 }

@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Getter
 @NoArgsConstructor(force = true)
 @Entity
 @Table(indexes = @Index(columnList = "companyId"))
-@JsonIgnoreProperties(value = {"id", "company"})
+@JsonIgnoreProperties(value = {"company"})
 public class News {
     @Id
     private final Long id;
@@ -38,7 +38,7 @@ public class News {
     @Column(columnDefinition = "TEXT")
     private final String source;
 
-    private final OffsetDateTime publishDate;
+    private final Instant publishDate;
 
     private final Float rsi;
 

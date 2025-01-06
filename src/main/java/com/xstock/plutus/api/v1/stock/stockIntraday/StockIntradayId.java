@@ -1,9 +1,10 @@
 package com.xstock.plutus.api.v1.stock.stockIntraday;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
-record StockIntradayId (
+record StockIntradayId(
         Integer companyId,
-        OffsetDateTime time
-) implements Serializable {}
+        Instant time
+) implements Serializable {
+}

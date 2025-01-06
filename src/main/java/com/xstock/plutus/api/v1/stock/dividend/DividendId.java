@@ -1,9 +1,10 @@
 package com.xstock.plutus.api.v1.stock.dividend;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
-record DividendId (
+record DividendId(
         Integer companyId,
-        OffsetDateTime exerciseDate
-) implements Serializable {}
+        Instant exerciseDate
+) implements Serializable {
+}

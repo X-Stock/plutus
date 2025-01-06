@@ -19,7 +19,6 @@ public class NewsService implements CommonService<News> {
     private final NewsRepository newsRepository;
 
     @Override
-    @Cacheable
     public PaginatedResponse<News> getAllByTicker(String ticker, Pageable pageable, boolean unpaged) {
         Sort sort = Sort.by(Sort.Direction.DESC, "publishDate");
         Pageable paging = unpaged

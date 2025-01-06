@@ -6,4 +6,5 @@ record BalanceSheetId(
         Integer companyId,
         Short quarter,
         Short year
-) implements Serializable {}
+) implements Serializable {
+}
