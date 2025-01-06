@@ -2,9 +2,9 @@ import com.google.protobuf.gradle.id
 
 plugins {
 	id("java")
-	id("org.springframework.boot") version "3.4.0"
-	id("org.springframework.boot.aot") version "3.4.0"
-	id("io.spring.dependency-management") version "1.1.6"
+	id("org.springframework.boot") version "3.4.1"
+	id("org.springframework.boot.aot") version "3.4.1"
+	id("io.spring.dependency-management") version "1.1.7"
 	id("com.google.protobuf") version "0.9.4"
 }
 
