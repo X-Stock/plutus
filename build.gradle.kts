@@ -50,7 +50,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.1")
 	implementation("io.grpc:grpc-protobuf:1.69.0")
 	implementation("io.grpc:grpc-stub:1.68.1")
-	implementation("com.google.protobuf:protobuf-java-util:4.28.3")
+	implementation("com.google.protobuf:protobuf-java-util:4.29.3")
 
 
 	runtimeOnly("org.postgresql:postgresql")
