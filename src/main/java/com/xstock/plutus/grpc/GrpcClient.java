@@ -3,14 +3,19 @@ package com.xstock.plutus.grpc;
 import com.xstock.proto.optimizePortfolio.OptimizePortfolioGrpc;
 import com.xstock.proto.optimizePortfolio.OptimizedPortfolioRequest;
 import com.xstock.proto.optimizePortfolio.OptimizedPortfolioResponse;
+import io.grpc.Grpc;
+import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.StatusRuntimeException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class GrpcClient {
     private static final Log log = LogFactory.getLog(GrpcClient.class.getName());
 
@@ -18,8 +23,9 @@ public class GrpcClient {
 
     private final OptimizePortfolioGrpc.OptimizePortfolioBlockingStub blockingStub;
 
-    public GrpcClient(ManagedChannel channel) {
-        this.channel = channel;
+    public GrpcClient(@Value("${grpc.server}") String targetServer) {
+        this.channel = Grpc.newChannelBuilder(targetServer, InsecureChannelCredentials.create())
+                .build();
         blockingStub = OptimizePortfolioGrpc.newBlockingStub(channel);
         log.info("Started gRPC Client");
     }
