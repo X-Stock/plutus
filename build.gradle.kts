@@ -54,7 +54,7 @@ dependencies {
 
 
 	runtimeOnly("org.postgresql:postgresql")
-	runtimeOnly("io.grpc:grpc-netty-shaded:1.68.1")
+	runtimeOnly("io.grpc:grpc-netty-shaded:1.69.0")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	compileOnly("org.apache.tomcat:annotations-api:6.0.53") // necessary for Java 9+
