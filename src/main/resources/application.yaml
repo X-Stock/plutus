@@ -21,8 +21,6 @@ spring:
           issuer-uri: "https://auth.xstock.vn/realms/xStock"
           audiences:
             - account
-  aot:
-    enabled: false
   threads:
     virtual:
       enabled: true
