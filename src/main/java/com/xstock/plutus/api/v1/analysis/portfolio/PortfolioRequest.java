@@ -1,11 +1,15 @@
 package com.xstock.plutus.api.v1.analysis.portfolio;
 
+import jakarta.validation.constraints.*;
+
 import java.util.Set;
 
 public record PortfolioRequest(
-        Set<String> industries,
-        Set<String> tickers,
+        @NotEmpty Set<@NotBlank String> industries,
+        Set<@NotBlank String> tickers,
+        @NotBlank
+        @Pattern(regexp = "max_ratio|max_return|min_risk", message = "must be 'max_ratio', 'max_return' or 'min_risk'")
         String objective,
-        Long capital
+        @NotNull @Positive Long capital
 ) {
 }

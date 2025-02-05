@@ -21,8 +21,9 @@ spring:
           issuer-uri: "https://auth.xstock.vn/realms/xStock"
           audiences:
             - account
-  aot:
-    enabled: false
+  rabbitmq:
+    user: guest
+    password: guest
   threads:
     virtual:
       enabled: true

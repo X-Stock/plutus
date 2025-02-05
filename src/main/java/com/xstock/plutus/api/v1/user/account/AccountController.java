@@ -1,5 +1,6 @@
 package com.xstock.plutus.api.v1.user.account;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,18 @@ public class AccountController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createConfig(@PathVariable UUID id, @RequestBody String config) {
+    public void createConfig(
+            @PathVariable UUID id,
+            @RequestBody @NotBlank String config
+    ) {
         accountService.createConfig(id, config);
     }
 
     @PutMapping
-    public ResponseEntity<HttpStatus> updateConfig(@PathVariable UUID id, @RequestBody String config) {
+    public ResponseEntity<HttpStatus> updateConfig(
+            @PathVariable UUID id,
+            @RequestBody @NotBlank String config
+    ) {
         return accountService.updateConfig(id, config);
     }
 

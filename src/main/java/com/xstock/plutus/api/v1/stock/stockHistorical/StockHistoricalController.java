@@ -1,6 +1,9 @@
 package com.xstock.plutus.api.v1.stock.stockHistorical;
 
 import com.xstock.plutus.utils.dto.PaginatedResponse;
+import com.xstock.plutus.utils.validations.constraints.HistoricalIntervalConstraint;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +22,9 @@ public class StockHistoricalController {
     public PaginatedResponse<StockHistorical> getAllByTicker(
             @PathVariable String ticker,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            Instant fromDate,
+            @Past Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            Instant startDate,
+            @PastOrPresent Instant startDate,
             @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "false") boolean unpaged
     ) {
@@ -31,11 +34,11 @@ public class StockHistoricalController {
     @GetMapping(path = "/returns")
     public PaginatedResponse<StockHistoricalReturns> getReturns(
             @PathVariable String ticker,
-            @RequestParam String interval,
+            @RequestParam @HistoricalIntervalConstraint String interval,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            Instant fromDate,
+            @Past Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            Instant toDate,
+            @PastOrPresent Instant toDate,
             @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "false") boolean unpaged
     ) {
