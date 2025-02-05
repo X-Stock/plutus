@@ -28,7 +28,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
 
 	runtimeOnly("org.postgresql:postgresql")
 
