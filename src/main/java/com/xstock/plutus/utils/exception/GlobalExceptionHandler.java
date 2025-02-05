@@ -28,8 +28,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(value = GrpcResponseException.class)
-    public ErrorMessage handleGrpcException(GrpcResponseException ex, WebRequest request) {
+    @ExceptionHandler(value = RabbitMqResponseException.class)
+    public ErrorMessage handleGrpcException(RabbitMqResponseException ex, WebRequest request) {
         return new ErrorMessage(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 ex.getMessage(),
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
                         error -> ((FieldError) error).getField(), // Key: field name
                         error -> {
                             String message = error.getDefaultMessage();
-                            return message == null ? "Unknown message" : message; // Value: error message
+                            return message == null ? "Unknown message" : message; // Value: message message
                         },
                         (existing, replacement) -> existing + "; " + replacement // Merge messages
                 ));

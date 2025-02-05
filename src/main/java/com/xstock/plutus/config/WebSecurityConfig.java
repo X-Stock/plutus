@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     );
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, @Value("${spring.allow-ips:}") String[] allowIps) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, @Value("${spring.allow-ips:}") String[] allowIps) throws Exception {
         Set<IpAddressMatcher> allowedIps = new HashSet<>(baseAllowedIps);
         for (String ip : allowIps) {
             try {

@@ -22,7 +22,7 @@ class CachingConfig implements CachingConfigurer {
     private static final Duration TIME_TO_LIVE = Duration.ofHours(12);
 
     @Bean
-    public RedisCacheConfiguration cacheConfiguration(ObjectMapper objectMapper) {
+    RedisCacheConfiguration cacheConfiguration(ObjectMapper objectMapper) {
         objectMapper = objectMapper.copy();
 
         objectMapper = objectMapper
