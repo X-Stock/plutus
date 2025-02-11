@@ -21,7 +21,7 @@ class DatabaseCreationTest {
     private CompanyRepository companyRepository;
 
     @Test
-    void getCompany_createdByDefault() {
+    void test01GetCompanyCreatedByDefault() {
         Optional<Company> company = companyRepository.findByTicker("VVS");
         assert company.isPresent();
         assertThat(company.get().getTicker()).isEqualTo("VVS");

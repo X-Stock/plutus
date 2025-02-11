@@ -39,7 +39,7 @@ class SecurityTests {
 
     @Test
     @WithMockUser
-    void Should_Return_Company_When_Authorized() throws Exception {
+    void test01ShouldReturnCompanyWhenAuthorized() throws Exception {
         Company mockCompany = Mockito.mock(Company.class);
         when(companyService.getByTicker("VVS")).thenReturn(mockCompany);
 
@@ -50,7 +50,7 @@ class SecurityTests {
     }
 
     @Test
-    void ShouldNot_Return_When_Unauthorized() throws Exception {
+    void test02ShouldNotReturnWhenUnauthorized() throws Exception {
         mvc.perform(get(url + "/companies")
                 .with(mockRemoteIp("192.168.0.1")))
                 .andExpect(status().isUnauthorized());
@@ -58,7 +58,7 @@ class SecurityTests {
 
     @ParameterizedTest
     @ValueSource(strings = { "127.0.0.1", "::1"})
-    void Should_AllowAccess_With_AllowedIps(String ipAddress) throws Exception {
+    void test03ShouldAllowAccessWithAllowedIps(String ipAddress) throws Exception {
         mvc.perform(get(url + "/companies")
                         .with(mockRemoteIp(ipAddress))).
                 andExpect(status().isOk());

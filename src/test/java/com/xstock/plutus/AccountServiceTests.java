@@ -46,7 +46,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(username = uuid)
-    void Should_Deny_When_WrongID() {
+    void test01ShouldDenyWhenWrongId() {
         assertThrows(AccessDeniedException.class, () -> accountService.getConfig(id));
         assertThrows(AccessDeniedException.class, () -> accountService.createConfig(id, config));
         assertThrows(AccessDeniedException.class, () -> accountService.updateConfig(id, config));
@@ -54,7 +54,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(authorities = authority)
-    void Should_Deny_When_WrongAuthority() {
+    void test02ShouldDenyWhenWrongAuthority() {
         assertThrows(AccessDeniedException.class, () -> accountService.getConfig(id));
         assertThrows(AccessDeniedException.class, () -> accountService.createConfig(id, config));
         assertThrows(AccessDeniedException.class, () -> accountService.updateConfig(id, config));
@@ -62,7 +62,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(authorities = authority, username = uuid)
-    void Should_AllowAccess_When_Authorized() {
+    void test03ShouldAllowAccessWhenAuthorized() {
         when(accountRepository.findById(id)).thenReturn(Optional.of(account));
         assertEquals(config, accountService.getConfig(id));
         assertDoesNotThrow(() -> accountService.createConfig(id, config));
@@ -71,7 +71,7 @@ public class AccountServiceTests {
 
     @Test
     @WithMockUser(authorities = authority, username = uuid)
-    void Should_UpdateOrCreate_Config() {
+    void test05ShouldUpdateOrCreateConfig() {
         assertEquals(ResponseEntity.status(HttpStatus.CREATED).build(), accountService.updateConfig(id, config));
         when(accountRepository.findById(id)).thenReturn(Optional.of(account));
         assertEquals(ResponseEntity.status(HttpStatus.OK).build(), accountService.updateConfig(id, config));
