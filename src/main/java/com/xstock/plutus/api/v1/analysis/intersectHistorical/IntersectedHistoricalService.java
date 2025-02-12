@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class IntersectedHistoricalService {
     private final StockHistoricalService stockHistoricalService;
 
-    private <T> List<IntersectedHistorical<T>> intersectHistorical(Map<String, List<T>> historical) {
+    private static <T> List<IntersectedHistorical<T>> intersectHistorical(Map<String, List<T>> historical) {
         Set<Instant> intersectTime = historical.values().parallelStream()
                 .map(stockHistorical -> stockHistorical
                         .stream()
@@ -58,18 +58,21 @@ public class IntersectedHistoricalService {
 
     @Cacheable
     public List<IntersectedHistorical<StockHistoricalReturns>> intersectHistoricalReturns(
-            Set<String> tickers,
-            String interval,
-            Instant fromDate,
-            Instant toDate
+            IntersectHistoricalReturnsRequest request
     ) {
-        Map<String, List<StockHistoricalReturns>> historical = tickers
+        Map<String, List<StockHistoricalReturns>> historical = request.tickers()
                 .parallelStream()
                 .collect(Collectors.toMap(
                         ticker -> ticker,
                         ticker -> stockHistoricalService
-                                .getReturnsByTicker(ticker, interval, fromDate, toDate, null, true)
-                                .content()
+                                .getReturnsByTicker(
+                                        ticker,
+                                        request.interval(),
+                                        request.fromDate(),
+                                        request.toDate(),
+                                        null,
+                                        true
+                                ).content()
                 ));
 
         return intersectHistorical(historical);
@@ -77,16 +80,14 @@ public class IntersectedHistoricalService {
 
     @Cacheable
     public List<IntersectedHistorical<StockHistorical>> intersectHistoricalPrices(
-            Set<String> tickers,
-            Instant fromDate,
-            Instant toDate
+            IntersectHistoricalPricesRequest request
     ) {
-        Map<String, List<StockHistorical>> historical = tickers
+        Map<String, List<StockHistorical>> historical = request.tickers()
                 .parallelStream()
                 .collect(Collectors.toMap(
                         ticker -> ticker,
                         ticker -> stockHistoricalService
-                                .getAllByTicker(ticker, fromDate, toDate, null, true)
+                                .getAllByTicker(ticker, request.fromDate(), request.toDate(), null, true)
                                 .content()
                 ));
 

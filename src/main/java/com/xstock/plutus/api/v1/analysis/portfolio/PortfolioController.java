@@ -1,19 +1,15 @@
 package com.xstock.plutus.api.v1.analysis.portfolio;
 
 import com.xstock.plutus.api.v1.stock.stockHistorical.StockHistoricalReturns;
-import com.xstock.plutus.utils.validations.constraints.HistoricalIntervalConstraint;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,26 +18,14 @@ public class PortfolioController {
     private final PortfolioService portfolioService;
 
     @PostMapping(path = "/optimize", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getOptimizedPortfolio(
-            @RequestBody @Validated PortfolioRequest portfolio,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @Past Instant fromDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @PastOrPresent Instant toDate
-    ) {
-        return portfolioService.getOptimizedPortfolio(portfolio, fromDate, toDate);
+    public String getOptimizedPortfolio(@RequestBody @Valid PortfolioRequest request) {
+        return portfolioService.getOptimizedPortfolio(request);
     }
 
     @PostMapping(path ="/historical-returns")
     public List<StockHistoricalReturns> getPortfolioReturns(
-            @RequestBody @Validated Set<@Valid PortfolioReturnsRequest> request,
-            @RequestParam @HistoricalIntervalConstraint String interval,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @Past Instant fromDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @PastOrPresent Instant toDate,
-            @RequestParam(defaultValue = "false") boolean cumulative
+            @RequestBody @Valid PortfolioReturnsRequest request
     ) {
-        return portfolioService.getPortfolioReturns(request, interval, fromDate, toDate, cumulative);
+        return portfolioService.getPortfolioReturns(request);
     }
 }

@@ -16,7 +16,7 @@ public class HistoricalIntervalValidator implements ConstraintValidator<Historic
 
     @Override
     public boolean isValid(String interval, ConstraintValidatorContext context) {
-        return !interval.isBlank() &&
+        return interval != null && !interval.isBlank() &&
                 pattern.matcher(interval).matches();
     }
 }
