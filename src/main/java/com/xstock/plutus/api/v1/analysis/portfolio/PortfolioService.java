@@ -1,5 +1,6 @@
 package com.xstock.plutus.api.v1.analysis.portfolio;
 
+import com.xstock.plutus.api.v1.analysis.intersectHistorical.IntersectHistoricalReturnsRequest;
 import com.xstock.plutus.api.v1.analysis.intersectHistorical.IntersectedHistorical;
 import com.xstock.plutus.api.v1.analysis.intersectHistorical.IntersectedHistoricalService;
 import com.xstock.plutus.api.v1.stock.company.Company;
@@ -19,6 +20,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -31,47 +33,61 @@ public class PortfolioService {
     private final IntersectedHistoricalService intersectedHistoricalService;
 
     private Set<String> getTickers(Set<String> industries) {
-        Set<Company> companies = industries
-                .stream()
-                .flatMap(industry ->
-                        industryService
-                                .getCompaniesByIndustry(industry, null, true)
-                                .content()
-                                .stream())
-                .collect(Collectors.toUnmodifiableSet());
-        return companies.stream().map(Company::getTicker).collect(Collectors.toUnmodifiableSet());
+        Stream<Company> companies = industries
+                .parallelStream()
+                .flatMap(industry -> industryService
+                        .getCompaniesByIndustry(industry, null, true)
+                        .content()
+                        .stream());
+        return companies.map(Company::getTicker).collect(Collectors.toUnmodifiableSet());
     }
 
     @Cacheable
-    public String getOptimizedPortfolio(
-            PortfolioRequest portfolio,
-            Instant fromDate,
-            Instant toDate
-    ) {
-        Set<String> tickers = portfolio.tickers().isEmpty()
-                ? getTickers(portfolio.industries())
-                : portfolio.tickers();
+    public String getOptimizedPortfolio(PortfolioRequest request) {
+        Set<String> tickers = request.tickers().isEmpty()
+                ? getTickers(request.industries())
+                : request.tickers();
         return rabbitMqClient.sendAndReceive(
-                new PortfolioRequestDto(tickers, portfolio.objective(), portfolio.capital(), fromDate, toDate),
-                "optimize_portfolio"
-        );
+                new PortfolioRequestDto(
+                        tickers,
+                        request.objective(),
+                        request.capital(),
+                        request.fromDate(),
+                        request.toDate()),
+                "optimize_portfolio");
     }
 
     @Cacheable
     public List<StockHistoricalReturns> getPortfolioReturns(
-            Set<PortfolioReturnsRequest> request,
-            String interval,
-            Instant fromDate,
-            Instant toDate,
-            boolean cumulative
+            PortfolioReturnsRequest request
     ) {
-        Map<String, Float> portfolio = request
-                .stream()
-                .collect(Collectors.toUnmodifiableMap(PortfolioReturnsRequest::ticker, PortfolioReturnsRequest::weight));
-        List<IntersectedHistorical<StockHistoricalReturns>> intersectedHistorical = intersectedHistoricalService.intersectHistoricalReturns(portfolio.keySet(), interval, fromDate, toDate);
+        Map<String, Float> portfolio = request.assets().stream()
+                .collect(Collectors.toUnmodifiableMap(Asset::ticker, Asset::weight));
+        
+        List<IntersectedHistorical<StockHistoricalReturns>> intersectedHistorical = intersectedHistoricalService
+                .intersectHistoricalReturns(new IntersectHistoricalReturnsRequest(
+                        portfolio.keySet(),
+                        request.interval(),
+                        request.fromDate(),
+                        request.toDate()
+                ));
+        Stream<StockHistoricalReturns> portfolioReturns = getPortfolioReturnsStream(intersectedHistorical, portfolio);
 
+        if (request.isCumulative()) {
+            AtomicReference<Float> cumulativeReturns = new AtomicReference<>(1f);
+            return portfolioReturns.map(returns ->
+                            (StockHistoricalReturns) new StockHistoricalReturnsDTO(
+                                    returns.getTime(),
+                                    cumulativeReturns.updateAndGet(v -> v * (1f + returns.getReturns()))
+                            ))
+                    .toList();
+        }
+        return portfolioReturns.toList();
+    }
+
+    private static Stream<StockHistoricalReturns> getPortfolioReturnsStream(List<IntersectedHistorical<StockHistoricalReturns>> intersectedHistorical, Map<String, Float> portfolio) {
         int timePoints = intersectedHistorical.getFirst().historical().size();
-        List<StockHistoricalReturns> portfolioReturns =  IntStream.iterate(timePoints - 1, i -> i - 1)
+        return IntStream.iterate(timePoints - 1, i -> i - 1)
                 .limit(timePoints)
                 .mapToObj(i -> {
                     Instant time = intersectedHistorical.getFirst().historical().get(i).getTime();
@@ -81,19 +97,7 @@ public class PortfolioService {
                                         company.historical().get(i).getReturns() * portfolio.get(company.ticker()),
                                 Float::sum
                         );
-                    return (StockHistoricalReturns) new StockHistoricalReturnsDTO(time, returns);
-                })
-                .toList();
-
-        if (cumulative) {
-            AtomicReference<Float> cumulativeReturns = new AtomicReference<>(1f);
-            return portfolioReturns.stream().map(returns ->
-                            (StockHistoricalReturns) new StockHistoricalReturnsDTO(
-                                    returns.getTime(),
-                                    cumulativeReturns.updateAndGet(v -> v * (1f + returns.getReturns()))
-                            ))
-                    .toList();
-        }
-        return portfolioReturns;
+                    return new StockHistoricalReturnsDTO(time, returns);
+                });
     }
 }

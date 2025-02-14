@@ -24,11 +24,11 @@ public class StockHistoricalController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             @Past Instant fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @PastOrPresent Instant startDate,
+            @PastOrPresent Instant toDate,
             @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "false") boolean unpaged
     ) {
-        return stockHistoricalService.getAllByTicker(ticker, fromDate, startDate, pageable, unpaged);
+        return stockHistoricalService.getAllByTicker(ticker, fromDate, toDate, pageable, unpaged);
     }
 
     @GetMapping(path = "/returns")

@@ -1,8 +1,7 @@
-package com.xstock.plutus.api.v1.analysis.portfolio;
+package com.xstock.plutus.api.v1.analysis.intersectHistorical;
 
 import com.xstock.plutus.utils.validations.constraints.HistoricalIntervalConstraint;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import com.xstock.plutus.utils.validations.constraints.IntersectTickerConstraint;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,9 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.Instant;
 import java.util.Set;
 
-public record PortfolioReturnsRequest(
-        @NotEmpty
-        Set<Asset> assets,
+public record IntersectHistoricalReturnsRequest (
+        @IntersectTickerConstraint
+        Set<String> tickers,
 
         @HistoricalIntervalConstraint
         String interval,
@@ -23,8 +22,5 @@ public record PortfolioReturnsRequest(
 
         @PastOrPresent
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-        Instant toDate,
-
-        @NotNull
-        boolean isCumulative
+        Instant toDate
 ) {}
