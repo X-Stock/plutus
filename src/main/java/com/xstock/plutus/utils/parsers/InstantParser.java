@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 
 public class InstantParser {
     public static Instant parse(String source) {
-        if (source.isEmpty()) {
+        if (source.isBlank()) {
             return null;
         }
 
